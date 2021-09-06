@@ -1,5 +1,5 @@
 Screen:
-    
+
     MDCard:
         size_hint: None, None
         size: 300, 400
@@ -8,7 +8,7 @@ Screen:
         padding: 25
         spacing: 25
         orientation: 'vertical'
-
+    
         MDLabel:
             id: welcome_label
             text: "WELCOME"
@@ -17,6 +17,18 @@ Screen:
             size_hint_y: None
             height: self.texture_size[1]
             padding_y: 15
+
+        MDRoundFlatButton:
+            text: "DOCTOR"
+            font_size: 12
+            pos_hint: {"center_x": 0.5}
+            on_press: app.logger()
+
+        MDRoundFlatButton:
+            text: "PATIENT"
+            font_size: 12
+            pos_hint: {"center_x": 0.5}
+            on_press: app.logger()
 
         MDTextFieldRound:
             id: user
