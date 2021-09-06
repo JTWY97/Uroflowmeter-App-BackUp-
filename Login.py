@@ -5,6 +5,7 @@
 # 11 Pages --
 # --> Patient: Log In Page, Main Page, Sypmtoms Tracker, Bladder Diary, Fluid Intake, Quick Pee
 # --> Doctor: Log In Page (Repeated), Doctor Sign Up Page, Main Page, Patient List, Patient Data Summary, Patient Sign Up Page
+print("hello hello")
 
 from kivy.lang import Builder
 from kivymd.app import MDApp
