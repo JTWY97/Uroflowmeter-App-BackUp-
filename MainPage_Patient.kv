@@ -1,0 +1,44 @@
+Screen:
+
+    MDCard:
+        size_hint: None, None
+        size: 300, 450
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 10
+        padding: 25
+        spacing: 25
+        orientation: 'vertical'
+    
+        MDLabel:
+            id: WelcomeLabel
+            text: "WELCOME BACK!"
+            font_size: 40
+            halign: 'center'
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDRoundFlatButton:
+            text: "Symptom Tracker"
+            font_size: 12
+            pos_hint: {"center_x": 0.5}
+
+        MDRoundFlatButton:
+            text: "Bladder Diary"
+            font_size: 12
+            pos_hint: {"center_x": 0.5}          
+                    
+        MDRoundFlatButton:
+            text: "Fluid Intake"
+            font_size: 12
+            pos_hint: {"center_x": 0.5} 
+        
+        MDFloatingActionButton:
+            text: "Quick Pee!"
+            icon: "water-plus"
+            elevation_normal: 12
+            pos_hint: {"center_x": 0.5} 
+            # md_bg_color: app.theme_cls.primary_light
+
+        Widget:
+            size_hint_y: None
+            height: 10
