@@ -26,8 +26,8 @@ Builder.load_file(folder + "/loadingpopup.kv")
 
 # Import the screens used to log the user in
 from Welcome_Screen import WelcomeScreen
-from LogInScreen_Doctor import LogInDoctor
-from LogInScreen_Patient import LogInPatient
+from LogInScreen_Doctor import LogIn_Doctor
+from LogInScreen_Patient import LogIn_Patient
 
 class FirebaseLoginScreen(Screen, EventDispatcher):
     """Use this widget as a complete module to incorporate Firebase user
@@ -63,24 +63,24 @@ class FirebaseLoginScreen(Screen, EventDispatcher):
     remember_user = BooleanProperty(True)
 
     debug = False
-    popup = Factory.LoadingPopup()
-    popup.background = folder + "/transparent_image.png"
+    # popup = Factory.LoadingPopup()
+    # popup.background = folder + "/transparent_image.png"
 
-    def log_out(self):
-        '''Clear the user's refresh token, marked them as not signed in, and
-        go back to the welcome screen.
-        '''
-        with open(self.refresh_token_file, 'w') as f:
-            f.write('')
-        self.login_state = 'out'
-        self.login_success = False
-        self.refresh_token = ''
-        self.ids.screen_manager.current = 'Welcome_Screen'
-        # Clear text fields
-        self.ids.sign_in_screen.ids.email.text = '' #
-        self.ids.sign_in_screen.ids.password.text = '' #
-        self.ids.sign_up_screen.ids.email.text = '' #
-        self.ids.sign_up_screen.ids.password.text = '' #
+    # def log_out(self):
+    #     '''Clear the user's refresh token, marked them as not signed in, and
+    #     go back to the welcome screen.
+    #     '''
+    #     with open(self.refresh_token_file, 'w') as f:
+    #         f.write('')
+    #     self.login_state = 'out'
+    #     self.login_success = False
+    #     self.refresh_token = ''
+    #     self.ids.screen_manager.current = 'Welcome_Screen'
+    #     # Clear text fields
+    #     self.ids.sign_in_screen.ids.email.text = '' #
+    #     self.ids.sign_in_screen.ids.password.text = '' #
+    #     self.ids.sign_up_screen.ids.email.text = '' #
+    #     self.ids.sign_up_screen.ids.password.text = '' #
 
 
     def on_login_success(self, screen_name, login_success_boolean):
@@ -108,7 +108,7 @@ class FirebaseLoginScreen(Screen, EventDispatcher):
         if self.debug:
             print("Successfully signed in a user: ", log_in_data)
         # User's email/password exist, but are they verified?
-        self.hide_loading_screen()
+        # self.hide_loading_screen()
         self.refresh_token = log_in_data['refreshToken']
         self.localId = log_in_data['localId']
         self.idToken = log_in_data['idToken']
@@ -138,7 +138,7 @@ class FirebaseLoginScreen(Screen, EventDispatcher):
         account was invalid.
         """
         self.hide_loading_screen()
-        self.email_not_found = False  # Triggers hiding the sign in button
+        # self.email_not_found = False  # Triggers hiding the sign in button
         msg = failure_data['error']['message'].replace("_", " ").capitalize()
         toast(msg)
         if msg == "Email not found":
@@ -147,7 +147,7 @@ class FirebaseLoginScreen(Screen, EventDispatcher):
             print("Couldn't sign the user in: ", failure_data)
 
     def sign_in_error(self, *args):
-        self.hide_loading_screen()
+        # self.hide_loading_screen()
         if self.debug:
             print("Sign in error", args)
 
@@ -188,7 +188,7 @@ class FirebaseLoginScreen(Screen, EventDispatcher):
         """Sets the idToken and localId variables upon successfully loading an
         account using the refresh token.
         """
-        self.hide_loading_screen()
+        # self.hide_loading_screen()
         if self.debug:
             print("Successfully logged a user in automatically using the refresh token")
         self.idToken = loaded_data['id_token']
@@ -197,7 +197,7 @@ class FirebaseLoginScreen(Screen, EventDispatcher):
         self.login_success = True
 
     def failed_account_load(self, *args):
-        self.hide_loading_screen()
+        # self.hide_loading_screen()
         if self.debug:
             print("Failed to load an account.", args)
 

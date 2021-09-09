@@ -1,22 +1,27 @@
-<WelcomeScreen>:
+Screen:
     FloatLayout:
+        MDLabel:
+            text: "Log In As:"
+            font_size: 40
+            halign: 'center'
+            size_hint_y: None
+            pos_hint: {"top": .9, "center_x": .5}
+            height: self.texture_size[1]
         MDRaisedButton:
             id: DoctorLogIn
             text: "DOCTOR"
-            font_size: 12
-            size_hint_x: None
-            # size_hint: .9, .05
-            # pos_hint: {"top": .3, "center_x": .5}
+            font_size: 25
+            size_hint: .7, .06
+            pos_hint: {"top": .7, "center_x": .5}
             on_release:
                 root.parent.current = "LogInScreen_Doctor"
 
         MDRaisedButton:
             id: PatientLogIn
             text: "PATIENT"
-            font_size: 12
-            size_hint_x: None
-            # size_hint: .9, .05
-            # pos_hint: {"top": .225, "center_x": .5}
+            font_size: 25
+            size_hint: .7, .06
+            pos_hint: {"top": .8, "center_x": .5}
             on_release:
                 root.parent.current = "LogInScreen_Patient"
 
