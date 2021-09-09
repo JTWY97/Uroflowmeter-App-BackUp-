@@ -14,7 +14,7 @@ class MainApp(MDApp):
 		return Builder.load_file('Login.kv')
 
 	def logger(self):
-		self.root.ids.WelcomeLabel.text = f'Sup Text!' #id: welcome_id
+		self.root.ids.WelcomeLabel.text = f'Sup {self.root.ids.User.text}!' #id: welcome_id
 
 	def clear(self):
 		self.root.ids.WelcomeLabel.text = "WELCOME"		

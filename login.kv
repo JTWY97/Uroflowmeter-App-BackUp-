@@ -1,4 +1,4 @@
-<LogInScreen>:
+Screen:
 
     MDCard:
         size_hint: None, None
@@ -41,13 +41,13 @@
             text: "LOG IN"
             font_size: 12
             pos_hint: {"center_x": 0.5}
-            # on_press: app.logger()
+            on_press: app.logger()
 
         MDRoundFlatButton:
             text: "CLEAR"
             font_size: 12
             pos_hint: {"center_x": 0.5} 
-            # on_press: app.clear()           
+            on_press: app.clear()           
 
         Widget:
             size_hint_y: None

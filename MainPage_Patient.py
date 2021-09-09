@@ -5,7 +5,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 class MainApp(MDApp):
 	def build(self):
 		self.theme_cls.theme_style = "Dark"
-		self.theme_cls.primary_palette = "Green"
+		self.theme_cls.primary_palette = "BlueGray"
 		return Builder.load_file('MainPage_Patient.kv')
 
 MainApp().run()
