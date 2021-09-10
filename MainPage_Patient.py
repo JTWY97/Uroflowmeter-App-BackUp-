@@ -6,17 +6,18 @@ from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 class WelcomePage(Screen):
 	pass
 
-class DoctorLogin(Screen):
+class Doctor_LogIn(Screen):
 	pass
 
-class PatientLogin(Screen):
+class Patient_LogIn(Screen):
 	pass
+
 
 ScreenM = ScreenManager()
 
 ScreenM.add_widget(WelcomePage(name='Welcome'))
-ScreenM.add_widget(DoctorLogin(name='DoctorLogin'))
-ScreenM.add_widget(PatientLogin(name='PatientLogin'))
+ScreenM.add_widget(Doctor_LogIn(name='DoctorLogin'))
+ScreenM.add_widget(Patient_LogIn(name='PatientLogin'))
 
 
 class HomePagePatient(MDApp):
