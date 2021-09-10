@@ -1,4 +1,5 @@
-from kivy.uix.screenmanager import Screen
+import kivy
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import BooleanProperty, StringProperty
 from kivy.event import EventDispatcher
 from kivy.network.urlrequest import UrlRequest
@@ -17,6 +18,7 @@ from json import dumps
 import os.path
 
 # Load the kv files
+from kivymd.app import MDApp
 folder = os.path.dirname(os.path.realpath(__file__))
 Builder.load_file(folder + "/LogInScreen_Doctor.kv")
 Builder.load_file(folder + "/LogInScreen_Patient.kv")
