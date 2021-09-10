@@ -1,4 +1,8 @@
-Screen:
+ScreenManager:
+    WelcomePage:
+    Doctor_LogIn:
+    Patient_LogIn:
+
 <WelcomePage>:
     name: 'Welcome'
     FloatLayout:
@@ -16,7 +20,7 @@ Screen:
             size_hint: .7, .06
             pos_hint: {"top": .7, "center_x": .5}
             on_release:
-                root.parent.current = "LogInScreen_Doctor"
+                root.parent.current = "DoctorLogin"
 
         MDRaisedButton:
             id: PatientLogIn
@@ -25,9 +29,10 @@ Screen:
             size_hint: .7, .06
             pos_hint: {"top": .8, "center_x": .5}
             on_release:
-                root.parent.current = "LogInScreen_Patient"
+                root.parent.current = "PatientLogin"
 
-<DoctorLogin>:
+<Doctor_LogIn>:
+
     name: 'DoctorLogin'
     FloatLayout:
         MDLabel:
@@ -68,13 +73,15 @@ Screen:
             text: "Back"
             font_size: 25
             size_hint: .5, .06
-            pos_hint: {"top":0.6, "center_x": 0.5}
-            # on_press: app.logger()     
+            pos_hint: {"top":0.5, "center_x": 0.5}
+            on_release:
+                root.parent.current = "Welcome"     
 
         Widget:
             size_hint_y: None
             height: 10
-<PatientLogin>:
+<Patient_LogIn>:
+
     name:'PatientLogin'
     FloatLayout:
         MDLabel:
@@ -109,7 +116,15 @@ Screen:
             font_size: 25
             size_hint: .4, .06
             pos_hint: {"top":0.6, "center_x": 0.5}
-            # on_press: app.logger()         
+            # on_press: app.logger()       \
+
+        MDRoundFlatButton:
+            text: "Back"
+            font_size: 25
+            size_hint: .5, .06
+            pos_hint: {"top":0.5, "center_x": 0.5}
+            on_release:
+                root.parent.current = "Welcome"     
 
         Widget:
             size_hint_y: None
