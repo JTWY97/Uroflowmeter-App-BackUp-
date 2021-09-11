@@ -11,7 +11,7 @@ class MainApp(MDApp):
 	def build(self):
 		self.theme_cls.theme_style = "Dark"
 		self.theme_cls.primary_palette = "BlueGray"
-		return Builder.load_file('Login.kv')
+		return Builder.load_file('login.kv')
 
 	def logger(self):
 		self.root.ids.WelcomeLabel.text = f'Sup {self.root.ids.User.text}!' #id: welcome_id

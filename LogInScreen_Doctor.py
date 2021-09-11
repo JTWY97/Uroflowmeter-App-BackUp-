@@ -1,10 +1,10 @@
-# from kivy.uix.screenmanager import Screen, SlideTransition
+from kivy.uix.screenmanager import Screen, SlideTransition
 
-# class LogInDoctor(Screen):
-#     def go_back(self):
-#         self.parent.transition = SlideTransition(direction="right")
-#         self.parent.current = self.parent.current = "WelcomeScreen"
-#         self.parent.transition = SlideTransition(direction="left")
+class LogInDoctor(Screen):
+     def go_back(self):
+         self.parent.transition = SlideTransition(direction="right")
+         self.parent.current = self.parent.current = "WelcomeScreen"
+         self.parent.transition = SlideTransition(direction="left")
 
 from kivy.lang import Builder
 from kivymd.app import MDApp

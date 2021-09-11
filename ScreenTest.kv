@@ -21,6 +21,7 @@ ScreenManager:
             pos_hint: {"top": .7, "center_x": .5}
             on_release:
                 root.parent.current = "DoctorLogin"
+                root.manager.transition.direction = "left"
 
         MDRaisedButton:
             id: PatientLogIn
@@ -30,14 +31,14 @@ ScreenManager:
             pos_hint: {"top": .8, "center_x": .5}
             on_release:
                 root.parent.current = "PatientLogin"
+                root.manager.transition.direction = "left"
 
 <Doctor_LogIn>:
-
     name: 'DoctorLogin'
     FloatLayout:
         MDLabel:
             id: WelcomeLabel_Doctor
-            text: "Welcome!"
+            text: "Welcome Doctor!"
             font_size: 40
             halign: 'center'
             size_hint_y: None
@@ -75,18 +76,18 @@ ScreenManager:
             size_hint: .5, .06
             pos_hint: {"top":0.5, "center_x": 0.5}
             on_release:
-                root.parent.current = "Welcome"     
-
+                root.parent.current = "Welcome"
+                root.manager.transition.direction = "right"
         Widget:
             size_hint_y: None
             height: 10
-<Patient_LogIn>:
 
+<Patient_LogIn>:
     name:'PatientLogin'
     FloatLayout:
         MDLabel:
             id: WelcomeLabel_Patient
-            text: "Welcome!"
+            text: "Welcome Patient!"
             font_size: 40
             halign: 'center'
             size_hint_y: None
@@ -125,6 +126,15 @@ ScreenManager:
             pos_hint: {"top":0.5, "center_x": 0.5}
             on_release:
                 root.parent.current = "Welcome"     
+
+        MDRoundFlatButton:
+            text: "Back"
+            font_size: 25
+            size_hint: .5, .06
+            pos_hint: {"top":0.5, "center_x": 0.5}
+            on_release:
+                root.parent.current = "Welcome"
+                root.manager.transition.direction = "right"
 
         Widget:
             size_hint_y: None

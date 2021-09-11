@@ -12,6 +12,7 @@ class Doctor_LogIn(Screen):
 class Patient_LogIn(Screen):
 	pass
 
+
 ScreenM = ScreenManager()
 
 ScreenM.add_widget(WelcomePage(name='Welcome'))
