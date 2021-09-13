@@ -4,7 +4,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivy.event import EventDispatcher
 from kivy.properties import BooleanProperty, StringProperty
 from kivy.network.urlrequest import UrlRequest
-from kivy.factory import Factory
 import certifi
 
 # KivyMD imports
@@ -16,15 +15,19 @@ sys.path.append("/".join(x for x in __file__.split("/")[:-1]))
 from json import dumps
 import os.path
 
+folder = os.path.dirname(os.path.realpath(__file__))
 
-class Welcome_Page(Screen):
-	pass
+Builder.load_file(folder + "/Patient_LogIn.kv")
+Builder.load_file(folder + "/WelcomePage.kv")
+Builder.load_file(folder + "/FirebaseLogIn_Patient.kv")
 
-class Doctor_LogIn(Screen):
-	pass
+# Import the screens used to log the user in
+from WelcomePage import Welcome_Page
+from Patient_LogIn import Patient_LogIn
 
-class Firebase_LoginScreen(Screen, EventDispatcher):
-	web_api_key = StringProperty()
+class Firebase_LoginScreen_Patient(Patient_LogIn, EventDispatcher):
+	web_api_key = StringProperty("")
+	print(web_api_key)
 	refresh_token = ""
 	localId = ""
 	idToken = ""
@@ -45,11 +48,10 @@ class Firebase_LoginScreen(Screen, EventDispatcher):
 		self.login_state = 'out'
 		self.login_success = False
 		self.refresh_token = ''
-		self.ids.screen_manager.current = 'Welcome_Screen'
-		self.ids.DoctorLogin.ids.User_Doctor.text = '' 
-		self.ids.DoctorLogin.ids.Password_Doctor.text = '' 
+		self.ids.User_Patient.text = '' 
+		self.ids.Password_Pateint.text = ''
 		
-	def on_login_success(self,  login_success_boolean): #DoctorHomePage,
+	def on_login_success(self,  PatientHomePage, login_success_boolean):
 		print("Testing", self.login_success, self.login_state)
 		print("self.login_success=", login_success_boolean)
 
@@ -121,7 +123,7 @@ class Firebase_LoginScreen(Screen, EventDispatcher):
 		self.localId = loaded_data['user_id']
 		self.login_state = 'in'
 		self.login_success = True
-		
+	
 	def failed_account_load(self, *args):
 		if self.debug:
 			print("Failed to load an account.", args)
@@ -138,31 +140,3 @@ class Firebase_LoginScreen(Screen, EventDispatcher):
 			f.write('')
 
 	pass
-
-class Patient_LogIn(Screen, EventDispatcher):
-	pass
-
-class HomePage_Doctor(Screen):
-	pass
-
-class HomePage_Patient(Screen):
-	pass
-
-ScreenM = ScreenManager()
-
-ScreenM.add_widget(Welcome_Page(name='Welcome'))
-ScreenM.add_widget(Doctor_LogIn(name='DoctorLogin'))
-ScreenM.add_widget(Firebase_LoginScreen(name='FirebaseLoginScreen'))
-ScreenM.add_widget(Patient_LogIn(name='PatientLogin'))
-ScreenM.add_widget(HomePage_Doctor(name='DoctorHomePage'))
-ScreenM.add_widget(HomePage_Patient(name='PatientHomePage'))
-
-class HomePagePatient(MDApp):
-
-	def build(self):
-		self.theme_cls.theme_style = "Dark"
-		self.theme_cls.primary_palette = "BlueGray"
-		screen = Builder.load_file('LogInCombined.kv')
-		return screen
-
-HomePagePatient().run()
