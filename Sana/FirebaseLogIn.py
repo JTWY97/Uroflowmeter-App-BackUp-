@@ -22,6 +22,7 @@ Builder.load_file("Doctor_LogIn.kv")
 Builder.load_file("WelcomePage.kv")
 Builder.load_file("PatientHomePage.kv")
 Builder.load_file("DoctorHomePage.kv")
+Builder.load_file("NewUser_Doctor.kv")
 Builder.load_file("FirebaseLogIn.kv")
 
 # Import the screens used to log the user in
@@ -30,6 +31,7 @@ from Patient_LogIn import Patient_LogIn
 from Doctor_LogIn import Doctor_LogIn
 from PatientHomePage import PatientHomePage
 from DoctorHomePage import DoctorHomePage
+from NewUser_Doctor import NewUser_Doctor
 
 class Firebase_LoginScreen_Patient(Patient_LogIn, EventDispatcher):
 	web_api_key = StringProperty("")
@@ -166,10 +168,6 @@ class Firebase_LoginScreen_Doctor(Doctor_LogIn, EventDispatcher):
 		self.refresh_token = ''
 		self.ids.User_Doctor.text = '' 
 		self.ids.Password_Doctor.text = ''
-		
-	def on_login_success(self,  DoctorHomePage, login_success_boolean):
-		print("Testing", self.login_success, self.login_state)
-		print("self.login_success=", login_success_boolean)
 
 	def on_web_api_key(self, *args):
 		self.refresh_token_file = MDApp.get_running_app().user_data_dir + "/refresh_token.txt"
