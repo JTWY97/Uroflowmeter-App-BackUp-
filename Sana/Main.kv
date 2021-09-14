@@ -1,43 +1,13 @@
 #:import FirebaseLoginScreen_Doctor FirebaseLogIn.Firebase_LoginScreen_Doctor
 #:import FirebaseLoginScreen_Patient FirebaseLogIn.Firebase_LoginScreen_Patient
-#:import Welcome_Page FirebaseLogIn.WelcomePage
-#:import DoctorHomePage FirebaseLogIn.DoctorHomePage
-#:import PatientHomePage FirebaseLogIn.PatientHomePage
+#:import Welcome_Page WelcomePage.Welcome_Page
+
 
 ScreenManager:
     id: screen_manager
     Welcome_Page:
         id: Welcome_Page
         name: "Welcome_Page"
-        FloatLayout:
-            MDLabel:
-                text: "Log In As:"
-                font_size: 40
-                halign: 'center'
-                size_hint_y: None
-                pos_hint: {"top": .9, "center_x": .5}
-                height: self.texture_size[1]
-            MDRaisedButton:
-                id: DoctorLogIn
-                text: "DOCTOR"
-                font_size: 25
-                size_hint: .7, .06
-                pos_hint: {"top": .7, "center_x": .5}
-                on_release:
-                    root.parent.current = "Firebase_LoginScreen_Doctor"
-
-            MDRaisedButton:
-                id: PatientLogIn
-                text: "PATIENT"
-                font_size: 25
-                size_hint: .7, .06
-                pos_hint: {"top": .8, "center_x": .5}
-                on_release:
-                    root.parent.current = "Firebase_LoginScreen_Patient"
-
-            Widget:
-                size_hint_y: None
-                height: 10
 
     Firebase_LoginScreen_Doctor:
         id: firebase_login_screen_doctor
@@ -47,66 +17,29 @@ ScreenManager:
         require_email_verification: True
         web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
         on_login_success:
-            if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
-            if self.login_state == 'in': app.local_id = self.localId
-            if self.login_state == 'in': app.user_idToken = self.idToken
             if self.login_state == 'in': screen_manager.current = 'DoctorHomePage'
-
-    # Firebase_LoginScreen_Patient:
-    #     id: firebase_login_screen_patient
-    #     name: "firebase_login_screen_patient"
-    #     debug: True
-    #     remember_user: True
-    #     require_email_verification: True
-    #     web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
-    #     on_login_success:
-    #         if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
-    #         if self.login_state == 'in': app.local_id = self.localId
-    #         if self.login_state == 'in': app.user_idToken = self.idToken
-    #         if self.login_state == 'in': screen_manager.current = 'PatientHomePage'
+            if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
+            if self.login_state == 'in': app.local_id_doctor = self.localId
+            if self.login_state == 'in': app.user_idToken_doctor = self.idToken
 
 
-    DoctorHomePage:
-        name:'DoctorHomePage'
-        FloatLayout:
-            MDLabel:
-                id: WelcomeLabel_Doctor
-                text: "Welcome!"
-                font_size: 40
-                halign: 'center'
-                size_hint_y: None
-                pos_hint: {"top": .9, "center_x": .5}
-                height: self.texture_size[1]
+    Firebase_LoginScreen_Patient:
+        id: firebase_login_screen_patient
+        name: "firebase_login_screen_patient"
+        debug: True
+        remember_user: True
+        require_email_verification: True
+        web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
+        on_login_success:
+            if self.login_state == 'in': screen_manager.current = 'PatientHomePage'
+            if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
+            if self.login_state == 'in': app.local_id_patient = self.localId
+            if self.login_state == 'in': app.user_idToken_patient = self.idToken
 
-            MDRoundFlatButton:
-                id: PatientList
-                text: "Patient List"
-                font_size: 25
-                size_hint: .4, .06
-                pos_hint: {"top":0.7, "center_x": 0.5}
-
-            MDRoundFlatButton:
-                id: SignUpPatient
-                text: "New Patient"
-                font_size: 25
-                size_hint: .4, .06
-                pos_hint: {"top":0.6, "center_x": 0.5}
-
-            MDRoundFlatButton:
-                id: LogOut_Doctor
-                text: "Log Out"
-                font_size: 25
-                size_hint: .4, .06
-                pos_hint: {"top":0.5, "center_x": 0.5}
-                on_release:
-                    app.sign_out_doctor()      
-
-            Widget:
-                size_hint_y: None
-                height: 10
 
     PatientHomePage:
-        name:'PatientHomePage'
+        id: PatientHomePage
+        name: "PatientHomePage"    
         FloatLayout:
             MDLabel:
                 id: WelcomeLabel_Patient
@@ -130,14 +63,14 @@ ScreenManager:
                 font_size: 25
                 size_hint: .4, .06
                 pos_hint: {"top":0.6, "center_x": 0.5}        
-                        
+                            
             MDRoundFlatButton:
                 id: FluidIntake
                 text: "Fluid Intake"
                 font_size: 25
                 size_hint: .4, .06
                 pos_hint: {"top":0.5, "center_x": 0.5}
-            
+                
             MDFloatingActionButton:
                 id: QuickPee
                 text: "Quick Pee!"
@@ -159,6 +92,47 @@ ScreenManager:
             Widget:
                 size_hint_y: None
                 height: 10
+
+    DoctorHomePage:
+        id: DoctorHomePage
+        name: "DoctorHomePage"
+        FloatLayout:
+            MDLabel:
+                id: WelcomeLabel_Doctor
+                text: "Welcome!"
+                font_size: 40
+                halign: 'center'
+                size_hint_y: None
+                pos_hint: {"top": .9, "center_x": .5}
+                height: self.texture_size[1]
+
+            MDRoundFlatButton:
+                id: PatientList
+                text: "Patient List"
+                font_size: 25
+                size_hint: .4, .06
+                pos_hint: {"top":0.7, "center_x": 0.5}
+
+            MDRoundFlatButton:
+                id: SignUpPatient
+                text: "New Patient"
+                font_size: 25
+                size_hint: .4, .06
+                pos_hint: {"top":0.6, "center_x": 0.5}     
+
+            MDRoundFlatButton:
+                id: LogOut_Doctor
+                text: "Log Out"
+                font_size: 25
+                size_hint: .4, .06
+                pos_hint: {"top":0.5, "center_x": 0.5}
+                on_release:
+                    app.sign_out_doctor()
+            Widget:
+                size_hint_y: None
+                height: 10
+
+
 
 
            

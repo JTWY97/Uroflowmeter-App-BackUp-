@@ -1,4 +1,4 @@
 from kivy.uix.screenmanager import Screen
 
-class HomePage_Patient(Screen):
+class PatientHomePage(Screen):
 	pass
