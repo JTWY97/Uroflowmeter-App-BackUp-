@@ -23,16 +23,18 @@ class HomePagePatient(MDApp):
 		return Builder.load_file("UroflowMain.kv")
 
     #Click OK
-    def on_save(self,instance,value,date_range):
-        print(instance,value,date_range)
+	def on_save(self, instance, value, date_range):
+		print(instance,value,date_range)
+		self.root.ids.date_label.text = str(value)
 
-    #Click Cancel
-    def on_cancel(self,instance,value):
-        self.root.ids.date_label.text = "You Clicked Cancel"
+	#Click Cancel
+	def on_cancel(self, kwargs, value, instance):
+		super(test, self).__init__(kwargs, value, instance)
+		self.root.ids.date_label.text = "You Clicked Cancel"
     
 	def show_date_picker(self):
 		date_dialog = MDDatePicker()
-        date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
+		date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
 		date_dialog.open()
 
 	def got_date(self, the_date):
