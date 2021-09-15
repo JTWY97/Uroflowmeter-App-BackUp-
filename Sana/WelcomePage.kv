@@ -1,4 +1,5 @@
 <Welcome_Page>:
+    name: 'Welcome'
     FloatLayout:
         MDLabel:
             text: "Log In As:"
@@ -7,6 +8,7 @@
             size_hint_y: None
             pos_hint: {"top": .9, "center_x": .5}
             height: self.texture_size[1]
+        
         MDRaisedButton:
             id: DoctorLogIn
             text: "DOCTOR"
@@ -24,7 +26,7 @@
             size_hint: .7, .06
             pos_hint: {"top": .8, "center_x": .5}
             on_release:
-                root.current = "firebase_login_screen_patient"
+                root.parent.current = "firebase_login_screen_patient"
                 root.manager.transition.direction = "left"
 
         Widget:
