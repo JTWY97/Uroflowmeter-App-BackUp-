@@ -21,6 +21,7 @@ od1 = json.dumps(users.val()) #to convert ordereddict to json
 print(type(od1)) #to check type 
 print(od1) #to check output data
 
+
 def auth(username, password):
         users = db.child("doctorUser").child(username).get()
         if users.val()["password"] == password:
@@ -33,3 +34,5 @@ def auth(username, password):
 data = {"basicinfo": "MoreFields", "email": "Random@email.com", "password": "sensitive"}
 db.child("doctorUsers").child("Doctor77").set(data) 
 db.child("doctorUsers").child("Doctor88").set(data)
+db.child("doctorUsers").child("Doctor88").set(data)
+db.child("doctorUsers").child("Doctor110").set(data)
