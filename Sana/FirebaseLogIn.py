@@ -23,7 +23,7 @@ Builder.load_file("WelcomePage.kv")
 Builder.load_file("PatientHomePage.kv")
 Builder.load_file("DoctorHomePage.kv")
 Builder.load_file("NewUser_Doctor.kv")
-Builder.load_file("FirebaseLogIn.kv")
+Builder.load_file("NewPatient.kv")
 
 # Import the screens used to log the user in
 from WelcomePage import Welcome_Page
@@ -32,6 +32,7 @@ from Doctor_LogIn import Doctor_LogIn
 from PatientHomePage import PatientHomePage
 from DoctorHomePage import DoctorHomePage
 from NewUser_Doctor import NewUser_Doctor
+from NewPatient import NewPatient
 
 class Firebase_LoginScreen_Patient(Patient_LogIn, EventDispatcher):
 	web_api_key = StringProperty("")
@@ -255,3 +256,118 @@ class Firebase_LoginScreen_Doctor(Doctor_LogIn, EventDispatcher):
 
 	pass
 
+class FirebaseNewUser_Doctor(NewUser_Doctor, EventDispatcher):
+    web_api_key = StringProperty()
+
+    refresh_token = ""
+    localId = ""
+    idToken = ""
+
+    login_success = BooleanProperty(False)
+    login_state = StringProperty("")
+    sign_up_msg = StringProperty()
+    email_exists = BooleanProperty(False)
+    email_not_found = BooleanProperty(False)
+    remember_user = BooleanProperty(True)
+    require_email_verification = BooleanProperty(False)
+
+    debug = False
+
+    def sign_up(self, email, password):
+
+        if self.debug:
+            print("Attempting to create a new account: ", email, password)
+        signup_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + self.web_api_key
+        signup_payload = dumps(
+            {"email": email, "password": password, "returnSecureToken": "true"})
+
+        UrlRequest(signup_url, req_body=signup_payload,
+                   on_success=self.successful_sign_up,
+                   on_failure=self.sign_up_failure,
+                   on_error=self.sign_up_error, ca_file=certifi.where())
+
+    def successful_sign_up(self, request, result):
+        if self.debug:
+            print("Successfully signed up a user: ", result)
+        self.refresh_token = result['refreshToken']
+        self.localId = result['localId']
+        self.idToken = result['idToken']
+
+        if self.require_email_verification:
+            self.send_verification_email(result['email'])
+            self.ids.screen_manager.current = 'sign_in_screen'
+
+        else:
+            self.login_state = 'in'
+            self.login_success = True
+
+    def sign_up_failure(self, urlrequest, failure_data):
+        self.email_exists = False
+        msg = failure_data['error']['message'].replace("_", " ").capitalize()
+        toast(msg)
+        if msg == "Email exists":
+            self.email_exists = True
+        if self.debug:
+            print("Couldn't sign the user up: ", failure_data)
+
+    def sign_up_error(self, *args):
+        if self.debug:
+            print("Sign up Error: ", args)
+
+class FirebaseNewUser_Patient(NewPatient, EventDispatcher):
+    web_api_key = StringProperty()
+
+    refresh_token = ""
+    localId = ""
+    idToken = ""
+
+    login_success = BooleanProperty(False)
+    login_state = StringProperty("")
+    sign_up_msg = StringProperty()
+    email_exists = BooleanProperty(False)
+    email_not_found = BooleanProperty(False)
+    remember_user = BooleanProperty(True)
+    require_email_verification = BooleanProperty(False)
+
+    debug = False
+
+    def sign_up(self, email, password):
+
+        if self.debug:
+            print("Attempting to create a new account: ", email, password)
+        signup_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + self.web_api_key
+        signup_payload = dumps(
+            {"email": email, "password": password, "returnSecureToken": "true"})
+
+        UrlRequest(signup_url, req_body=signup_payload,
+                   on_success=self.successful_sign_up,
+                   on_failure=self.sign_up_failure,
+                   on_error=self.sign_up_error, ca_file=certifi.where())
+
+    def successful_sign_up(self, request, result):
+        if self.debug:
+            print("Successfully signed up a user: ", result)
+        self.refresh_token = result['refreshToken']
+        self.localId = result['localId']
+        self.idToken = result['idToken']
+
+        if self.require_email_verification:
+            self.send_verification_email(result['email'])
+            self.ids.screen_manager.current = 'sign_in_screen'
+
+        else:
+            self.login_state = 'in'
+            self.login_success = True
+
+    def sign_up_failure(self, urlrequest, failure_data):
+        self.email_exists = False
+        msg = failure_data['error']['message'].replace("_", " ").capitalize()
+        toast(msg)
+        if msg == "Email exists":
+            self.email_exists = True
+        if self.debug:
+            print("Couldn't sign the user up: ", failure_data)
+
+    def sign_up_error(self, *args):
+        if self.debug:
+            print("Sign up Error: ", args)

@@ -1,0 +1,89 @@
+<NewPatient>:
+    FloatLayout:
+        MDTextFieldRound: 
+            id: FirstName_Patient
+            hint_text: "First Name"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.9, "center_x": 0.5}
+        
+        MDTextFieldRound: 
+            id: LastName_Patient
+            hint_text: "Last Name"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.85, "center_x": 0.5}
+
+        MDTextFieldRound: 
+            id: DOB
+            hint_text: "Date of Birth (dd/mm/yyyy)"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.8, "center_x": 0.5}
+
+        MDTextFieldRound:
+            id: Weight
+            hint_text: "Weight (kg)"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.75, "center_x": 0.5}
+
+        MDTextFieldRound:
+            id: Height
+            hint_text: "Height (cm)"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.7, "center_x": 0.5}
+
+        MDTextFieldRound:
+            id: Email_Patient
+            hint_text: "Set Patient Email"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.65, "center_x": 0.5}
+
+        MDTextFieldRound:
+            id: Password_Patient_SignUp
+            hint_text: "Set Patient Password"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.6, "center_x": 0.5}
+
+        MDLabel:
+            id: Start
+            text: "Treatment Start Date"
+            font_size: 15
+            halign: 'center'
+            size_hint_y: None
+            pos_hint: {"top": .55, "center_x": .5}
+            height: self.texture_size[1]  
+            
+        MDTextFieldRound: 
+            id: StartTreatment
+            hint_text: "Treatment Start Date (dd/mm/yyyy)"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.45, "center_x": 0.5}
+
+        MDLabel:
+            id: End
+            text: "Treatment End Date"
+            font_size: 15
+            halign: 'center'
+            size_hint_y: None
+            pos_hint: {"top": .4, "center_x": .5}
+            height: self.texture_size[1]  
+
+        MDTextFieldRound: 
+            id: EndTreatment
+            hint_text: "Treatment End Date (dd/mm/yyyy)"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.3, "center_x": 0.5}
+
+        MDRaisedButton:
+            text: "Create Account"
+            size_hint: .3, .04
+            pos_hint: {"top": .25, "center_x": .5}
+            on_release:
+                root.sign_up(Email_Patient.text, Password_Patient_SignUp.text)

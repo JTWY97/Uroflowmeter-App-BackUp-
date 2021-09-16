@@ -1,5 +1,6 @@
 #:import FirebaseLoginScreen_Doctor FirebaseLogIn.Firebase_LoginScreen_Doctor
 #:import FirebaseLoginScreen_Patient FirebaseLogIn.Firebase_LoginScreen_Patient
+#:import FirebaseNewUser_Doctor FirebaseLogIn.FirebaseNewUser_Doctor
 #:import Welcome_Page WelcomePage.Welcome_Page
 
 
@@ -14,7 +15,7 @@ ScreenManager:
         name: "firebase_login_screen_doctor"
         debug: True
         remember_user: True
-        require_email_verification: True
+        require_email_verification: False
         web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
         on_login_success:
             if self.login_state == 'in': screen_manager.current = 'DoctorHomePage'
@@ -26,16 +27,46 @@ ScreenManager:
         id: NewUser_Doctor
         name: "NewUser_Doctor"
 
+    FirebaseNewUser_Doctor:
+        id: firebase_newuser_doctor
+        name: "firebase_newuser_doctor"
+        debug: True
+        remember_user: True
+        require_email_verification: False
+        web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
+        on_login_success:
+            if self.login_state == 'in': screen_manager.current = 'DoctorHomePage'
+            if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
+            if self.login_state == 'in': app.local_id_doctor = self.localId
+            if self.login_state == 'in': app.user_idToken_doctor = self.idToken
+
     DoctorHomePage:
         id: DoctorHomePage
         name: "DoctorHomePage"
+
+    NewPatient:
+        id: NewPatient
+        name: "NewPatient"
+
+    FirebaseNewUser_Patient:
+        id: firebase_newuser_patient
+        name: "firebase_newuser_patient"
+        debug: True
+        remember_user: False
+        require_email_verification: False
+        web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
+        on_login_success:
+            if self.login_state == 'in': screen_manager.current = 'DoctorHomePage'
+            if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
+            if self.login_state == 'in': app.local_id_doctor = self.localId
+            if self.login_state == 'in': app.user_idToken_doctor = self.idToken
 
     Firebase_LoginScreen_Patient:
         id: firebase_login_screen_patient
         name: "firebase_login_screen_patient"
         debug: True
         remember_user: True
-        require_email_verification: True
+        require_email_verification: False
         web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
         on_login_success:
             if self.login_state == 'in': screen_manager.current = 'PatientHomePage'
