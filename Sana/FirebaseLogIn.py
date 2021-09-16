@@ -24,6 +24,7 @@ Builder.load_file("PatientHomePage.kv")
 Builder.load_file("DoctorHomePage.kv")
 Builder.load_file("NewUser_Doctor.kv")
 Builder.load_file("NewPatient.kv")
+Builder.load_file("SymptomTracker.kv")
 
 # Import the screens used to log the user in
 from WelcomePage import Welcome_Page
@@ -33,6 +34,7 @@ from PatientHomePage import PatientHomePage
 from DoctorHomePage import DoctorHomePage
 from NewUser_Doctor import NewUser_Doctor
 from NewPatient import NewPatient
+from SymptomTracker import SymptomTracker
 
 class Firebase_LoginScreen_Patient(Patient_LogIn, EventDispatcher):
 	web_api_key = StringProperty("")

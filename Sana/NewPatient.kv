@@ -87,3 +87,10 @@
             pos_hint: {"top": .25, "center_x": .5}
             on_release:
                 root.sign_up(Email_Patient.text, Password_Patient_SignUp.text)
+        MDRaisedButton:
+            text: "Back"
+            size_hint: .3, .04
+            pos_hint: {"top": .2, "center_x": .5}
+            on_release:
+                root.parent.current = "DoctorHomePage"
+                root.manager.transition.direction = "right"  

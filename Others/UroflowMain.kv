@@ -1,92 +1,90 @@
 ScreenManager:
+    id:screen_manager
     MainPage:
-    SymptomTracker:
-    BladderDiary:
-    FluidIntake:
-
-<MainPage>:
-    name: 'Main'
-    MDCard:
-        size_hint: None, None
-        size: 300, 450
-        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-        elevation: 10
-        padding: 25
-        spacing: 25
-        orientation: 'vertical'
-    
-        MDLabel:
-            id: WelcomeLabel
-            text: "WELCOME BACK!"
-            font_size: 40
-            halign: 'center'
-            size_hint_y: None
-            height: self.texture_size[1]
-
-        MDRoundFlatButton:
-            text: "Symptom Tracker"
-            font_size: 12
-            pos_hint: {"center_x": 0.5}
-            on_release:
-                root.parent.current = "SymptomTracker"
-                root.manager.transition.direction = "left"
-
-        MDRoundFlatButton:
-            text: "Bladder Diary"
-            font_size: 12
-            pos_hint: {"center_x": 0.5}          
-                    
-        MDRoundFlatButton:
-            text: "Fluid Intake"
-            font_size: 12
-            pos_hint: {"center_x": 0.5} 
+        id: MainPage
+        name: 'Main'
+        MDCard:
+            size_hint: None, None
+            size: 300, 450
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            elevation: 10
+            padding: 25
+            spacing: 25
+            orientation: 'vertical'
         
-        MDFloatingActionButton:
-            text: "Quick Pee!"
-            icon: "water-plus"
-            elevation_normal: 12
-            pos_hint: {"center_x": 0.5} 
-            # md_bg_color: app.theme_cls.primary_light
+            MDLabel:
+                id: WelcomeLabel
+                text: "WELCOME BACK!"
+                font_size: 40
+                halign: 'center'
+                size_hint_y: None
+                height: self.texture_size[1]
 
-        Widget:
-            size_hint_y: None
-            height: 10
+            MDRoundFlatButton:
+                text: "Symptom Tracker"
+                font_size: 12
+                pos_hint: {"center_x": 0.5}
+                on_release:
+                    root.current = "SymptomTracker"
+                    # root.manager.transition.direction = "left"
+
+            MDRoundFlatButton:
+                text: "Bladder Diary"
+                font_size: 12
+                pos_hint: {"center_x": 0.5}          
+                        
+            MDRoundFlatButton:
+                text: "Fluid Intake"
+                font_size: 12
+                pos_hint: {"center_x": 0.5} 
+            
+            MDFloatingActionButton:
+                text: "Quick Pee!"
+                icon: "water-plus"
+                elevation_normal: 12
+                pos_hint: {"center_x": 0.5} 
+                # md_bg_color: app.theme_cls.primary_light
+
+            Widget:
+                size_hint_y: None
+                height: 10
 
 
-<SymptomTracker>:
-    name: 'SymptomTracker'
-    FloatLayout:
-        MDLabel:
-            id: Symptom_Tracker
-            text: "How are your symptoms!"
-            font_size: 40
-            halign: 'center'
-            size_hint_y: None
-            pos_hint: {"top": .9, "center_x": .5}
-            height: self.texture_size[1]  
+    SymptomTracker:
+        id:SymptomTracker
+        name: 'SymptomTracker'
+        FloatLayout:
+            MDLabel:
+                id: Symptom_T
+                text: "How are your symptoms!"
+                font_size: 40
+                halign: 'center'
+                size_hint_y: None
+                pos_hint: {"top": .9, "center_x": .5}
+                height: self.texture_size[1]  
 
-        MDRoundFlatButton:
-            text: "Open Date Picker!"
-            font_size: 25
-            size_hint: .5, .06
-            pos_hint: {"top":0.7, "center_x": 0.5}
-            on_release: app.show_date_picker()
+            MDRoundFlatButton:
+                text: "Open Date Picker!"
+                font_size: 25
+                size_hint: .5, .06
+                pos_hint: {"top":0.7, "center_x": 0.5}
+                on_release: app.show_date_picker()
 
-        MDLabel:
-            id: date_label
-            text: "Some Stuff!"
-            pos_hint: {"top":1.0, "center_x": 0.95}
+            MDLabel:
+                id: date_label
+                text: "Some Stuff!"
+                pos_hint: {"top":1.0, "center_x": 0.95}
 
-        MDRoundFlatButton:
-            text: "Back"
-            font_size: 25
-            size_hint: .5, .06
-            pos_hint: {"top":0.5, "center_x": 0.5}
-            on_release:
-                root.parent.current = "Main"
-                root.manager.transition.direction = "right"
-        Widget:
-            size_hint_y: None
-            height: 10
+            MDRoundFlatButton:
+                text: "Back"
+                font_size: 25
+                size_hint: .5, .06
+                pos_hint: {"top":0.5, "center_x": 0.5}
+                on_release:
+                    root.parent.current = "Main"
+                    # root.manager.transition.direction = "right"
+            Widget:
+                size_hint_y: None
+                height: 10
 #<BladderDiary>:
 #<FluidIntake>:
