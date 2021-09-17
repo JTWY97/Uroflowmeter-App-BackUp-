@@ -37,6 +37,9 @@ ScreenManager:
                 text: "Fluid Intake"
                 font_size: 12
                 pos_hint: {"center_x": 0.5} 
+                on_release:
+                    root.current = "FluidIntake"
+                    # root.manager.transition.direction = "left"
             
             MDFloatingActionButton:
                 text: "Quick Pee!"
@@ -82,9 +85,78 @@ ScreenManager:
                 pos_hint: {"top":0.5, "center_x": 0.5}
                 on_release:
                     root.parent.current = "Main"
-                    # root.manager.transition.direction = "right"
+                    #root.manager.transition.direction = "right"
             Widget:
                 size_hint_y: None
                 height: 10
 #<BladderDiary>:
-#<FluidIntake>:
+    FluidIntake:
+        id:FluidIntake
+        name: 'FluidIntake'
+        FloatLayout:
+            MDLabel:
+                id: Symptom_T
+                text: "How much did you drink!"
+                font_size: 40
+                halign: 'center'
+                size_hint_y: None
+                pos_hint: {"top": .9, "center_x": .5}
+                height: self.texture_size[1]  
+
+#Small button
+            MDIconButton: 
+                icon: 'bottle-soda-classic-outline'
+                pos_hint: {"top":0.7, "center_x": 0.3}
+                theme_text_color: 'Custom'
+                text_color: app.theme_cls.primary_color
+
+                id: btn1
+                text: "50"
+                on_release:
+                    root.callback(self.text)
+
+#medium button
+            MDIconButton:
+                icon: 'bottle-soda-classic-outline'
+                pos_hint: {"top":0.7, "center_x": 0.5}
+                theme_text_color: 'Custom'
+                text_color: app.theme_cls.primary_color
+                user_font_size: "48sp"
+
+                id: btn2
+                text: "60"
+                on_release:
+                    root.callback(self.text)
+
+#Large button
+            MDIconButton:
+                icon: 'bottle-soda-classic-outline'
+                pos_hint: {"top":0.7, "center_x": 0.7}
+                theme_text_color: 'Custom'
+                text_color: app.theme_cls.primary_color
+                user_font_size: "64sp"
+
+                id: btn3
+                text: "70"
+                on_release:
+                    root.callback(self.text)
+
+            TextInput:
+                text: "Volume here!"
+                multiline: False
+                readonly: True
+                font_size: 43
+                size_hint: (1,0.1)
+                pos_hint: {"top":0.4, "center_x": 0.5}
+
+            MDRoundFlatButton:
+                text: "Back"
+                font_size: 25
+                size_hint: .5, .06
+                pos_hint: {"top":0.5, "center_x": 0.5}
+                on_release:
+                    root.parent.current = "Main"
+                    # root.manager.transition.direction = "right"
+            Widget:
+                size_hint_y: None
+                height: 10
