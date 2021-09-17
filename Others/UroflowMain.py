@@ -4,7 +4,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivymd.uix.picker import MDDatePicker
 
 class MainPage(Screen):
-    pass
+   pass
 
 class SymptomTracker(Screen):
     pass
@@ -13,7 +13,7 @@ class BladderDiary(Screen):
     pass
 
 class FluidIntake(Screen):
-    pass
+	pass
 
 #class MainApp(MDApp):
 class HomePagePatient(MDApp):
@@ -23,16 +23,22 @@ class HomePagePatient(MDApp):
 		return Builder.load_file("UroflowMain.kv")
 
 
-    #Click OK
-	def on_save(self, instance, value, date_range):
-		print(instance,value,date_range)
-		#self.app.ids.date_label.text = str(value)
+#Click OK
+	def on_save(self, instance, value, **kwargs):
+		super(self).on_save(self, instance, value)		
+		self.root.ids.date_label.text = str(value)
+		print(value)
 
 
-	#Click Cancel
-	def on_cancel(self, **kwargs, instance, value):
-		super(self).on_cancel(**kwargs, self, instance)
+#Click Cancel
+	def on_cancel(self, instance, value, **kwargs):
+		super(self).on_cancel(self, instance, **kwargs)
 		self.root.ids.date_label.text = "You Clicked Cancel"
+
+	#def get_date(self, date):
+	#'''
+	#:type date: <class 'datetime.date'>
+	#'''
 
 	def show_date_picker(self):
 		date_dialog = MDDatePicker()
