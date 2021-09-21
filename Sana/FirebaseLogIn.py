@@ -19,7 +19,7 @@ from json import dumps
 import os.path
 folder = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-from Database.FirebaseTest import doctorSignUp 
+from Database.FirebaseTest import doctorSignUp, patientSignUp
 
 Builder.load_file("Patient_LogIn.kv")
 Builder.load_file("Doctor_LogIn.kv")
@@ -337,7 +337,7 @@ class FirebaseNewUser_Patient(NewPatient, EventDispatcher):
 
     debug = False
 
-    def sign_up(self, email, password):
+    def sign_up(self, email, password, pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend):
 
         if self.debug:
             print("Attempting to create a new account: ", email, password)
@@ -349,6 +349,8 @@ class FirebaseNewUser_Patient(NewPatient, EventDispatcher):
                    on_success=self.successful_sign_up,
                    on_failure=self.sign_up_failure,
                    on_error=self.sign_up_error, ca_file=certifi.where())
+
+        patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend)
 
     def successful_sign_up(self, request, result):
         if self.debug:
@@ -377,3 +379,4 @@ class FirebaseNewUser_Patient(NewPatient, EventDispatcher):
     def sign_up_error(self, *args):
         if self.debug:
             print("Sign up Error: ", args)
+    

@@ -25,6 +25,11 @@ def doctorSignUp(firstname, lastname, specialization, hospital, phonenumber):
         doctorName = "Dr " + lastname
         db.child("doctorUsers").child(doctorName).set(data) 
 
+def patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend):
+        data = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend}
+        patientName = pfirstname + " " + plastname
+        db.child("patientUsers").child(patientName).set(data) 
+
 # #db.child("doctorUsers").child("doctorID").child("basicinfo")
 # data = {"basicinfo": "MoreFields", "email": "Random@email.com", "password": "sensitive"}
 # db.child("doctorUsers").child("Doctor77").set(data) 
