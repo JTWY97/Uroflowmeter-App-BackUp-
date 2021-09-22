@@ -2,6 +2,7 @@ from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivymd.uix.picker import MDDatePicker
+import numpy as np
 
 class MainPage(Screen):
    pass
@@ -46,5 +47,37 @@ class HomePagePatient(MDApp):
 		date_dialog.open()
 
 
+
+	volume = []
+	def callback(self,button):
+		if button == 'button1':
+			value = 70
+			self.volume.append(value)
+			self.showvol()
+			return self.volume
+
+		elif button == 'button2':
+			value = 90
+			self.volume.append(value)
+			self.showvol()
+			return self.volume
+
+		elif button == 'button3':
+			value = 100
+			self.volume.append(value)
+			self.showvol()
+			return self.volume
+
+		elif button == 'button4':
+			self.volume = self.volume[:-1]
+			self.showvol()
+			return self.volume
+
+	
+	def showvol(self):
+		print(self.volume)
+		meanvol = np.sum(self.volume)
+		self.root.ids.volumeop.text = str(int(meanvol))
+ 
 #MainApp().run()
 HomePagePatient().run()

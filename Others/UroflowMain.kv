@@ -111,9 +111,9 @@ ScreenManager:
                 text_color: app.theme_cls.primary_color
 
                 id: btn1
-                text: "50"
+                #text: 50
                 on_release:
-                    root.callback(self.text)
+                    app.callback(button = 'button1')
 
 #medium button
             MDIconButton:
@@ -124,9 +124,9 @@ ScreenManager:
                 user_font_size: "48sp"
 
                 id: btn2
-                text: "60"
+                #text: 60
                 on_release:
-                    root.callback(self.text)
+                    app.callback(button = 'button2')
 
 #Large button
             MDIconButton:
@@ -137,12 +137,25 @@ ScreenManager:
                 user_font_size: "64sp"
 
                 id: btn3
-                text: "70"
+                #text: 70
                 on_release:
-                    root.callback(self.text)
+                    app.callback(button = 'button3')
+
+#Delete Last Log
+            MDRoundFlatButton:
+                text: "Delete last entry"
+                font_size: 25
+                size_hint: .5, .06
+                pos_hint: {"top":0.6, "center_x": 0.5}
+
+                id: remove
+                #text: 70
+                on_release:
+                    app.callback(button = 'button4')
 
             TextInput:
                 text: "Volume here!"
+                id: volumeop
                 multiline: False
                 readonly: True
                 font_size: 43
