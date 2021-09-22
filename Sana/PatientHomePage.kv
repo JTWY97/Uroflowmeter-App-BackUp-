@@ -31,6 +31,8 @@
             font_size: 25
             size_hint: .4, .06
             pos_hint: {"top":0.5, "center_x": 0.5}
+            on_release:
+                root.parent.current = "FluidIntake"
             
         MDFloatingActionButton:
             id: QuickPee
