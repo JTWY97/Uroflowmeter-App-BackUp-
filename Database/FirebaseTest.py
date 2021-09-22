@@ -29,6 +29,8 @@ def patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, tr
         data = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend}
         patientName = pfirstname + " " + plastname
         db.child("patientUsers").child(patientName).set(data) 
+def volume(totalvol):
+        db.child("patientUsers").child(patientName).set(totalvol) 
 
 # #db.child("doctorUsers").child("doctorID").child("basicinfo")
 # data = {"basicinfo": "MoreFields", "email": "Random@email.com", "password": "sensitive"}

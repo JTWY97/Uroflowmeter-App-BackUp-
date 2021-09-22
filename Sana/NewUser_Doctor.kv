@@ -1,4 +1,4 @@
-<NewUser_Doctor>:
+<NewDoctor_SignUp>:
     FloatLayout:
         MDLabel:
             id: WelcomeLabel
@@ -64,4 +64,12 @@
             size_hint: .3, .06
             pos_hint: {"top": .1, "center_x": .5}
             on_release:
-                root.sign_up(Email_Doctor.text, Password_Doctor_SignUp.text, FirstName_Doctor.text, LastName_Doctor.text, Specialization.text, Hospital.text,  PhoneNumber_Doctor.text )
+                root.sign_up(Email_Doctor.text, Password_Doctor_SignUp.text, FirstName_Doctor.text, LastName_Doctor.text, Specialization.text, Hospital.text,  PhoneNumber_Doctor.text)
+
+        MDRaisedButton:
+            text: "Back"
+            size_hint: .2, .04
+            pos_hint: {"top": .0, "center_x": .5}
+            on_release:
+                root.parent.current = "Doctor_LogIn"
+                root.manager.transition.direction = "right"  

@@ -35,11 +35,6 @@ class HomePagePatient(MDApp):
 		super(self).on_cancel(self, instance, **kwargs)
 		self.root.ids.date_label.text = "You Clicked Cancel"
 
-	#def get_date(self, date):
-	#'''
-	#:type date: <class 'datetime.date'>
-	#'''
-
 	def show_date_picker(self):
 		date_dialog = MDDatePicker()
 		date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
