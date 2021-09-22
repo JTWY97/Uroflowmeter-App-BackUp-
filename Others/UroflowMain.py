@@ -4,6 +4,22 @@ from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivymd.uix.picker import MDDatePicker
 import numpy as np
 
+#Connect to firebase 
+import pyrebase
+import json
+  
+config = {
+  "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
+  "authDomain": "bg4102app.firebaseapp.com",
+  "databaseURL": "https://bg4102app-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  "storageBucket": "bg4102app.appspot.com",
+  ##"serviceAccount": "path/to/serviceAccountCredentials.json"
+}
+
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+
+
 class MainPage(Screen):
    pass
 
@@ -78,6 +94,9 @@ class HomePagePatient(MDApp):
 		print(self.volume)
 		meanvol = np.sum(self.volume)
 		self.root.ids.volumeop.text = str(int(meanvol))
- 
+ 		
+		data = {"total fluid intake": str(int(meanvol))}
+		db.child("patientUsers").child("jane doe").update(data) #to update to a dynamic variable
+
 #MainApp().run()
 HomePagePatient().run()
