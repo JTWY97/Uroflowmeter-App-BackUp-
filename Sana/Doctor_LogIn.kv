@@ -1,6 +1,6 @@
 <Doctor_LogIn>:
     FloatLayout:
-        MDLabel:
+        MDLabel: 
             id: WelcomeLabel_Doctor
             text: "Welcome!"
             font_size: 40
@@ -41,7 +41,7 @@
             size_hint: .4, .06
             pos_hint: {"top":0.5, "center_x": 0.5}
             on_release:
-                root.parent.current = "firebase_newuser_doctor"
+                root.parent.current = "NewDoctor_SignUp"
 
         MDRoundFlatButton:
             text: "Back"

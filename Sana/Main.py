@@ -1,4 +1,5 @@
 from kivymd.app import MDApp
+from kivy.lang import Builder
 
 class MainApp(MDApp):
     user_idToken_doctor = ""
@@ -6,12 +7,21 @@ class MainApp(MDApp):
     user_idToken_patient = ""
     local_id_patient = ""
 
+    Builder.load_file("Patient_LogIn.kv")
+    Builder.load_file("Doctor_LogIn.kv")
+    Builder.load_file("WelcomePage.kv")
+    Builder.load_file("PatientHomePage.kv")
+    Builder.load_file("DoctorHomePage.kv")
+    Builder.load_file("NewUser_Doctor.kv")
+    Builder.load_file("NewUser_Patient.kv")
+    Builder.load_file("SymptomTracker.kv")
+
     def sign_out_doctor(self):
-        self.root.ids.firebase_login_screen_doctor.log_out()
-        self.root.current = 'firebase_login_screen_doctor'
+        self.root.ids.Doctor_LogIn.log_out()
+        self.root.current = 'Doctor_LogIn'
 
     def sign_out_patient(self):
-        self.root.ids.firebase_login_screen_patient.log_out()
-        self.root.current = 'firebase_login_screen_patient'
+        self.root.ids.Patient_LogIn.log_out()
+        self.root.current = 'Patient_LogIn'
 		
 MainApp().run()

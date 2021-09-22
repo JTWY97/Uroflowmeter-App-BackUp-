@@ -1,8 +1,11 @@
-#:import FirebaseLoginScreen_Doctor FirebaseLogIn.Firebase_LoginScreen_Doctor
-#:import FirebaseLoginScreen_Patient FirebaseLogIn.Firebase_LoginScreen_Patient
-#:import FirebaseNewUser_Doctor FirebaseLogIn.FirebaseNewUser_Doctor
+#:import Doctor_LogIn Doctor_LogIn.Doctor_LogIn
+#:import Patient_LogIn Patient_LogIn.Patient_LogIn
+#:import NewDoctor_SignUp NewUser_Doctor.NewDoctor_SignUp
+#:import NewPatient_SignUp NewUser_Patient.NewPatient_SignUp
 #:import Welcome_Page WelcomePage.Welcome_Page
-
+#:import DoctorHomePage DoctorHomePage.DoctorHomePage
+#:import PatientHomePage PatientHomePage.PatientHomePage
+#:import SymptomTracker SymptomTracker.SymptomTracker
 
 ScreenManager:
     id: screen_manager
@@ -10,9 +13,9 @@ ScreenManager:
         id: Welcome_Page
         name: "Welcome_Page"
 
-    Firebase_LoginScreen_Doctor:
-        id: firebase_login_screen_doctor
-        name: "firebase_login_screen_doctor"
+    Doctor_LogIn:
+        id: Doctor_LogIn
+        name: "Doctor_LogIn"
         debug: True
         remember_user: True
         require_email_verification: False
@@ -23,13 +26,9 @@ ScreenManager:
             if self.login_state == 'in': app.local_id_doctor = self.localId
             if self.login_state == 'in': app.user_idToken_doctor = self.idToken
 
-    NewUser_Doctor:
-        id: NewUser_Doctor
-        name: "NewUser_Doctor"
-
-    FirebaseNewUser_Doctor:
-        id: firebase_newuser_doctor
-        name: "firebase_newuser_doctor"
+    NewDoctor_SignUp:
+        id: NewDoctor_SignUp
+        name: "NewDoctor_SignUp"
         debug: True
         remember_user: True
         require_email_verification: False
@@ -44,13 +43,9 @@ ScreenManager:
         id: DoctorHomePage
         name: "DoctorHomePage"
 
-    NewPatient:
-        id: NewPatient
-        name: "NewPatient"
-
-    FirebaseNewUser_Patient:
-        id: firebase_newuser_patient
-        name: "firebase_newuser_patient"
+    NewPatient_SignUp:
+        id: NewPatient_SignUp
+        name: "NewPatient_SignUp"
         debug: True
         remember_user: False
         require_email_verification: False
@@ -61,9 +56,9 @@ ScreenManager:
             if self.login_state == 'in': app.local_id_doctor = self.localId
             if self.login_state == 'in': app.user_idToken_doctor = self.idToken
 
-    Firebase_LoginScreen_Patient:
-        id: firebase_login_screen_patient
-        name: "firebase_login_screen_patient"
+    Patient_LogIn:
+        id: Patient_LogIn
+        name: "Patient_LogIn"
         debug: True
         remember_user: True
         require_email_verification: False
@@ -81,17 +76,3 @@ ScreenManager:
     SymptomTracker:
         id: SymptomTracker
         name: "SymptomTracker"
-
-
-
-
-           
-
-
-
-
-
-
-
-
-
