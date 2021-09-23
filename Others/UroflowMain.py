@@ -41,15 +41,16 @@ class HomePagePatient(MDApp):
 
 
 #Click OK
-	def on_save(self, instance, value, **kwargs):
-		super(self).on_save(self, instance, value)		
-		self.root.ids.date_label.text = str(value)
-		print(value)
+	date = []
+	def on_save(self, instance, value, date_range):
+		self.date.append(str(value))
+		self.root.ids.date_label.text = str(self.date[-1])
+
+	print(date)
 
 
 #Click Cancel
-	def on_cancel(self, instance, value, **kwargs):
-		super(self).on_cancel(self, instance, **kwargs)
+	def on_cancel(self, instance, value):
 		self.root.ids.date_label.text = "You Clicked Cancel"
 
 	def show_date_picker(self):
@@ -89,7 +90,7 @@ class HomePagePatient(MDApp):
 		print(self.volume)
 		meanvol = np.sum(self.volume)
 		self.root.ids.volumeop.text = str(int(meanvol))
- 		
+		
 		data = {"total fluid intake": str(int(meanvol))}
 		db.child("patientUsers").child("jane doe").update(data) #to update to a dynamic variable
 
