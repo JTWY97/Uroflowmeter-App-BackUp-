@@ -1,0 +1,26 @@
+<BladderDiary>:
+    GridLayout:
+        cols: 2 
+        rows: 2
+        MDRoundFlatButton:
+            text: 'Total Volume Voided'
+            font_size: 30
+            width: 100
+            on_release:
+                root.showtotalvol()
+        TextInput:
+            id: TotalVolume
+            text: ''
+            multiline: False
+            font_size: 30
+            width: 100
+        MDLabel:
+            text: 'Number of Voids'
+            size_hint_x: None
+            width: 100
+        TextInput:
+            id: Frequency
+            text: ''
+            multiline: False
+            readonly: True
+            font_size: 30
