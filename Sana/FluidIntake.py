@@ -44,7 +44,7 @@ class FluidIntake(Screen, EventDispatcher):
 	def showvol(self):
 		print(self.volume)
 		meanvol = np.sum(self.volume)
-		self.root.ids.volumeop.text = str(int(meanvol))
+		self.parent.ids.volumeop.text = str(int(meanvol))
  		
 		data = {"total fluid intake": str(int(meanvol))}
 		db.child("patientUsers").child("jane doe").update(data)
