@@ -7,8 +7,7 @@ config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
   "authDomain": "bg4102app.firebaseapp.com",
   "databaseURL": "https://bg4102app-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  "storageBucket": "bg4102app.appspot.com",
-  ##"serviceAccount": "path/to/serviceAccountCredentials.json"
+  "storageBucket": "bg4102app.appspot.com"
 }
 
 firebase = pyrebase.initialize_app(config)
