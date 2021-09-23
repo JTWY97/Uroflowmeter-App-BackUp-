@@ -8,7 +8,6 @@ config = {
   "authDomain": "bg4102app.firebaseapp.com",
   "databaseURL": "https://bg4102app-default-rtdb.asia-southeast1.firebasedatabase.app/",
   "storageBucket": "bg4102app.appspot.com",
-  ##"serviceAccount": "path/to/serviceAccountCredentials.json"
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -18,19 +17,19 @@ class FluidIntake(Screen, EventDispatcher):
 	volume = []
 	def callback(self, button):
 		if button == 'button1':
-			value = 70
+			value = 250
 			self.volume.append(value)
 			self.showvol()
 			return self.volume
 
 		elif button == 'button2':
-			value = 90
+			value = 500
 			self.volume.append(value)
 			self.showvol()
 			return self.volume
 
 		elif button == 'button3':
-			value = 100
+			value = 1000
 			self.volume.append(value)
 			self.showvol()
 			return self.volume
@@ -42,9 +41,8 @@ class FluidIntake(Screen, EventDispatcher):
 
 	
 	def showvol(self):
-		print(self.volume)
 		meanvol = np.sum(self.volume)
-		self.root.ids.volumeop.text = str(int(meanvol))
+		self.ids.volumeop.text = str(int(meanvol))
  		
 		data = {"total fluid intake": str(int(meanvol))}
 		db.child("patientUsers").child("jane doe").update(data)
