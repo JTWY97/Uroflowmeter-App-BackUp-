@@ -6,6 +6,7 @@ class MainApp(MDApp):
     local_id_doctor = ""
     user_idToken_patient = ""
     local_id_patient = ""
+    useriD = ""
 
     Builder.load_file("Patient_LogIn.kv")
     Builder.load_file("Doctor_LogIn.kv")
