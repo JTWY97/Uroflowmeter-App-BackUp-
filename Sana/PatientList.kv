@@ -1,0 +1,17 @@
+<PatientList>:
+    FloatLayout:
+        MDLabel:
+            id: PL
+            text: "Welcome!"
+            font_size: 40
+            halign: 'center'
+            size_hint_y: None
+            pos_hint: {"top": .9, "center_x": .5}
+
+        MDRoundFlatButton:
+            text: "New Patient"
+            font_size: 25
+            size_hint: .4, .06
+            pos_hint: {"top":0.6, "center_x": 0.5} 
+            on_release:
+                root.build() 

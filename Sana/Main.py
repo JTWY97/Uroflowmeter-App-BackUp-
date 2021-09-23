@@ -18,6 +18,7 @@ class MainApp(MDApp):
     Builder.load_file("SymptomTracker.kv")
     Builder.load_file("FluidIntake.kv")
     Builder.load_file("BladderDiary.kv")
+    Builder.load_file("PatientList.kv")
 
     def sign_out_doctor(self):
         self.root.ids.Doctor_LogIn.log_out()
@@ -26,5 +27,8 @@ class MainApp(MDApp):
     def sign_out_patient(self):
         self.root.ids.Patient_LogIn.log_out()
         self.root.current = 'Patient_LogIn'
+
+    def launch_patientlist(self):
+        self.root.ids.PatientList.build()
 		
 MainApp().run()
