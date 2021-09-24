@@ -9,14 +9,16 @@
             pos_hint: {"top": .9, "center_x": .5}
 
         MDRoundFlatButton:
-            text: "Load Last Urination"
+            text: "Load Urine Data"
             font_size: 25
             size_hint: .5, .06
             pos_hint: {"top":0.8, "center_x": 0.5}
             on_release:
                 root.ShowLastVol()
+                root.ShowTotalVol()
                 root.ShowVoidTime()
                 root.ShowVoidType()
+                # root.CountVoidType()
 
         MDLabel:
             id: LastVoid_Label
@@ -34,10 +36,25 @@
             pos_hint: {"top":0.65, "center_x": 0.5}
 
         MDLabel:
+            id: TotalVoid_Label
+            size_hint: .7, 0.06
+            text: "Total Volume Urinated:"
+            pos_hint: {"top":0.6, "center_x": 0.5}
+
+        TextInput:
+            text: ""
+            id: TotalVoid
+            multiline: False
+            readonly: True
+            font_size: 30
+            size_hint: .7, 0.06
+            pos_hint: {"top":0.55, "center_x": 0.5}
+
+        MDLabel:
             id: VoidTime_Label
             text: "Time of your last urination:"
             size_hint: .7, 0.06
-            pos_hint: {"top":0.6, "center_x": 0.5}
+            pos_hint: {"top":0.5, "center_x": 0.5}
 
         TextInput:
             text: ""
@@ -46,13 +63,13 @@
             readonly: True
             font_size: 30
             size_hint: .7, 0.06
-            pos_hint: {"top":0.55, "center_x": 0.5}
+            pos_hint: {"top":0.45, "center_x": 0.5}
 
         MDLabel:
             id: VoidType_Label
             text: "Your last Urination Type:"
             size_hint: .7, 0.06
-            pos_hint: {"top":0.5, "center_x": 0.5}
+            pos_hint: {"top":0.4, "center_x": 0.5}
 
         TextInput:
             text: ""
@@ -61,13 +78,28 @@
             readonly: True
             font_size: 30
             size_hint: .7, 0.06
-            pos_hint: {"top":0.45, "center_x": 0.5}
+            pos_hint: {"top":0.35, "center_x": 0.5}
+
+        # MDLabel:
+        #     id: Nocturia_Label
+        #     text: "Number of Nocturnal Polyuria Episodes:"
+        #     size_hint: .7, 0.06
+        #     pos_hint: {"top":0.3, "center_x": 0.5}
+
+        # TextInput:
+        #     id: Nocturia
+        #     text: ""
+        #     multiline: False
+        #     readonly: True
+        #     font_size: 30
+        #     size_hint: .7, 0.06
+        #     pos_hint: {"top":0.25, "center_x": 0.5}
 
         MDRoundFlatButton:
             text: "Back"
             font_size: 25
             size_hint: .5, .06
-            pos_hint: {"top":0.35, "center_x": 0.5}
+            pos_hint: {"top":0.25, "center_x": 0.5}
             on_release:
                 root.parent.current = "PatientHomePage"
                 root.manager.transition.direction = "right"
