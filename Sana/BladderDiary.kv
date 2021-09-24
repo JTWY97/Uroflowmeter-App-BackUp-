@@ -1,26 +1,73 @@
 <BladderDiary>:
-    GridLayout:
-        cols: 2 
-        rows: 2
-        MDRoundFlatButton:
-            text: 'Total Volume Voided'
-            font_size: 30
-            width: 100
-            on_release:
-                root.showtotalvol()
-        TextInput:
-            id: TotalVolume
-            text: ''
-            multiline: False
-            font_size: 30
-            width: 100
+    FloatLayout:
         MDLabel:
-            text: 'Number of Voids'
-            size_hint_x: None
-            width: 100
+            id: BladderDiaryLabel
+            text: "Welcome to your Bladder Diary!"
+            font_size: 40
+            halign: 'center'
+            size_hint_y: None
+            pos_hint: {"top": .9, "center_x": .5}
+
+        MDRoundFlatButton:
+            text: "Load Last Urination"
+            font_size: 25
+            size_hint: .5, .06
+            pos_hint: {"top":0.8, "center_x": 0.5}
+            on_release:
+                root.ShowLastVol()
+                root.ShowVoidTime()
+                root.ShowVoidType()
+
+        MDLabel:
+            id: LastVoid_Label
+            size_hint: .7, 0.06
+            text: "Volume of your last urination:"
+            pos_hint: {"top":0.7, "center_x": 0.5}
+
         TextInput:
-            id: Frequency
-            text: ''
+            text: ""
+            id: LastVoid
             multiline: False
             readonly: True
             font_size: 30
+            size_hint: .7, 0.06
+            pos_hint: {"top":0.65, "center_x": 0.5}
+
+        MDLabel:
+            id: VoidTime_Label
+            text: "Time of your last urination:"
+            size_hint: .7, 0.06
+            pos_hint: {"top":0.6, "center_x": 0.5}
+
+        TextInput:
+            text: ""
+            id: VoidTime
+            multiline: False
+            readonly: True
+            font_size: 30
+            size_hint: .7, 0.06
+            pos_hint: {"top":0.55, "center_x": 0.5}
+
+        MDLabel:
+            id: VoidType_Label
+            text: "Your last Urination Type:"
+            size_hint: .7, 0.06
+            pos_hint: {"top":0.5, "center_x": 0.5}
+
+        TextInput:
+            text: ""
+            id: VoidType
+            multiline: False
+            readonly: True
+            font_size: 30
+            size_hint: .7, 0.06
+            pos_hint: {"top":0.45, "center_x": 0.5}
+
+        MDRoundFlatButton:
+            text: "Back"
+            font_size: 25
+            size_hint: .5, .06
+            pos_hint: {"top":0.35, "center_x": 0.5}
+            on_release:
+                root.parent.current = "PatientHomePage"
+                root.manager.transition.direction = "right"

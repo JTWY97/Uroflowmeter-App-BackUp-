@@ -30,5 +30,6 @@ class MainApp(MDApp):
 
     def launch_patientlist(self):
         self.root.ids.PatientList.build()
-		
+        self.root.current = 'PatientList'
+
 MainApp().run()
