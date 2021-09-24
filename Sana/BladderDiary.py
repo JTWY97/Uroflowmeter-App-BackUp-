@@ -17,7 +17,7 @@ db = firebase.database()
 class BladderDiary(Screen, EventDispatcher):
 
     def ShowLastVol(self):
-        snapshot = db.child("patientData").child("patient2").child("day 1").child("volume").get()
+        snapshot = db.child("patientData").child("patient1").child("day 1").child("volume").get()
         snapshotvalue = snapshot.val()
         arr = snapshotvalue.split(',')
         an_array = np.array(arr).astype(np.float)
@@ -25,7 +25,7 @@ class BladderDiary(Screen, EventDispatcher):
         self.ids.LastVoid.text = str(int(volume)) + "ml"
 
     def ShowTotalVol(self):
-        snapshot = db.child("patientData").child("patient2").child("day 1").child("volume").get()
+        snapshot = db.child("patientData").child("patient1").child("day 1").child("volume").get()
         snapshotvalue = snapshot.val()
         arr = snapshotvalue.split(',')
         an_array = np.array(arr).astype(np.float)
@@ -33,7 +33,7 @@ class BladderDiary(Screen, EventDispatcher):
         self.ids.TotalVoid.text = str(int(volume)) + "ml"
 
     def ShowVoidTime(self):
-      VoidTimes = db.child("patientData").child("patient2").child("day 1").child("time").get()
+      VoidTimes = db.child("patientData").child("patient1").child("day 1").child("time").get()
       VoidTimesValues = VoidTimes.val()
       VoidTimesArr = VoidTimesValues.split(',')
       VoidTimeArray = np.array(VoidTimesArr).astype(np.float)
@@ -46,29 +46,15 @@ class BladderDiary(Screen, EventDispatcher):
       self.ids.VoidTime.text = str(int(out[3])) + str(int(out[2])) + ":" + str(int(out[1]))+ str(int(out[0]))
 
     def GetVoidType(self, VoidEpisodes):
-      VoidTypes = []
-      for Episode in VoidEpisodes:
-          VoidTypes.append(Episode)
-      return VoidTypes
+        VoidTypes = []
+        for Episode in VoidEpisodes:
+            VoidTypes.append(Episode)
+        return VoidTypes
 
     def ShowVoidType(self):
-      FireBase_VoidType = db.child("patientData").child("patient2").child("day 1").child("episode").get()
-      FireBase_VoidType = FireBase_VoidType.val()
-      FireBase_VoidType = FireBase_VoidType.split(',')
-      VoidTypeList = self.GetVoidType(FireBase_VoidType)
-      LatestVoidEpisodeType = VoidTypeList[-1]
-      self.ids.VoidType.text = LatestVoidEpisodeType
-
-    # def CountVoidType(self):
-    #   FireBase_VoidType = db.child("patientData").child("patient1").child("day 1").child("episode").get()
-    #   FireBase_VoidType = FireBase_VoidType.val()
-    #   FireBase_VoidType = FireBase_VoidType.split(',')
-    #   VoidTypeList = self.GetVoidType(FireBase_VoidType)
-    #   k = []
-    #   for Episode in VoidTypeList:
-    #     if Episode == "Nocturia Episode":
-    #       k.append(1)
-    #     # return k
-    #   a = np.sum(k)
-    #   print(a)
-    #   self.ids.Nocturia.text = str(int(a))
+        FireBase_VoidType = db.child("patientData").child("patient1").child("day 1").child("episode").get()
+        FireBase_VoidType = FireBase_VoidType.val()
+        FireBase_VoidType = FireBase_VoidType.split(',')
+        VoidTypeList = self.GetVoidType(FireBase_VoidType)
+        LatestVoidEpisodeType = VoidTypeList[-1]
+        self.ids.VoidType.text = LatestVoidEpisodeType
