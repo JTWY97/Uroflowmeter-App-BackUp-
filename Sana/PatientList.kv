@@ -1,17 +1,49 @@
-<PatientList>:
-    FloatLayout:
-        MDLabel:
-            id: PL
-            text: "Welcome!"
-            font_size: 40
-            halign: 'center'
-            size_hint_y: None
-            pos_hint: {"top": .9, "center_x": .5}
+<Patient>:
+    font_size: 15
+    height: 30
+    text_size: self.size
+    valign: 'middle'
 
-        MDRoundFlatButton:
-            text: "New Patient"
-            font_size: 25
-            size_hint: .4, .06
-            pos_hint: {"top":0.6, "center_x": 0.5} 
-            on_release:
-                root.build() 
+<PatientList>:
+    BoxLayout:
+        orientation: "vertical"
+        padding : 15, 15
+
+        BoxLayout:
+            orientation: "vertical"
+            padding : 5, 5
+            size_hint: .6, None
+            pos_hint: {'x': .18,}
+
+
+            BoxLayout:
+                orientation: "horizontal"
+                padding : 5, 5
+                spacing: 10, 10
+                size: 800, 40
+                size_hint: 1, None
+
+                MDRoundFlatButton:
+                    text: "Show"
+                    size_hint_x: .05
+                    spacing_x: 30
+                    on_press:
+                        root.BuildButton()
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 1
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: .5, 1
+                padding : 0, 15
+                spacing: 10, 10
+                size: 500, 30
+                GridLayout:
+                    id: PatientName
+                    cols: 1
+                    padding : 5, 0
+                    spacing: 10, 0
+                    size_hint: 1, 1
+                    pos: self.pos
+                    size: self.size

@@ -28,8 +28,4 @@ class MainApp(MDApp):
         self.root.ids.Patient_LogIn.log_out()
         self.root.current = 'Patient_LogIn'
 
-    def launch_patientlist(self):
-        self.root.ids.PatientList.build()
-        self.root.current = 'PatientList'
-
 MainApp().run()
