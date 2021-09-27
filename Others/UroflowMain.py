@@ -2,6 +2,7 @@ from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivymd.uix.picker import MDDatePicker
+from kivy.uix.button import Button 
 import numpy as np
 
 #Connect to firebase 
@@ -57,6 +58,18 @@ class HomePagePatient(MDApp):
 		date_dialog = MDDatePicker()
 		date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
 		date_dialog.open()
+
+	symptom = []
+	def symptomrecall(self, button):
+		if button == 'buttona':
+			value = 2
+			self.symptom.append()
+			self.showsymp()
+			return self.symptom
+	def showsymp(self):
+		print(self.symptom)
+		#totalsymp = 
+		#self.root.ids.volumeop.text = str()
 
 
 
