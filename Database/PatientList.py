@@ -73,15 +73,7 @@ for x in all_users.each():
     print(x.key())
     patientnames.append(x.key())
 
-
-
-
 od1 = json.dumps((all_users.key())) #to convert ordereddict to json
 print(od1)
-    
-# for user in all_users.each():
-#     print(user.key())
-#     print(user.val())
-
 
 PatientList().run()
