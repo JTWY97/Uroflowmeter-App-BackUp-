@@ -1,10 +1,16 @@
-<Patient>:
+<DiaryEntry>:
     font_size: 15
     height: 30
     text_size: self.size
     valign: 'middle'
 
-<PatientList>:
+<DiarySummary>:
+    font_size: 15
+    height: 30
+    text_size: self.size
+    valign: 'middle'
+
+<DynamicBladderDiary>:
     BoxLayout:
         orientation: "vertical"
         padding : 15, 15
@@ -23,12 +29,21 @@
                 size: 800, 40
                 size_hint: 1, None
 
+                GridLayout:
+                    id: BladderSummary
+                    cols: 1
+                    padding : 5, 0
+                    spacing: 10, 0
+                    size_hint: 1, 1
+                    pos: self.pos
+                    size: self.size
+
                 MDRoundFlatButton:
-                    text: "Show"
+                    text: "Show Detailed Timeline"
                     size_hint_x: .05
                     spacing_x: 30
                     on_press:
-                        root.BuildButton()
+                        root.BuildTimeline()
 
         BoxLayout:
             orientation: "horizontal"
@@ -40,10 +55,11 @@
                 spacing: 10, 10
                 size: 500, 30
                 GridLayout:
-                    id: PatientName
+                    id: BladderDiary
                     cols: 1
                     padding : 5, 0
                     spacing: 10, 0
                     size_hint: 1, 1
                     pos: self.pos
                     size: self.size
+

@@ -7,8 +7,8 @@
 #:import PatientHomePage PatientHomePage.PatientHomePage
 #:import SymptomTracker SymptomTracker.SymptomTracker
 #:import FluidIntake FluidIntake.FluidIntake
-#:import BladderDiary BladderDiary.BladderDiary
 #:import PatientList PatientList.PatientList
+#:import DynamicBladderDiary DynamicBladderDiary.DynamicBladderDiary
 
 ScreenManager:
     id: screen_manager
@@ -83,11 +83,11 @@ ScreenManager:
     FluidIntake:
         id: FluidIntake
         name: "FluidIntake"
-    
-    BladderDiary:
-        id: BladderDiary
-        name: "BladderDiary"
-
+        
     PatientList:
         id: PatientList
         name: "PatientList"
+            
+    DynamicBladderDiary:
+        id: DynamicBladderDiary
+        name: "DynamicBladderDiary"
