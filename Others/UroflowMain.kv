@@ -76,16 +76,38 @@ ScreenManager:
             MDLabel:
                 id: date_label
                 text: "Some Stuff!"
-                pos_hint: {"top":1.0, "center_x": 0.95}
+                pos_hint: {"top":1.1, "center_x": 0.95}
+
+            #Small button
+            MDIconButton: 
+                id: "idBtn1"
+                text: "PeeIssue"
+                pos_hint: {"top":0.63, "center_x": 0.3}
+                theme_text_color: 'Custom'
+                text_color: app.theme_cls.primary_color
+                font_size: 140
+                on_release:
+                    app.callback(button = 'buttona')
 
             MDRoundFlatButton:
                 text: "Back"
                 font_size: 25
                 size_hint: .5, .06
-                pos_hint: {"top":0.5, "center_x": 0.5}
+                pos_hint: {"top":0.3, "center_x": 0.5}
                 on_release:
                     root.parent.current = "Main"
                     #root.manager.transition.direction = "right"
+
+        FloatLayout:
+            TextInput:
+                text: "Current Symptoms!"
+                id: volumeop
+                multiline: False
+                readonly: True
+                font_size: 43
+                size_hint: .7, 0.2
+                pos_hint: {"top":0.4, "center_x": 0.5}
+
             Widget:
                 size_hint_y: None
                 height: 10
