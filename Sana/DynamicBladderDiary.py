@@ -63,7 +63,7 @@ class DynamicBladderDiary(Screen):
         VoidTime = self.GetData_Time()
         VoidVolume = self.GetData_Volume()
 
-        for i in range(0,len(VoidType)):
+        for i in range(0,len(VoidTime)):
             if VoidType[-i] == "First Morning Episode":
                 Icon = IconLeftWidget(icon="BladderDiaryIcons/Morning.png")
             elif VoidType[-i] == "Normal Episode":
@@ -73,7 +73,7 @@ class DynamicBladderDiary(Screen):
             else:
                 Icon = IconLeftWidget(icon="human")
 
-            ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + VoidType[-i], tertiary_text = "Void Volume: " + VoidVolume[-i]+ "ml")
+            ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[-i]), secondary_text = "Void Type: " + VoidType[-i], tertiary_text = "Void Volume: " + VoidVolume[-i]+ "ml")
 
             ListComponents.add_widget(Icon)
             ScreenLayout.add_widget(ListComponents)
