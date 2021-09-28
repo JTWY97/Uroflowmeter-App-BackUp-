@@ -40,14 +40,21 @@
             hint_text: "Set Patient Email"
             font_size: 25
             size_hint: .7, .04
-            pos_hint: {"top":0.65, "center_x": 0.5}
+            pos_hint: {"top":0.45, "center_x": 0.5}
 
         MDTextFieldRound:
             id: Password_Patient_SignUp
             hint_text: "Set Patient Password"
             font_size: 25
             size_hint: .7, .04
-            pos_hint: {"top":0.6, "center_x": 0.5}
+            pos_hint: {"top":0.4, "center_x": 0.5}
+
+        MDTextFieldRound:
+            id: RaspBerryPi_ID
+            hint_text: "Set RaspberryPi ID"
+            font_size: 25
+            size_hint: .7, .04
+            pos_hint: {"top":0.35, "center_x": 0.5}
 
         MDLabel:
             id: Start
@@ -55,7 +62,7 @@
             font_size: 15
             halign: 'center'
             size_hint_y: None
-            pos_hint: {"top": .55, "center_x": .5}
+            pos_hint: {"top": .6, "center_x": .5}
             height: self.texture_size[1]  
             
         MDTextFieldRound: 
@@ -63,7 +70,7 @@
             hint_text: "Treatment Start Date (dd/mm/yyyy)"
             font_size: 25
             size_hint: .7, .04
-            pos_hint: {"top":0.45, "center_x": 0.5}
+            pos_hint: {"top":0.65, "center_x": 0.5}
 
         MDLabel:
             id: End
@@ -71,7 +78,7 @@
             font_size: 15
             halign: 'center'
             size_hint_y: None
-            pos_hint: {"top": .4, "center_x": .5}
+            pos_hint: {"top": .5, "center_x": .5}
             height: self.texture_size[1]  
 
         MDTextFieldRound: 
@@ -79,7 +86,7 @@
             hint_text: "Treatment End Date (dd/mm/yyyy)"
             font_size: 25
             size_hint: .7, .04
-            pos_hint: {"top":0.3, "center_x": 0.5}
+            pos_hint: {"top":0.55, "center_x": 0.5}
 
         MDRaisedButton:
             text: "Create Account"
@@ -95,3 +102,9 @@
             on_release:
                 root.parent.current = "DoctorHomePage"
                 root.manager.transition.direction = "right"  
+
+        MDIconButton: 
+            id: ButtonOne
+            icon: "LoginIcons/waterdroplet.png"
+            pos_hint: {"top":1, "center_x": 0.5}
+            user_font_size: "48sp"
