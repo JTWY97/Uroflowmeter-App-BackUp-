@@ -6,7 +6,8 @@ class MainApp(MDApp):
     local_id_doctor = ""
     user_idToken_patient = ""
     local_id_patient = ""
-    useriD = ""
+    UserID_Patient = ""
+    UserID_Doctor = ""
 
     Builder.load_file("Patient_LogIn.kv")
     Builder.load_file("Doctor_LogIn.kv")
@@ -18,7 +19,7 @@ class MainApp(MDApp):
     Builder.load_file("SymptomTracker.kv")
     Builder.load_file("FluidIntake.kv")
     Builder.load_file("PatientList.kv")
-    Builder.load_file("DynamicBladderDiary.kv")
+    Builder.load_file("BladderDiary.kv")
 
     def sign_out_doctor(self):
         self.root.ids.Doctor_LogIn.log_out()

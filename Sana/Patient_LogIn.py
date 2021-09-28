@@ -10,16 +10,26 @@ import os.path
 sys.path.append("/".join(x for x in __file__.split("/")[:-1]))
 folder = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-
-# KivyMD imports
+import pyrebase
 from kivymd.toast import toast
+
+config = {
+  "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
+  "authDomain": "bg4102app.firebaseapp.com",
+  "databaseURL": "https://bg4102app-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  "storageBucket": "bg4102app.appspot.com"
+}
+
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
 
 class Patient_LogIn(Screen, EventDispatcher):
     web_api_key = StringProperty("")
     refresh_token = ""
     localId = ""
     idToken = ""
-    
+    UserID = ""
+
     login_success = BooleanProperty(False)
     login_state = StringProperty("")
     email_exists = BooleanProperty(False)
@@ -38,6 +48,8 @@ class Patient_LogIn(Screen, EventDispatcher):
         self.refresh_token = ''
         self.ids.User_Patient.text = '' 
         self.ids.Password_Patient.text = ''
+        # Variables_Patient = "Variables_Patient.txt"
+        # open(Variables_Patient, "w").close()
 
     def on_web_api_key(self, *args):
         self.refresh_token_file = MDApp.get_running_app().user_data_dir + "/refresh_token.txt"
@@ -51,15 +63,24 @@ class Patient_LogIn(Screen, EventDispatcher):
     def sign_in_success(self, urlrequest, log_in_data):
         if self.debug:
             print("Successfully signed in a user: ", log_in_data)
-            
+        self.save_UserID(self.ids.User_Patient.text)
         self.refresh_token = log_in_data['refreshToken']
         self.localId = log_in_data['localId']
         self.idToken = log_in_data['idToken']
         self.save_refresh_token(self.refresh_token)
-        
+
         self.login_state = 'in'
         self.login_success = True
     
+    def save_UserID(self, email):
+        Variables_Patient = "Variables_Patient.txt"
+        ChildBranch = email[:-4]
+        FirebaseConnection = db.child("PatientLogInID").child(ChildBranch).get()
+        PatientID = FirebaseConnection.val()
+        self.UserID = FirebaseConnection.val()
+        with open(Variables_Patient, "w") as f:
+            f.write(PatientID)
+
     def sign_in(self, email, password):
         if self.debug:
             print("Attempting to sign user in: ", email, password)

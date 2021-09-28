@@ -14,6 +14,11 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 class FluidIntake(Screen, EventDispatcher):
+
+	Patient_Variables = "Variables_Patient.txt"
+	with open(Patient_Variables, "r") as f:
+		PatientID = f.read()
+
 	volume = []
 	def callback(self, button):
 		if button == 'button1':
@@ -46,6 +51,6 @@ class FluidIntake(Screen, EventDispatcher):
 		self.ids.volumeop.text = str(int(meanvol))
  		
 		data = {"total fluid intake": str(int(meanvol))}
-		db.child("patientUsers").child("jane doe").update(data)
+		db.child("patientUsers").child(self.PatientID).update(data)
 
         

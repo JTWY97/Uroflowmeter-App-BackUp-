@@ -36,7 +36,7 @@ class NewDoctor_SignUp(Screen, EventDispatcher):
                    on_success=self.successful_sign_up,
                    on_failure=self.sign_up_failure,
                    on_error=self.sign_up_error, ca_file=certifi.where())
-        doctorSignUp(firstname, lastname, specialization, hospital, phonenumber) #call the firebase function
+        doctorSignUp(firstname, lastname, specialization, hospital, phonenumber, email) #call the firebase function
 
     def successful_sign_up(self, request, result):
         if self.debug:

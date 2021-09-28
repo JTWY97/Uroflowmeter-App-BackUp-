@@ -40,7 +40,7 @@ class NewPatient_SignUp(Screen, EventDispatcher):
                    on_failure=self.sign_up_failure,
                    on_error=self.sign_up_error, ca_file=certifi.where())
 
-        patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend)
+        patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend, email)
 
     def successful_sign_up(self, request, result):
         if self.debug:

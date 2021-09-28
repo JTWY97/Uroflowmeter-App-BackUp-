@@ -20,13 +20,13 @@ db = firebase.database() #connect to firebase
 # print(type(od1)) #to check type 
 # print(od1) #to check output data
 
-def doctorSignUp(firstname, lastname, specialization, hospital, phonenumber):
-        data = {"firstname": firstname, "lastname": lastname, "specialization": specialization, "hospital": hospital, "phonenumber": phonenumber}
+def doctorSignUp(firstname, lastname, specialization, hospital, phonenumber, email):
+        data = {"firstname": firstname, "lastname": lastname, "specialization": specialization, "hospital": hospital, "phonenumber": phonenumber, "email": email}
         doctorName = "Dr " + lastname
         db.child("doctorUsers").child(doctorName).set(data) 
 
-def patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend):
-        data = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend}
+def patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend, email):
+        data = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend, "email":email}
         patientName = pfirstname + " " + plastname
         db.child("patientUsers").child(patientName).set(data) 
 def volume(totalvol):
