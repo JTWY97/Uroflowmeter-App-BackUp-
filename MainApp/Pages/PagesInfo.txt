@@ -1,0 +1,2 @@
+Pages
+This is where the Kivy Scripts that contain UI of the pages are stored

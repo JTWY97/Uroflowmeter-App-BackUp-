@@ -1,0 +1,2 @@
+External Connections
+This is where the External Connections are stored ie. pages that link the app to firebase

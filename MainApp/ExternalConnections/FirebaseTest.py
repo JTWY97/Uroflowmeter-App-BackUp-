@@ -17,18 +17,16 @@ def doctorSignUp(firstname, lastname, specialization, hospital, phonenumber, ema
         SignUpData = {"firstname": firstname, "lastname": lastname, "specialization": specialization, "hospital": hospital, "phonenumber": phonenumber, "email": email}
         doctorName = "Dr " + lastname
         db.child("doctorUsers").child(doctorName).set(SignUpData)
-        emailID = email[:-4]
-        LogInData = {emailID: doctorName}
-        db.child("DoctorLogInID").child(emailID).set(LogInData)
+        LogInData = {email[-4]: doctorName}
+        db.child("DoctorLogInID").set(LogInData)
         
 
 def patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend, email):
         SignUpData = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend, "email":email}
         patientName = pfirstname + " " + plastname
         db.child("patientUsers").child(patientName).set(SignUpData)
-        emailID = email[:-4]
-        LogInData = {emailID: patientName}
-        db.child("PatientLogInID").child(emailID).set(LogInData)
+        LogInData = {email[-4]: patientName}
+        db.child("PatientLogInID").set(LogInData)
 
 # def volume(totalvol):
 #         db.child("patientUsers").child(patientName).set(totalvol) 

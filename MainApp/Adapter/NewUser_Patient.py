@@ -8,10 +8,11 @@ from json import dumps
 # KivyMD imports
 from kivymd.toast import toast
 
-from Database.FirebaseTest import doctorSignUp
+from Database.FirebaseTest import patientSignUp
 
-class NewDoctor_SignUp(Screen, EventDispatcher):
+class NewPatient_SignUp(Screen, EventDispatcher):
     web_api_key = StringProperty()
+
     refresh_token = ""
     localId = ""
     idToken = ""
@@ -26,16 +27,20 @@ class NewDoctor_SignUp(Screen, EventDispatcher):
 
     debug = False
 
-    def sign_up(self, email, password, firstname, lastname, specialization, hospital, phonenumber): 
+    def sign_up(self, email, password, pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend):
+
         if self.debug:
             print("Attempting to create a new account: ", email, password)
         signup_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + self.web_api_key
-        signup_payload = dumps({"email": email, "password": password, "returnSecureToken": "true"})
+        signup_payload = dumps(
+            {"email": email, "password": password, "returnSecureToken": "true"})
+
         UrlRequest(signup_url, req_body=signup_payload,
                    on_success=self.successful_sign_up,
                    on_failure=self.sign_up_failure,
                    on_error=self.sign_up_error, ca_file=certifi.where())
-        doctorSignUp(firstname, lastname, specialization, hospital, phonenumber, email) #call the firebase function
+
+        patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend, email)
 
     def successful_sign_up(self, request, result):
         if self.debug:

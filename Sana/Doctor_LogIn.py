@@ -73,7 +73,7 @@ class Doctor_LogIn(Screen, EventDispatcher):
     def save_UserID(self, email):
         Variables_Doctor = "Variables_Doctor.txt"
         ChildBranch = email[:-4]
-        FirebaseConnection = db.child("DoctorLogInID").child(ChildBranch).get()
+        FirebaseConnection = db.child("DoctorLogInID").child(ChildBranch).child(ChildBranch).get()
         self.UserID = FirebaseConnection.val()
         DoctorID = FirebaseConnection.val()
         with open(Variables_Doctor, "w") as f:
