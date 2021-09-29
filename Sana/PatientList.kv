@@ -14,14 +14,21 @@
             padding : 5, 5
             size_hint: .6, None
             pos_hint: {'x': .18,}
-
-
             BoxLayout:
                 orientation: "horizontal"
                 padding : 5, 5
                 spacing: 10, 10
                 size: 800, 40
                 size_hint: 1, None
+
+                GridLayout:
+                    id: PatientName
+                    cols: 1
+                    padding : 5, 0
+                    spacing: 10, 0
+                    size_hint: 1, 1
+                    pos: self.pos
+                    size: self.size
                 
         MDRoundFlatButton:
             text: "New Patient"
