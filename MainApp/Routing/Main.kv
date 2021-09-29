@@ -1,0 +1,112 @@
+#:import Doctor_LogIn Doctor_LogIn.Doctor_LogIn
+#:import Patient_LogIn Patient_LogIn.Patient_LogIn
+#:import NewDoctor_SignUp NewUser_Doctor.NewDoctor_SignUp
+#:import NewPatient_SignUp NewUser_Patient.NewPatient_SignUp
+#:import Welcome_Page WelcomePage.Welcome_Page
+#:import DoctorHomePage DoctorHomePage.DoctorHomePage
+#:import PatientHomePage PatientHomePage.PatientHomePage
+#:import SymptomTracker SymptomTracker.SymptomTracker
+#:import FluidIntake FluidIntake.FluidIntake
+#:import PatientList PatientList.PatientList
+#:import BladderDiary BladderDiary.BladderDiary
+
+ScreenManager:
+    id: screen_manager
+    Welcome_Page:
+        ##0
+        id: Welcome_Page
+        name: "Welcome_Page"
+
+    Doctor_LogIn:
+        ##1
+        id: Doctor_LogIn
+        name: "Doctor_LogIn"
+        debug: True
+        remember_user: True
+        require_email_verification: False
+        web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
+        on_login_success:
+            if self.login_state == 'in': screen_manager.current = 'DoctorHomePage'
+            # if self.login_state == 'in': self.manager.screens[3].ids.WelcomeLabel_Doctor.text = "Welcome " + self.UserID
+            if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
+            if self.login_state == 'in': app.local_id_doctor = self.localId
+            if self.login_state == 'in': app.user_idToken_doctor = self.idToken
+            if self.login_state == 'in': app.UserID_Doctor = self.UserID
+    
+    NewDoctor_SignUp:
+        ##2
+        id: NewDoctor_SignUp
+        name: "NewDoctor_SignUp"
+        debug: True
+        remember_user: True
+        require_email_verification: False
+        web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
+        on_login_success:
+            if self.login_state == 'in': screen_manager.current = 'DoctorHomePage'
+            # if self.login_state == 'in': self.manager.screens[3].ids.WelcomeLabel_Doctor.text = "Welcome " + self.UserID 
+            if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
+            if self.login_state == 'in': app.local_id_doctor = self.localId
+            if self.login_state == 'in': app.user_idToken_doctor = self.idToken
+            if self.login_state == 'in': app.UserID_Doctor = self.UserID
+
+    DoctorHomePage:
+        ##3
+        id: DoctorHomePage
+        name: "DoctorHomePage"
+
+    NewPatient_SignUp:
+        ##4
+        id: NewPatient_SignUp
+        name: "NewPatient_SignUp"
+        debug: True
+        remember_user: False
+        require_email_verification: False
+        web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
+        on_login_success:
+            if self.login_state == 'in': screen_manager.current = 'DoctorHomePage'
+            if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
+            if self.login_state == 'in': app.local_id_doctor = self.localId
+            if self.login_state == 'in': app.user_idToken_doctor = self.idToken
+
+    Patient_LogIn:
+        ##5
+        id: Patient_LogIn
+        name: "Patient_LogIn"
+        debug: True
+        remember_user: True
+        require_email_verification: False
+        web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
+        on_login_success:
+            if self.login_state == 'in': screen_manager.current = 'PatientHomePage'
+            if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
+            if self.login_state == 'in': app.local_id_patient = self.localId
+            if self.login_state == 'in': app.user_idToken_patient = self.idToken
+
+    PatientHomePage:
+        ##6
+        id: PatientHomePage
+        name: "PatientHomePage"
+
+    SymptomTracker:
+        ##7
+        id: SymptomTracker
+        name: "SymptomTracker"
+
+    FluidIntake:
+        ##8
+        id: FluidIntake
+        name: "FluidIntake"
+    
+    PatientList:
+        ##9
+        id: PatientList
+        name: "PatientList"
+        on_enter:
+            PatientList.BuildButton()
+            
+    BladderDiary:
+        ##10
+        id: BladderDiary
+        name: "BladderDiary"
+        on_enter:
+            BladderDiary.ShowSummary()

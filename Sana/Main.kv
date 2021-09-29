@@ -47,7 +47,6 @@ ScreenManager:
             if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
             if self.login_state == 'in': app.local_id_doctor = self.localId
             if self.login_state == 'in': app.user_idToken_doctor = self.idToken
-            if self.login_state == 'in': app.UserID_Doctor = self.UserID
 
     DoctorHomePage:
         ##3
@@ -78,11 +77,9 @@ ScreenManager:
         web_api_key: "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM"
         on_login_success:
             if self.login_state == 'in': screen_manager.current = 'PatientHomePage'
-            # if self.login_state == 'in': self.manager.screens[6].ids.WelcomeLabel_Patient.text = "Welcome " + self.UserID
             if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
             if self.login_state == 'in': app.local_id_patient = self.localId
             if self.login_state == 'in': app.user_idToken_patient = self.idToken
-            if self.login_state == 'in': app.UserID_Patient = self.UserID
 
     PatientHomePage:
         ##6

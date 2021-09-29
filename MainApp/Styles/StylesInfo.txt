@@ -1,0 +1,3 @@
+Styles
+This is where the components of the UI are stored
+Eg. Button imgages

@@ -1,5 +1,7 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
+from kivymd.uix.label import MDLabel
+from kivymd.font_definitions import theme_font_styles
 
 class MainApp(MDApp):
     user_idToken_doctor = ""
