@@ -19,6 +19,7 @@ class Patient(MDList):
 
 class PatientList(Screen):
     def BuildButton(self):
+
         ScreenLayout = self.ids['PatientName']
         patientnames = []
         startdate = []
@@ -27,6 +28,7 @@ class PatientList(Screen):
         AllDoctorsPatients = db.child("patientUsers").get()
         for Patient in AllDoctorsPatients.each():
             patientnames.append(Patient.key())
+            print(patientnames)
 
         for i in range(0,len(patientnames)):
             Icon = IconLeftWidget(icon="human")

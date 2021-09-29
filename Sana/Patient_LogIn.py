@@ -73,11 +73,7 @@ class Patient_LogIn(Screen, EventDispatcher):
         self.login_success = True
     
     def save_UserID(self, email):
-<<<<<<< HEAD
-        Variables_Patient = "c:/githubjoshua/Sana/Variables_Patient.txt"
-=======
-        Variables_Patient = "C:/Users/jeric/Documents/GitHub/MobileApplicationForUroflowometer/Sana/Variables_Patient.txt"
->>>>>>> 2153c69224ebda0e64ff39ac0c3a816d4d22a754
+        Variables_Patient = "Variables_Patient.txt"
         ChildBranch = email[:-4]
         FirebaseConnection = db.child("PatientLogInID").child(ChildBranch).child(ChildBranch).get()
         PatientID = FirebaseConnection.val()
