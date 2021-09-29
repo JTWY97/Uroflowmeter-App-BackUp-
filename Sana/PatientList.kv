@@ -5,35 +5,13 @@
     valign: 'middle'
 
 <PatientList>:
-    BoxLayout:
-        orientation: "vertical"
-        padding : 15, 15
-
-        BoxLayout:
-            orientation: "vertical"
-            padding : 5, 5
-            size_hint: .6, None
-            pos_hint: {'x': .18,}
-            BoxLayout:
-                orientation: "horizontal"
-                padding : 5, 5
-                spacing: 10, 10
-                size: 800, 40
-                size_hint: 1, None
-
-                GridLayout:
-                    id: PatientName
-                    cols: 1
-                    padding : 5, 0
-                    spacing: 10, 0
-                    size_hint: 1, 1
-                    pos: self.pos
-                    size: self.size
+    GridLayout:
+        id: PatientName
+        cols: 1
+        padding : 5, 0
+        spacing: 10, 0
+        size_hint: 1, 1
+        pos: self.pos
+        size: self.size
                 
-            MDRoundFlatButton:
-                text: "New Patient"
-                font_size: 25
-                size_hint: .7, 0.3
-                pos_hint: {"top":0.6, "center_x": 0.5} 
-                on_release:
-                    root.current = "NewUser_Patient" 
+ 
