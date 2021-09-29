@@ -22,7 +22,7 @@ class DiarySummary(MDList):
     pass
 
 class BladderDiary(Screen):
-    Patient_Variables = "Variables_Patient.txt"
+    Patient_Variables = "c:/githubjoshua/Sana/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
 
