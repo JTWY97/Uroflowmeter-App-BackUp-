@@ -1,33 +1,63 @@
 <Welcome_Page>:
-    name: 'Welcome'
+    name: 'Welcome to Ap-pee!'
     FloatLayout:
+
+        MDIconButton:
+            user_font_size: "90sp"
+            icon: "Buttons/WaterDrop.png"
+            pos_hint: {"top":1, "center_x": 0.5}
+
+
         MDLabel:
-            text: "Log In As:"
+            text: "Welcome to Ap-pee!"
             font_size: 40
             halign: 'center'
             size_hint_y: None
-            pos_hint: {"top": .9, "center_x": .5}
+            pos_hint: {"top": .8, "center_x": .5}
             height: self.texture_size[1]
-        
-        MDRaisedButton:
-            id: DoctorLogIn
-            text: "DOCTOR"
-            font_size: 25
-            size_hint: .7, .06
-            pos_hint: {"top": .7, "center_x": .5}
-            on_release:
-                root.parent.current = "Doctor_LogIn"
-                root.manager.transition.direction = "left"
+
+
+        MDLabel:
+            text: "I am a..."
+            font_size: 30
+            halign: 'center'
+            size_hint_y: None
+            pos_hint: {"top": .65, "center_x": .5}
+            height: self.texture_size[1]
+
+
+        MDIconButton:
+            user_font_size: "90sp"
+            icon: "Buttons/Patient.png"
+            pos_hint: {"top":.6, "center_x": 0.5}
+
 
         MDRaisedButton:
             id: PatientLogIn
             text: "PATIENT"
             font_size: 25
             size_hint: .7, .06
-            pos_hint: {"top": .8, "center_x": .5}
+            pos_hint: {"top": .4, "center_x": .5}
             on_release:
                 root.parent.current = "Patient_LogIn"
                 root.manager.transition.direction = "left"
+
+        MDIconButton:
+            user_font_size: "90sp"
+            icon: "Buttons/Doctor.png"
+            pos_hint: {"top":.33, "center_x": 0.5}
+        
+        MDRaisedButton:
+            id: DoctorLogIn
+            text: "DOCTOR"
+            font_size: 25
+            size_hint: .7, .06
+            pos_hint: {"top": .15, "center_x": .5}
+            on_release:
+                root.parent.current = "Doctor_LogIn"
+                root.manager.transition.direction = "left"
+
+
 
         Widget:
             size_hint_y: None
