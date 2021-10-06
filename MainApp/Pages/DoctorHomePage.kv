@@ -1,0 +1,41 @@
+<DoctorHomePage>:
+    FloatLayout:
+        MDLabel:
+            id: WelcomeLabel_Doctor
+            text: "Welcome!"
+            font_size: 40
+            halign: 'center'
+            size_hint_y: None
+            pos_hint: {"top": .9, "center_x": .5}
+            height: self.texture_size[1]
+
+        MDRoundFlatButton:
+            id: PatientList
+            text: "Patient List"
+            font_size: 25
+            size_hint: .4, .06
+            pos_hint: {"top":0.7, "center_x": 0.5}
+            on_release:
+                root.parent.current = "PatientList"
+                
+
+        MDRoundFlatButton:
+            id: SignUpPatient
+            text: "New Patient"
+            font_size: 25
+            size_hint: .4, .06
+            pos_hint: {"top":0.6, "center_x": 0.5} 
+            on_release:
+                root.parent.current = "NewPatient_SignUp"    
+
+        MDRoundFlatButton:
+            id: LogOut_Doctor
+            text: "Log Out"
+            font_size: 25
+            size_hint: .4, .06
+            pos_hint: {"top":0.5, "center_x": 0.5}
+            on_release:
+                app.sign_out_doctor()
+        Widget:
+            size_hint_y: None
+            height: 10

@@ -11,60 +11,39 @@
     valign: 'middle'
 
 <BladderDiary>:
-    BoxLayout:
-        orientation: "vertical"
-        padding : 15, 15
+    FloatLayout:
+        MDRoundFlatButton:
+            text: "Back"
+            size_hint: 0.7, 0.05
+            spacing_x: 30
+            pos_hint: {"top": .1, "center_x": .5}
+            on_press:
+                root.parent.current = "PatientHomePage"
 
-        BoxLayout:
-            orientation: "vertical"
-            padding : 5, 5
-            size_hint: .6, None
-            pos_hint: {'x': .18,}
+        MDRoundFlatButton:
+            text: "Show Detailed Timeline"
+            size_hint: 0.7, 0.05
+            spacing_x: 30
+            pos_hint: {"top": .9, "center_x": .5}
+            on_press:
+                root.ShowSummary()
+    
+        GridLayout:
+            id: BladderSummary
+            pos_hint: {"top": .8, "center_x": .5}
+            cols: 1
+            padding : 5, 0
+            spacing: 10, 0
+            size_hint: 0.9, 0.3
+            pos: self.pos
+            size: self.size
 
-
-            BoxLayout:
-                orientation: "horizontal"
-                padding : 5, 5
-                spacing: 10, 10
-                size: 800, 40
-                size_hint: 1, None
-
-                GridLayout:
-                    id: BladderSummary
-                    cols: 1
-                    padding : 5, 0
-                    spacing: 10, 0
-                    size_hint: 1, 1
-                    pos: self.pos
-                    size: self.size
-
-                MDRoundFlatButton:
-                    text: "Show Detailed Timeline"
-                    size_hint_x: .05
-                    spacing_x: 30
-                    on_press:
-                        root.BuildTimeline()
-
-        BoxLayout:
-            orientation: "horizontal"
-            size_hint: 1, 1
-            BoxLayout:
-                orientation: "vertical"
-                size_hint: .5, 1
-                padding : 0, 15
-                spacing: 10, 10
-                size: 500, 30
-                GridLayout:
-                    id: BladderDiaryWidgets
-                    cols: 1
-                    padding : 5, 0
-                    spacing: 10, 0
-                    size_hint: 1, 1
-                    pos: self.pos
-                    size: self.size
-                MDRoundFlatButton:
-                    text: "Back"
-                    size_hint_x: .05
-                    spacing_x: 30
-                    on_press:
-                        root.parent.current = "PatientHomePage"
+        GridLayout:
+            id: BladderDiaryWidgets
+            pos_hint: {"top": .4, "center_x": .5}
+            cols: 1
+            padding : 5, 0
+            spacing: 10, 0
+            size_hint: 0.9, 0.3
+            pos: self.pos
+            size: self.size
