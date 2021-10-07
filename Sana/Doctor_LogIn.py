@@ -9,9 +9,6 @@ import pyrebase
 import os
 from kivymd.toast import toast
 
-path = os.getcwd()
-path = path + "/MobileApplicationForUroflowometer/Sana/"
-
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
   "authDomain": "bg4102app.firebaseapp.com",
@@ -23,6 +20,8 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 class Doctor_LogIn(Screen, EventDispatcher):
+    path = os.getcwd()
+    path = path + "/MobileApplicationForUroflowometer/Sana/"
     web_api_key = StringProperty("")
     refresh_token = ""
     localId = ""
@@ -70,7 +69,7 @@ class Doctor_LogIn(Screen, EventDispatcher):
         self.login_success = True
 
     def save_UserID(self, email):
-        Variables_Doctor = path + "Context/Variables_Doctor.txt"
+        Variables_Doctor = self.path + "Context/Variables_Doctor.txt"
         ChildBranch = email[:-4]
         FirebaseConnection = db.child("DoctorLogInID").child(ChildBranch).child(ChildBranch).get()
         self.UserID = FirebaseConnection.val()

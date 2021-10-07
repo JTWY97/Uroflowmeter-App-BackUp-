@@ -4,6 +4,7 @@ from kivymd.uix.list import MDList, ThreeLineAvatarListItem
 from kivymd.uix.list import IconLeftWidget
 import pyrebase
 import numpy as np
+import os
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -20,7 +21,10 @@ class DiarySummary(MDList):
     pass
 
 class BladderDiary(Screen):
-    Patient_Variables = "Variables_Patient.txt"
+    path = os.getcwd()
+    path = path + "/MobileApplicationForUroflowometer/Sana/"
+    
+    Patient_Variables = path + "Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
 
@@ -35,21 +39,13 @@ class BladderDiary(Screen):
         PatientUroflowData_Time = db.child("patientData").child(self.PatientID).child("day 1").child("time").get()
         PatientUroflowData_Time = PatientUroflowData_Time.val()
         VoidTimeArray = PatientUroflowData_Time.split(',')
-        VoidTimeArray = np.array(VoidTimeArray).astype(np.float)
-        print(VoidTimeArray)
         for i in range(0, len(VoidTimeArray)):
             VoidTime = self.GetTime_Text(VoidTimeArray[i])
             VoidTimeList.append(VoidTime)
         return VoidTimeList
 
     def GetTime_Text(self,VoidTimeArray):
-        TimeOfLastVoid = VoidTimeArray
-        b = 10
-        n = np.ceil(np.max(np.log(TimeOfLastVoid) / np.log(b))).astype(int)
-        d = np.arange(n)
-        d.shape = d.shape + (1,) * (TimeOfLastVoid.ndim)
-        out = TimeOfLastVoid // b ** d % b
-        VoidTime = str(int(out[3])) + str(int(out[2])) + ":" + str(int(out[1]))+ str(int(out[0]))
+        VoidTime = str(int(VoidTimeArray[0])) + str(int(VoidTimeArray[1])) + ":" + str(int(VoidTimeArray[2]))+ str(int(VoidTimeArray[3]))
         return VoidTime
 
     def GetData_VoidType(self):
