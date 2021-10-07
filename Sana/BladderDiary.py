@@ -1,4 +1,4 @@
-from kivymd.uix.list import MDList, ThreeLineAvatarListItem, OneLineAvatarListItem
+from kivymd.uix.list import MDList, OneLineAvatarListItem
 from kivymd.uix.screen import Screen
 from kivymd.uix.list import MDList, ThreeLineAvatarListItem
 from kivymd.uix.list import IconLeftWidget
@@ -15,8 +15,6 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-class DiaryEntry(MDList):
-    pass
 
 class DiarySummary(MDList):
     pass
@@ -60,28 +58,6 @@ class BladderDiary(Screen):
         PatientUroflowData_VoidType = PatientUroflowData_VoidType.val()
         VoidType = PatientUroflowData_VoidType.split(',')
         return VoidType
-
-    def BuildTimeline(self):
-        ScreenLayout = self.ids['BladderDiaryWidgets']
-        VoidType = self.GetData_VoidType()
-        VoidTime = self.GetData_Time()
-        VoidVolume = self.GetData_Volume()
-
-        for i in range(0,len(VoidTime)):
-            if VoidType[-i] == "First Morning Episode":
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Morning.png")
-            elif VoidType[-i] == "Normal Episode":
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Normal.png")
-            elif VoidType[-i] == "Nocturia Episode":
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Nocturia.png")
-            else:
-                Icon = IconLeftWidget(icon="human")
-
-            ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[-i]), secondary_text = "Void Type: " + VoidType[-i], tertiary_text = "Void Volume: " + VoidVolume[-i]+ "ml")
-
-            ListComponents.add_widget(Icon)
-            ScreenLayout.add_widget(ListComponents)
-            i+=1
 
     def ShowSummary(self):
         ScreenLayout = self.ids['BladderSummary']
@@ -132,7 +108,7 @@ class BladderDiary(Screen):
         MostFrequentEpisode_Entry.add_widget(Icon)
         Morning_Entry = OneLineAvatarListItem(text = "Total Number of Morning Voids: " + str(Morning))
         TotalMorningVoid_Entry = OneLineAvatarListItem(text = "Total Volume of Morning Voids: " + str(TotalMorningVoid) + "ml")
-        Normal_Entry = OneLineAvatarListItem(text = "Total Number of Morning Voids: " + str(Normal))
+        Normal_Entry = OneLineAvatarListItem(text = "Total Number of Normal Voids: " + str(Normal))
         TotalNormalVoid_Entry = OneLineAvatarListItem(text =  "Total Volume of Normal Voids: " + str(TotalNormalVoid) + "ml")
         Night_Entry = OneLineAvatarListItem(text = "Total Number of Night Voids: " + str(Night))
         TotalNightVoid_Entry = OneLineAvatarListItem(text =  "Total Volume of Nocturia Voids: " + str(TotalNightVoid) + "ml")

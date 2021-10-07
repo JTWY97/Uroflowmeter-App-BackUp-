@@ -10,7 +10,7 @@ from kivymd.toast import toast
 
 from Database.FirebaseTest import patientSignUp
 
-class NewPatient_SignUp(Screen, EventDispatcher):
+class NewUser_Patient(Screen, EventDispatcher):
     web_api_key = StringProperty()
 
     refresh_token = ""

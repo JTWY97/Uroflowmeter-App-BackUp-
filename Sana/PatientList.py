@@ -3,6 +3,10 @@ from kivymd.uix.screen import Screen
 from kivymd.uix.list import MDList, ThreeLineAvatarListItem
 from kivymd.uix.list import IconLeftWidget
 import pyrebase
+import os 
+
+path = os.getcwd()
+path = path + "/MobileApplicationForUroflowometer/Sana/"
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",

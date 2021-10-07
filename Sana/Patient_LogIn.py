@@ -6,12 +6,12 @@ import certifi
 from json import dumps
 from kivymd.app import MDApp
 import sys
-import os.path
-sys.path.append("/".join(x for x in __file__.split("/")[:-1]))
-folder = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+import os
 import pyrebase
 from kivymd.toast import toast
+
+path = os.getcwd()
+path = path + "/MobileApplicationForUroflowometer/Sana/"
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -73,7 +73,7 @@ class Patient_LogIn(Screen, EventDispatcher):
         self.login_success = True
     
     def save_UserID(self, email):
-        Variables_Patient = "Variables_Patient.txt"
+        Variables_Patient = path + "Context/Variables_Patient.txt"
         ChildBranch = email[:-4]
         FirebaseConnection = db.child("PatientLogInID").child(ChildBranch).child(ChildBranch).get()
         PatientID = FirebaseConnection.val()
