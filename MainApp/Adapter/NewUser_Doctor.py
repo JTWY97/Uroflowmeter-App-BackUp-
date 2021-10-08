@@ -8,9 +8,9 @@ from json import dumps
 # KivyMD imports
 from kivymd.toast import toast
 
-from Database.FirebaseTest import doctorSignUp
+from ExternalConnections.FirebaseTest import doctorSignUp
 
-class NewDoctor_SignUp(Screen, EventDispatcher):
+class NewUser_Doctor(Screen, EventDispatcher):
     web_api_key = StringProperty()
     refresh_token = ""
     localId = ""
@@ -35,7 +35,7 @@ class NewDoctor_SignUp(Screen, EventDispatcher):
                    on_success=self.successful_sign_up,
                    on_failure=self.sign_up_failure,
                    on_error=self.sign_up_error, ca_file=certifi.where())
-        doctorSignUp(firstname, lastname, specialization, hospital, phonenumber, email) #call the firebase function
+        # doctorSignUp(firstname, lastname, specialization, hospital, phonenumber, email) #call the firebase function
 
     def successful_sign_up(self, request, result):
         if self.debug:
@@ -64,4 +64,3 @@ class NewDoctor_SignUp(Screen, EventDispatcher):
     def sign_up_error(self, *args):
         if self.debug:
             print("Sign up Error: ", args)
-    pass

@@ -11,6 +11,7 @@ class MainApp(MDApp):
     UserID_Doctor = ""
 
     path = os.getcwd()
+    print(path)
     path = path + "/MobileApplicationForUroflowometer/MainApp/"
 
     Builder.load_file(path + "Pages/Patient_LogIn.kv")
@@ -18,12 +19,12 @@ class MainApp(MDApp):
     Builder.load_file(path + "Pages/WelcomePage.kv")
     Builder.load_file(path + "Pages/PatientHomePage.kv")
     Builder.load_file(path + "Pages/DoctorHomePage.kv")
-    Builder.load_file(path + "Pages/NewUser_Doctor.kv")
-    Builder.load_file(path + "Pages/NewUser_Patient.kv")
     Builder.load_file(path + "Pages/SymptomTracker.kv")
     Builder.load_file(path + "Pages/FluidIntake.kv")
     Builder.load_file(path + "Pages/PatientList.kv")
     Builder.load_file(path + "Pages/BladderDiary.kv")
+    Builder.load_file(path + "Pages/NewUser_Doctor.kv")
+    Builder.load_file(path + "Pages/NewUser_Patient.kv")
 
     def sign_out_doctor(self):
         self.root.ids.Doctor_LogIn.log_out()
