@@ -2,6 +2,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.screenmanager import SlideTransition
 from kivymd.uix.picker import MDDatePicker
 <<<<<<< HEAD
+<<<<<<< HEAD
 import pyrebase
 import os
   
@@ -17,6 +18,8 @@ db = firebase.database()
 
 path = os.getcwd()
 path = path + "/Sana/"
+=======
+>>>>>>> parent of 6c92e76 (fixed main app)
 =======
 >>>>>>> parent of 6c92e76 (fixed main app)
 
