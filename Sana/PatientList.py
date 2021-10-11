@@ -6,7 +6,7 @@ import pyrebase
 import os 
 
 path = os.getcwd()
-path = path + "/MobileApplicationForUroflowometer/Sana/"
+path = path + "/Sana/"
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",

@@ -10,7 +10,7 @@ from kivymd.toast import toast
 from FirebaseTest import doctorSignUp
 
 path = os.getcwd()
-path = path + "/MobileApplicationForUroflowometer/Sana/"
+path = path + "/Sana/"
 
 class NewUser_Doctor(Screen, EventDispatcher):
     web_api_key = StringProperty()

@@ -15,7 +15,7 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 path = os.getcwd()
-path = path + "/MobileApplicationForUroflowometer/Sana/"
+path = path + "/Sana/"
 
 class SymptomTracker(Screen):
 

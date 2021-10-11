@@ -23,7 +23,7 @@ class DiaryEntry(MDList):
 
 class BladderDiarySummary(Screen):
     path = os.getcwd()
-    path = path + "/MobileApplicationForUroflowometer/Sana/"
+    path = path + "/Sana/"
     
     Patient_Variables = path + "Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:

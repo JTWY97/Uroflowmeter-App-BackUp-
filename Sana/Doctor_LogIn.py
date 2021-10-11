@@ -21,7 +21,7 @@ db = firebase.database()
 
 class Doctor_LogIn(Screen, EventDispatcher):
     path = os.getcwd()
-    path = path + "/MobileApplicationForUroflowometer/Sana/"
+    path = path + "/Sana/"
     web_api_key = StringProperty("")
     refresh_token = ""
     localId = ""

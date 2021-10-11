@@ -12,7 +12,7 @@ config = {
 }
 
 path = os.getcwd()
-path = path + "/MobileApplicationForUroflowometer/Sana/"
+path = path + "/Sana/"
 
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
