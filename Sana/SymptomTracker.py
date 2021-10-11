@@ -1,10 +1,9 @@
 from kivy.uix.screenmanager import Screen
 from kivy.uix.screenmanager import SlideTransition
 from kivymd.uix.picker import MDDatePicker
-<<<<<<< HEAD
-<<<<<<< HEAD
 import pyrebase
 import os
+  
   
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -18,10 +17,6 @@ db = firebase.database()
 
 path = os.getcwd()
 path = path + "/Sana/"
-=======
->>>>>>> parent of 6c92e76 (fixed main app)
-=======
->>>>>>> parent of 6c92e76 (fixed main app)
 
 class SymptomTracker(Screen):
     date = []

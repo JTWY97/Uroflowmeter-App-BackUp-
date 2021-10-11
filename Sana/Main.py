@@ -1,6 +1,5 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
-
 class MainApp(MDApp):
     user_idToken_doctor = ""
     local_id_doctor = ""
