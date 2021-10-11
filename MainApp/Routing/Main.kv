@@ -1,14 +1,14 @@
-#:import WelcomePage Adapter.WelcomePage.WelcomePage
-#:import DoctorHomePage Adapter.DoctorHomePage.DoctorHomePage
-#:import PatientHomePage Adapter.PatientHomePage.PatientHomePage
-#:import SymptomTracker Adapter.SymptomTracker.SymptomTracker
-#:import FluidIntake Adapter.FluidIntake.FluidIntake
-#:import PatientList Adapter.PatientList.PatientList
-#:import BladderDiary Adapter.BladderDiary.BladderDiary
-#:import Doctor_LogIn Adapter.Doctor_LogIn.Doctor_LogIn
-#:import Patient_LogIn Adapter.Patient_LogIn.Patient_LogIn
-#:import NewUser_Doctor Adapter.NewUser_Doctor.NewUser_Doctor
-#:import NewUser_Patient Adapter.NewUser_Patient.NewUser_Patient
+# :import WelcomePage WelcomePage.WelcomePage
+# :import DoctorHomePage DoctorHomePage.DoctorHomePage
+# :import PatientHomePage PatientHomePage.PatientHomePage
+# :import SymptomTracker SymptomTracker.SymptomTracker
+# :import FluidIntake FluidIntake.FluidIntake
+# :import PatientList PatientList.PatientList
+# :import BladderDiary BladderDiary.BladderDiary
+# :import Doctor_LogIn Doctor_LogIn.Doctor_LogIn
+# :import Patient_LogIn Patient_LogIn.Patient_LogIn
+# :import NewDoctor_SignUp NewUser_Doctor.NewDoctor_SignUp
+# :import NewPatient_SignUp NewUser_Patient.NewPatient_SignUp
 
 ScreenManager:
     id: screen_manager
@@ -34,7 +34,7 @@ ScreenManager:
             if self.login_state == 'in': app.user_idToken_doctor = self.idToken
             if self.login_state == 'in': app.UserID_Doctor = self.UserID
     
-    NewUser_Doctor:
+    NewDoctor_SignUp:
         ##2
         id: NewDoctor_SignUp
         name: "NewDoctor_SignUp"
@@ -54,7 +54,7 @@ ScreenManager:
         id: DoctorHomePage
         name: "DoctorHomePage"
 
-    NewUser_Patient:
+    NewPatient_SignUp:
         ##4
         id: NewPatient_SignUp
         name: "NewPatient_SignUp"
