@@ -6,6 +6,7 @@ from kivymd.uix.picker import MDDatePicker
 import pyrebase
 import os
   
+  
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
   "authDomain": "bg4102app.firebaseapp.com",
@@ -20,6 +21,7 @@ path = os.getcwd()
 path = path + "/Sana/"
 
 class SymptomTracker(Screen):
+<<<<<<< HEAD
 
     Patient_Variables = path + "Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
@@ -34,6 +36,8 @@ class SymptomTracker(Screen):
 
 class SymptomTracker(Screen):
 >>>>>>> parent of 6c92e76 (fixed main app)
+=======
+>>>>>>> parent of fe5ce49 (tst)
     date = []
     def on_save(self, instance, value, date_range):
         self.date.append(str(value))
