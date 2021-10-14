@@ -63,10 +63,10 @@ class Doctor_LogIn(Screen, EventDispatcher):
         self.localId = log_in_data['localId']
         self.idToken = log_in_data['idToken']
         self.save_refresh_token(self.refresh_token)
-        self.save_UserID(self.ids.User_Doctor.text)
         
         self.login_state = 'in'
         self.login_success = True
+        self.save_UserID(self.ids.User_Doctor.text)
 
     def save_UserID(self, email):
         Variables_Doctor = self.path + "Context/Variables_Doctor.txt"
