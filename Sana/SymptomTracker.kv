@@ -21,13 +21,13 @@
         MDLabel:
             id: date_label
             text: "Some Stuff!"
-            pos_hint: {"top":1.0, "center_x": 0.95}
+            pos_hint: {"top":0.6, "center_x": 0.95}
 
         MDRoundFlatButton:
             text: "Back"
             font_size: 25
             size_hint: .5, .06
-            pos_hint: {"top":0.5, "center_x": 0.5}
+            pos_hint: {"top":0.3, "center_x": 0.5}
             on_release:
                 root.parent.current = "PatientHomePage"
                 # root.manager.transition.direction = "right"
@@ -35,6 +35,7 @@
     GridLayout:
         rows: 3
         cols: 5
+        pos_hint: {"center_y":0, "center_x": 0.8}
         MDIconButton:
             id: ButtonOne
             icon: "human"
