@@ -35,63 +35,63 @@
     GridLayout:
         rows: 3
         cols: 5
-        pos_hint: {"center_y":0, "center_x": 0.8}
+        pos_hint: {"center_y":0.2, "center_x": 0.65}
         MDIconButton:
             id: ButtonOne
-            icon: "human"
+            icon: "SymptomTrackerIcons/Fatigue.png"
             # pos_hint: {"top":1, "center_x": 0.3}
             theme_text_color: 'Custom'
             text_color: app.theme_cls.primary_color
-            user_font_size: 50
+            user_font_size: 90
             on_release:
                 root.SendSymptom(button = 'button1')
 
         MDIconButton:
             id: ButtonTwo
-            icon: "human"
+            icon: "SymptomTrackerIcons/SwollenLeg.png"
             # pos_hint: {"top":1, "center_x": 0.3}
             theme_text_color: 'Custom'
             text_color: app.theme_cls.primary_color
-            user_font_size: 50
+            user_font_size: 90
             on_release:
                 root.SendSymptom(button = 'button2')
 
         MDIconButton:
             id: ButtonThree
-            icon: "human"
+            icon: "SymptomTrackerIcons/Fever.png"
             # pos_hint: {"top":1, "center_x": 0.3}
             theme_text_color: 'Custom'
             text_color: app.theme_cls.primary_color
-            user_font_size: 50
+            user_font_size: 90
             on_release:
                 root.SendSymptom(button = 'button3')
         MDIconButton:
             id: ButtonFour
-            icon: "human"
+            icon: "SymptomTrackerIcons/Nausea.png"
             # pos_hint: {"top":1, "center_x": 0.3}
             theme_text_color: 'Custom'
             text_color: app.theme_cls.primary_color
-            user_font_size: 50
+            user_font_size: 90
             on_release:
                 root.SendSymptom(button = 'button4')
 
         MDIconButton:
             id: ButtonFive
-            icon: "human"
+            icon: "SymptomTrackerIcons/Headache.png"
             # pos_hint: {"top":1, "center_x": 0.3}
             theme_text_color: 'Custom'
             text_color: app.theme_cls.primary_color
-            user_font_size: 50
+            user_font_size: 90
             on_release:
                 root.SendSymptom(button = 'button5')
 
-        # MDIconButton:
-        #     id: ButtonSix
-        #     icon: "human"
-        #     # pos_hint: {"top":1, "center_x": 0.3}
-        #     theme_text_color: 'Custom'
-        #     text_color: app.theme_cls.primary_color
-        #     user_font_size: 50
+        MDIconButton:
+            id: ButtonSix
+            icon: "SymptomTrackerIcons/Leaks.png"
+            pos_hint: {"top":1, "center_x": 0.3}
+            theme_text_color: 'Custom'
+            text_color: app.theme_cls.primary_color
+            user_font_size: 90
 
         # MDIconButton:
         #     id: ButtonSeven

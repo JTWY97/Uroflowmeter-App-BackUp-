@@ -68,6 +68,12 @@ class SymptomTracker(Screen):
             self.SymptomList.append(Symptom)
             self.SendSymptomToFirebase()
             return self.SymptomList
+
+        elif button == 'button6':
+            Symptom = "Leaks"
+            self.SymptomList.append(Symptom)
+            self.SendSymptomToFirebase()
+            return self.SymptomList
             
     def SendSymptomToFirebase(self):
         Label = "Symptoms Experienced" + str(self.date)
