@@ -2,6 +2,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.screenmanager import SlideTransition
 from kivymd.uix.picker import MDDatePicker
 <<<<<<< HEAD
+<<<<<<< HEAD
 import pyrebase
 import os
   
@@ -25,6 +26,10 @@ class SymptomTracker(Screen):
         PatientID = f.read()
 
 
+=======
+
+class SymptomTracker(Screen):
+>>>>>>> parent of 6c92e76 (fixed main app)
 =======
 
 class SymptomTracker(Screen):
