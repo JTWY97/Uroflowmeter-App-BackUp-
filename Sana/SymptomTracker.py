@@ -3,6 +3,7 @@ from kivy.uix.screenmanager import SlideTransition
 from kivymd.uix.picker import MDDatePicker
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import pyrebase
 import os
   
@@ -38,6 +39,10 @@ class SymptomTracker(Screen):
 >>>>>>> parent of 6c92e76 (fixed main app)
 =======
 >>>>>>> parent of fe5ce49 (tst)
+=======
+
+class SymptomTracker(Screen):
+>>>>>>> parent of 6c92e76 (fixed main app)
     date = []
     def on_save(self, instance, value, date_range):
         self.date.append(str(value))
