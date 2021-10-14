@@ -2,6 +2,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.event import EventDispatcher
 import numpy as np
 import pyrebase
+import os
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -14,8 +15,11 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 class FluidIntake(Screen, EventDispatcher):
+    # path = os.getcwd()
+    # path = path + "/MainApp/Context/"
+	
+	Patient_Variables = "./MainApp/Context/Variables_Patient.txt"
 
-	Patient_Variables = "Variables_Patient.txt"
 	with open(Patient_Variables, "r") as f:
 		PatientID = f.read()
 

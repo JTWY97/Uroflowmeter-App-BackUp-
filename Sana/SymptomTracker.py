@@ -8,7 +8,7 @@ config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
   "authDomain": "bg4102app.firebaseapp.com",
   "databaseURL": "https://bg4102app-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  "storageBucket": "bg4102app.appspot.com",
+  "storageBucket": "bg4102app.appspot.com"
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -76,6 +76,7 @@ class SymptomTracker(Screen):
             return self.SymptomList
             
     def SendSymptomToFirebase(self):
-        Label = "Symptoms Experienced" + str(self.date)
+        Label = "Symptoms Experienced" #+ str(self.date)
         data = {Label: self.SymptomList}
+        print(data)
         db.child("patientData").child(self.PatientID).update(data)

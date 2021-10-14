@@ -11,7 +11,7 @@ class MainApp(MDApp):
     UserID_Doctor = ""
 
     path = os.getcwd()
-    path = path + "/MobileApplicationForUroflowometer/MainApp/"
+    path = path + "/MainApp/"
 
     Builder.load_file(path + "Pages/Patient_LogIn.kv")
     Builder.load_file(path + "Pages/Doctor_LogIn.kv")

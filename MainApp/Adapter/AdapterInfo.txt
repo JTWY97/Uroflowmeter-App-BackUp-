@@ -1,3 +1,3 @@
 Adapter
-This is where the Main App and Python Scripts are stored
+This is where the Python Scripts are stored
 The Python Scrips contain the functional information about the app
