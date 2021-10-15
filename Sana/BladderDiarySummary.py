@@ -18,8 +18,8 @@ db = firebase.database()
 
 
 
-# class DiaryEntry(MDList):
-#     pass
+class DiaryEntry(MDList):
+    pass
 
 class BladderDiarySummary(Screen):
     path = os.getcwd()

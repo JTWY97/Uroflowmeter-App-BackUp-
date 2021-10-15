@@ -8,7 +8,7 @@ from json import dumps
 # KivyMD imports
 from kivymd.toast import toast
 
-from ExternalConnections.FirebaseTest import doctorSignUp
+from Database.FirebaseTest import doctorSignUp
 
 class NewDoctor_SignUp(Screen, EventDispatcher):
     web_api_key = StringProperty()

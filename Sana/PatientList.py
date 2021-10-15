@@ -18,6 +18,9 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
+class Patient(MDList):
+    pass
+
 class PatientList(Screen):
     def BuildButton(self):
 
