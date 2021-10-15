@@ -15,7 +15,7 @@ db = firebase.database()
 
 class FluidIntake(Screen, EventDispatcher):
 
-	Patient_Variables = "Variables_Patient.txt"
+	Patient_Variables = "./Context/Variables_Patient.txt"
 	with open(Patient_Variables, "r") as f:
 		PatientID = f.read()
 

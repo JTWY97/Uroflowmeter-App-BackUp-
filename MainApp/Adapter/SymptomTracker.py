@@ -14,12 +14,9 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-path = os.getcwd()
-path = path + "/Sana/"
-
 class SymptomTracker(Screen):
 
-    Patient_Variables = path + "Context/Variables_Patient.txt"
+    Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
 
