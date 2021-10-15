@@ -9,13 +9,23 @@
             pos_hint: {"top": .9, "center_x": .5}
             height: self.texture_size[1]
 
+        MDIconButton:
+            user_font_size: dp(40)
+            icon: "Styles/AppLogo/Doctor.png"
+            pos_hint: {"top":.8, "center_x": 0.55}
+
+        MDIconButton:
+            user_font_size: dp(40)
+            icon: "Styles/AppLogo/WaterDrop.png"
+            pos_hint: {"top":.8, "center_x": 0.45}
+
         MDTextFieldRound:
             id: User_Doctor
             hint_text: "Username"
             icon_right: "account"
             font_size: 25
             size_hint: .7, .06
-            pos_hint: {"top":0.8, "center_x": 0.5}
+            pos_hint: {"top":0.6, "center_x": 0.5}
 
         MDTextFieldRound:
             id: Password_Doctor
@@ -24,14 +34,14 @@
             size_hint_x: None
             font_size: 25
             size_hint: .7, .06
-            pos_hint: {"top":0.7, "center_x": 0.5}
+            pos_hint: {"top":0.5, "center_x": 0.5}
             password: True
 
         MDRoundFlatButton:
             text: "Log In"
             font_size: 25
             size_hint: .4, .06
-            pos_hint: {"top":0.6, "center_x": 0.5}
+            pos_hint: {"top":0.4, "center_x": 0.5}
             on_release:
                 root.sign_in(User_Doctor.text, Password_Doctor.text)
 
@@ -39,7 +49,7 @@
             text: "New User"
             font_size: 25
             size_hint: .4, .06
-            pos_hint: {"top":0.5, "center_x": 0.5}
+            pos_hint: {"top":0.3, "center_x": 0.5}
             on_release:
                 root.parent.current = "NewDoctor_SignUp"
 
@@ -47,7 +57,7 @@
             text: "Back"
             font_size: 25
             size_hint: .4, .06
-            pos_hint: {"top":0.4, "center_x": 0.5}
+            pos_hint: {"top":0.2, "center_x": 0.5}
             on_release:
                 root.parent.current = "Welcome_Page"
                 root.manager.transition.direction = "right"   

@@ -1,8 +1,5 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
-from kivymd.uix.label import MDLabel
-from kivymd.font_definitions import theme_font_styles
-
 class MainApp(MDApp):
     user_idToken_doctor = ""
     local_id_doctor = ""
@@ -22,6 +19,7 @@ class MainApp(MDApp):
     Builder.load_file("FluidIntake.kv")
     Builder.load_file("PatientList.kv")
     Builder.load_file("BladderDiary.kv")
+    Builder.load_file("BladderDiarySummary.kv")
 
     def sign_out_doctor(self):
         self.root.ids.Doctor_LogIn.log_out()

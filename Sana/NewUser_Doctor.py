@@ -4,13 +4,15 @@ from kivy.properties import BooleanProperty, StringProperty
 from kivy.network.urlrequest import UrlRequest
 import certifi
 from json import dumps
-
-# KivyMD imports
+import os
 from kivymd.toast import toast
 
-from Database.FirebaseTest import doctorSignUp
+from FirebaseTest import doctorSignUp
 
-class NewDoctor_SignUp(Screen, EventDispatcher):
+path = os.getcwd()
+path = path + "/Sana/"
+
+class NewUser_Doctor(Screen, EventDispatcher):
     web_api_key = StringProperty()
     refresh_token = ""
     localId = ""
@@ -64,4 +66,3 @@ class NewDoctor_SignUp(Screen, EventDispatcher):
     def sign_up_error(self, *args):
         if self.debug:
             print("Sign up Error: ", args)
-    pass

@@ -2,74 +2,104 @@
     FloatLayout:
         MDLabel:
             id: WelcomeLabel
-            text: "Welcome to Appee!"
+            text: "Welcome to Ap-pee!"
             font_size: 40
             halign: 'center'
             size_hint_y: None
-            pos_hint: {"top": .9, "center_x": .5}
+            pos_hint: {"top": 1, "center_x": .5}
             height: self.texture_size[1]     
 
-        MDTextFieldRound:
-            id: FirstName_Doctor
-            hint_text: "First Name"
-            font_size: 25
-            size_hint: .7, .06
-            pos_hint: {"top":0.8, "center_x": 0.5}
-        
-        MDTextFieldRound:
-            id: LastName_Doctor
-            hint_text: "Last Name"
-            font_size: 25
-            size_hint: .7, .06
-            pos_hint: {"top":0.7, "center_x": 0.5}
+        MDIconButton:
+            user_font_size: "90sp"
+            icon: "Styles/AppLogo/Doctor.png"
+            pos_hint: {"top":.95, "center_x": 0.5}
 
-        MDTextFieldRound:
-            id: Specialization
-            hint_text: "Specialization"
+        MDLabel:
+            markup: True
+            text: "[u]Login Credentials[/b]"
+            underline:True
             font_size: 25
-            size_hint: .7, .06
-            pos_hint: {"top":0.6, "center_x": 0.5}
-
-        MDTextFieldRound:
-            id: Hospital
-            hint_text: "Hospital"
-            font_size: 25
-            size_hint: .7, .06
-            pos_hint: {"top":0.5, "center_x": 0.5}
-
-        MDTextFieldRound:
-            id: PhoneNumber_Doctor
-            hint_text: "Phone Number"
-            font_size: 25
-            size_hint: .7, .06
-            pos_hint: {"top":0.4, "center_x": 0.5}
+            halign: 'center'
+            size_hint_y: None
+            pos_hint: {"top": .8, "center_x": .5}
+            height: self.texture_size[1]
 
         MDTextFieldRound:
             id: Email_Doctor
             hint_text: "Email"
             font_size: 25
-            size_hint: .7, .06
-            pos_hint: {"top":0.3, "center_x": 0.5}
+            size_hint: .7, .05
+            pos_hint: {"top":0.73, "center_x": 0.5}
 
         MDTextFieldRound:
             id: Password_Doctor_SignUp
             hint_text: "Password"
             font_size: 25
-            size_hint: .7, .06
-            pos_hint: {"top":0.2, "center_x": 0.5}
+            size_hint: .7, .05
+            pos_hint: {"top":0.67, "center_x": 0.5}
             password: True
+
+        MDLabel:
+            markup: True
+            text: "[u]Basic Particulars[/b]"
+            underline:True
+            font_size: 25
+            halign: 'center'
+            size_hint_y: None
+            pos_hint: {"top": .55, "center_x": .5}
+            height: self.texture_size[1]
+
+        MDTextFieldRound:
+            id: FirstName_Doctor
+            hint_text: "First Name"
+            font_size: 25
+            size_hint: .7, .05
+            pos_hint: {"top":0.48, "center_x": 0.5}
+        
+        MDTextFieldRound:
+            id: LastName_Doctor
+            hint_text: "Last Name"
+            font_size: 25
+            size_hint: .7, .05
+            pos_hint: {"top":0.42, "center_x": 0.5}
+
+        MDTextFieldRound:
+            id: Specialization
+            hint_text: "Specialization"
+            font_size: 25
+            size_hint: .7, .05
+            pos_hint: {"top":0.36, "center_x": 0.5}
+
+        MDTextFieldRound:
+            id: Hospital
+            hint_text: "Hospital"
+            font_size: 25
+            size_hint: .7, .05
+            pos_hint: {"top":0.3, "center_x": 0.5}
+
+        MDTextFieldRound:
+            id: PhoneNumber_Doctor
+            hint_text: "Phone Number"
+            font_size: 25
+            size_hint: .7, .05
+            pos_hint: {"top":0.24, "center_x": 0.5}
 
         MDRaisedButton:
             text: "Create Account"
-            size_hint: .3, .06
-            pos_hint: {"top": .1, "center_x": .5}
+            size_hint: .2, .04
+            pos_hint: {"top": .16, "center_x": .5}
             on_release:
                 root.sign_up(Email_Doctor.text, Password_Doctor_SignUp.text, FirstName_Doctor.text, LastName_Doctor.text, Specialization.text, Hospital.text,  PhoneNumber_Doctor.text)
 
         MDRaisedButton:
             text: "Back"
             size_hint: .2, .04
-            pos_hint: {"top": .0, "center_x": .5}
+            pos_hint: {"top": .1, "center_x": .5}
             on_release:
                 root.parent.current = "Doctor_LogIn"
                 root.manager.transition.direction = "right"  
+
+        MDIconButton:
+            user_font_size: "45sp"
+            icon: "Styles/AppLogo/WaterDrop.png"
+            pos_hint: {"top":.16, "center_x": 0.35}

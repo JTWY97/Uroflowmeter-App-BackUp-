@@ -3,6 +3,10 @@ from kivymd.uix.screen import Screen
 from kivymd.uix.list import MDList, ThreeLineAvatarListItem
 from kivymd.uix.list import IconLeftWidget
 import pyrebase
+import os 
+
+path = os.getcwd()
+path = path + "/Sana/"
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -19,6 +23,7 @@ class Patient(MDList):
 
 class PatientList(Screen):
     def BuildButton(self):
+
         ScreenLayout = self.ids['PatientName']
         patientnames = []
         startdate = []
@@ -27,6 +32,7 @@ class PatientList(Screen):
         AllDoctorsPatients = db.child("patientUsers").get()
         for Patient in AllDoctorsPatients.each():
             patientnames.append(Patient.key())
+            print(patientnames)
 
         for i in range(0,len(patientnames)):
             Icon = IconLeftWidget(icon="human")

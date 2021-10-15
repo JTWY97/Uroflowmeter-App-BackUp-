@@ -1,21 +1,22 @@
-#:import Doctor_LogIn Doctor_LogIn.Doctor_LogIn
-#:import Patient_LogIn Patient_LogIn.Patient_LogIn
-#:import NewDoctor_SignUp NewUser_Doctor.NewDoctor_SignUp
-#:import NewPatient_SignUp NewUser_Patient.NewPatient_SignUp
-#:import Welcome_Page WelcomePage.Welcome_Page
-#:import DoctorHomePage DoctorHomePage.DoctorHomePage
-#:import PatientHomePage PatientHomePage.PatientHomePage
-#:import SymptomTracker SymptomTracker.SymptomTracker
-#:import FluidIntake FluidIntake.FluidIntake
-#:import PatientList PatientList.PatientList
-#:import BladderDiary BladderDiary.BladderDiary
+# :import WelcomePage WelcomePage.WelcomePage
+# :import DoctorHomePage DoctorHomePage.DoctorHomePage
+# :import PatientHomePage PatientHomePage.PatientHomePage
+# :import SymptomTracker SymptomTracker.SymptomTracker
+# :import FluidIntake FluidIntake.FluidIntake
+# :import PatientList PatientList.PatientList
+# :import BladderDiary BladderDiary.BladderDiary
+# :import Doctor_LogIn Doctor_LogIn.Doctor_LogIn
+# :import Patient_LogIn Patient_LogIn.Patient_LogIn
+# :import NewDoctor_SignUp NewUser_Doctor.NewDoctor_SignUp
+# :import NewPatient_SignUp NewUser_Patient.NewPatient_SignUp
 
 ScreenManager:
     id: screen_manager
-    Welcome_Page:
+
+    WelcomePage:
         ##0
-        id: Welcome_Page
-        name: "Welcome_Page"
+        id: WelcomePage
+        name: "WelcomePage"
 
     Doctor_LogIn:
         ##1
@@ -47,7 +48,6 @@ ScreenManager:
             if self.login_state == 'in': print("User has logged in. Unique identifier is ", self.localId)
             if self.login_state == 'in': app.local_id_doctor = self.localId
             if self.login_state == 'in': app.user_idToken_doctor = self.idToken
-            if self.login_state == 'in': app.UserID_Doctor = self.UserID
 
     DoctorHomePage:
         ##3
@@ -109,4 +109,4 @@ ScreenManager:
         id: BladderDiary
         name: "BladderDiary"
         on_enter:
-            BladderDiary.ShowSummary()
+            BladderDiary.BuildTimeline()

@@ -69,11 +69,11 @@ class BladderDiary(Screen):
 
         for i in range(0,len(VoidTime)):
             if VoidType[-i] == "First Morning Episode":
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Morning.png")
+                Icon = IconLeftWidget(icon="Styles/BladderDiaryIcons/Morning.png")
             elif VoidType[-i] == "Normal Episode":
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Normal.png")
+                Icon = IconLeftWidget(icon="Styles/BladderDiaryIcons/Normal.png")
             elif VoidType[-i] == "Nocturia Episode":
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Nocturia.png")
+                Icon = IconLeftWidget(icon="Styles/BladderDiaryIcons/Nocturia.png")
             else:
                 Icon = IconLeftWidget(icon="human")
 
@@ -111,17 +111,17 @@ class BladderDiary(Screen):
         if Morning >= Night:
             if Morning >= Normal:
                 MostFrequentEpisode = "First Morning Episode"
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Morning.png")
+                Icon = IconLeftWidget(icon="Styles/BladderDiaryIcons/Morning.png")
             else:
                 MostFrequentEpisode = "Normal Episode"
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Normal.png")
+                Icon = IconLeftWidget(icon="Styles/BladderDiaryIcons/Normal.png")
         else:
             if Night >= Normal:
                 MostFrequentEpisode = "Nocturia Episode"
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Nocturia.png")
+                Icon = IconLeftWidget(icon="Styles/BladderDiaryIcons/Nocturia.png")
             else:
                 MostFrequentEpisode = "Normal Episode"
-                Icon = IconLeftWidget(icon="BladderDiaryIcons/Normal.png")
+                Icon = IconLeftWidget(icon="Styles/BladderDiaryIcons/Normal.png")
 
         TotalMorningVoid = np.sum(MorningVoidVolume)
         TotalNormalVoid = np.sum(NormalVoidVolume)

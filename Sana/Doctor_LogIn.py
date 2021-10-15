@@ -6,11 +6,7 @@ import certifi
 from json import dumps
 from kivymd.app import MDApp
 import pyrebase
-import sys
-import os.path
-sys.path.append("/".join(x for x in __file__.split("/")[:-1]))
-folder = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+import os
 from kivymd.toast import toast
 
 config = {
@@ -24,6 +20,8 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 class Doctor_LogIn(Screen, EventDispatcher):
+    path = os.getcwd()
+    path = path + "/Sana/"
     web_api_key = StringProperty("")
     refresh_token = ""
     localId = ""
@@ -65,13 +63,13 @@ class Doctor_LogIn(Screen, EventDispatcher):
         self.localId = log_in_data['localId']
         self.idToken = log_in_data['idToken']
         self.save_refresh_token(self.refresh_token)
-        self.save_UserID(self.ids.User_Doctor.text)
         
         self.login_state = 'in'
         self.login_success = True
+        self.save_UserID(self.ids.User_Doctor.text)
 
     def save_UserID(self, email):
-        Variables_Doctor = "Variables_Doctor.txt"
+        Variables_Doctor = self.path + "Context/Variables_Doctor.txt"
         ChildBranch = email[:-4]
         FirebaseConnection = db.child("DoctorLogInID").child(ChildBranch).child(ChildBranch).get()
         self.UserID = FirebaseConnection.val()

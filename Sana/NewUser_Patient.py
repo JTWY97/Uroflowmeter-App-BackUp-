@@ -8,9 +8,9 @@ from json import dumps
 # KivyMD imports
 from kivymd.toast import toast
 
-from Database.FirebaseTest import patientSignUp
+from FirebaseTest import patientSignUp
 
-class NewPatient_SignUp(Screen, EventDispatcher):
+class NewUser_Patient(Screen, EventDispatcher):
     web_api_key = StringProperty()
 
     refresh_token = ""
@@ -69,4 +69,3 @@ class NewPatient_SignUp(Screen, EventDispatcher):
     def sign_up_error(self, *args):
         if self.debug:
             print("Sign up Error: ", args)
-    pass
