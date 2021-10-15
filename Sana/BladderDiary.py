@@ -22,11 +22,7 @@ class DiarySummary(MDList):
     pass
 
 class BladderDiary(Screen):
-<<<<<<< HEAD
     Patient_Variables = "c:/githubjoshua/Sana/Variables_Patient.txt"
-=======
-    Patient_Variables = "C:/Users/jeric/Documents/GitHub/MobileApplicationForUroflowometer/Sana/Variables_Patient.txt"
->>>>>>> 2153c69224ebda0e64ff39ac0c3a816d4d22a754
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
 
