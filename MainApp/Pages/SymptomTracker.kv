@@ -93,15 +93,15 @@
             text_color: app.theme_cls.primary_color
             user_font_size: 90
 
-        # MDIconButton:
-        #     id: ButtonSeven
-        #     icon: "human"
-        #     # pos_hint: {"top":1, "center_x": 0.3}
-        #     theme_text_color: 'Custom'
-        #     text_color: app.theme_cls.primary_color
-        #     user_font_size: 50
-        #     # on_release:
-        #     #     root.callback(button = 'button1')
+        MDIconButton:
+            id: ButtonSeven
+            icon: "./Styles/SymptomTrackerIcons/Foulsmell.png"
+            pos_hint: {"top":1, "center_x": 0.3}
+            theme_text_color: 'Custom'
+            text_color: app.theme_cls.primary_color
+            user_font_size: 90
+            on_release:
+                root.callback(button = 'button7')
 
         # MDIconButton:
         #     id: ButtonEight

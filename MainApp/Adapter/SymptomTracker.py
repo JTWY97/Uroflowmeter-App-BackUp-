@@ -71,7 +71,21 @@ class SymptomTracker(Screen):
             self.SymptomList.append(Symptom)
             self.SendSymptomToFirebase()
             return self.SymptomList
-            
+
+        elif button == 'button7':
+            Symptom = "Foul Smelly Urine"
+            self.SymptomList.append(Symptom)
+            self.SendSymptomToFirebase()
+            return self.SymptomList
+
+        elif button == 'button8':
+            Symptom = "Hesitancy to Urinate"
+            self.SymptomList.append(Symptom)
+            self.SendSymptomToFirebase()
+            return self.SymptomList
+
+
+
     def SendSymptomToFirebase(self):
         Label = "Symptoms Experienced" + str(self.date)
         data = {Label: self.SymptomList}
