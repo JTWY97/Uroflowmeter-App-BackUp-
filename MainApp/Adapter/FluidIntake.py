@@ -1,6 +1,5 @@
 from kivy.uix.screenmanager import Screen
 from kivy.event import EventDispatcher
-from kivymd.uix.textfield import MDTextField
 import numpy as np
 import pyrebase
 
@@ -45,17 +44,17 @@ class FluidIntake(Screen, EventDispatcher):
 			self.showvol()
 			return self.volume
 
-	#def button(self,button):
-		#CustomField = MDTextField(text='Enter Fluid in ml',
-		#pos_hint = {'center_x': 0.5, 'center_y': 0.5}, 
-		#size_hint_x=None,width=300)
-	
+	def CustomVolume(self, CustomVol):
+		self.volume.append(int(CustomVol))
+		self.showvol()
+		return self.volume
+
 	def showvol(self):
 		print(self.volume)
 		meanvol = np.sum(self.volume)
 		self.ids.volumeop.text = str(int(meanvol))
  		
-		data = {"total fluid intake": str(int(meanvol))}
-		db.child("patientUsers").child(self.PatientID).update(data)
+		# data = {"total fluid intake": str(int(meanvol))}
+		# db.child("patientUsers").child(self.PatientID).update(data)
 
         

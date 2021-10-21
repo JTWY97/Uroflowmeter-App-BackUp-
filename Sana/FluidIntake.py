@@ -52,5 +52,3 @@ class FluidIntake(Screen, EventDispatcher):
  		
 		data = {"total fluid intake": str(int(meanvol))}
 		db.child("patientUsers").child(self.PatientID).update(data)
-
-        

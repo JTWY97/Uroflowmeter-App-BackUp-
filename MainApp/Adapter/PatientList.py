@@ -2,7 +2,9 @@ from kivymd.uix.list import MDList, ThreeLineAvatarListItem
 from kivymd.uix.screen import Screen
 from kivymd.uix.list import MDList, ThreeLineAvatarListItem
 from kivymd.uix.list import IconLeftWidget
+from kivy.uix.scrollview import ScrollView
 import pyrebase
+import os 
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -13,9 +15,6 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
-
-class Patient(MDList):
-    pass
 
 class PatientList(Screen):
     def BuildButton(self):
@@ -42,4 +41,5 @@ class PatientList(Screen):
 
             ListComponents.add_widget(Icon)
             ScreenLayout.add_widget(ListComponents)
+
             i+=1

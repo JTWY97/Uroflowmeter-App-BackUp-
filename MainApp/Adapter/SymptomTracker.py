@@ -90,6 +90,7 @@ class SymptomTracker(Screen):
             self.SendSymptomToFirebase()
             return self.SymptomList
 
+<<<<<<< HEAD
         elif button == 'button10':
             Symptom = "Cramp on Side"
             self.SymptomList.append(Symptom)
@@ -105,6 +106,8 @@ class SymptomTracker(Screen):
       
 
 
+=======
+>>>>>>> 20cb839a9a4d9cb402c2d69fea586525e6611d5e
     def SendSymptomToFirebase(self):
         Label = "Symptoms Experienced" + str(self.date)
         data = {Label: self.SymptomList}
