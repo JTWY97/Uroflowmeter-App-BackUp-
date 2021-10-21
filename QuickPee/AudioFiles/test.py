@@ -83,7 +83,6 @@ def rename_file(img_name):
 def save_image_from_sound(img_path):
     filename = rename_file(img_path)
     x = read_as_melspectrogram(conf, img_path, trim_long_data=False, debug_display=True)
-    #x_color = mono_to_color(x)
     
     plt.imshow(x, interpolation='nearest')
     plt.savefig('./AudioFiles/' + filename)
