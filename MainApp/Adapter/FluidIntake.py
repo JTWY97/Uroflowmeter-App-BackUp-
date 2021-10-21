@@ -44,13 +44,17 @@ class FluidIntake(Screen, EventDispatcher):
 			self.showvol()
 			return self.volume
 
-	
+	def CustomVolume(self, CustomVol):
+		self.volume.append(int(CustomVol))
+		self.showvol()
+		return self.volume
+
 	def showvol(self):
 		print(self.volume)
 		meanvol = np.sum(self.volume)
 		self.ids.volumeop.text = str(int(meanvol))
  		
-		data = {"total fluid intake": str(int(meanvol))}
-		db.child("patientUsers").child(self.PatientID).update(data)
+		# data = {"total fluid intake": str(int(meanvol))}
+		# db.child("patientUsers").child(self.PatientID).update(data)
 
         
