@@ -84,8 +84,6 @@ class SymptomTracker(Screen):
             self.SendSymptomToFirebase()
             return self.SymptomList
 
-
-
     def SendSymptomToFirebase(self):
         Label = "Symptoms Experienced" + str(self.date)
         data = {Label: self.SymptomList}

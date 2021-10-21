@@ -5,16 +5,15 @@
 #:import FluidIntake Adapter.FluidIntake.FluidIntake
 #:import PatientList Adapter.PatientList.PatientList
 #:import BladderDiary Adapter.BladderDiary.BladderDiary
+#:import BladderDiarySummary Adapter.BladderDiarySummary.BladderDiarySummary
 #:import Doctor_LogIn Adapter.Doctor_LogIn.Doctor_LogIn
 #:import Patient_LogIn Adapter.Patient_LogIn.Patient_LogIn
-#:import NewDoctor_SignUp Adapter.NewUser_Doctor.NewDoctor_SignUp
-#:import NewPatient_SignUp Adapter.NewUser_Patient.NewPatient_SignUp
+#:import NewUser_Doctor Adapter.NewUser_Doctor.NewUser_Doctor
+#:import NewUser_Patient Adapter.NewUser_Patient.NewUser_Patient
 
 ScreenManager:
     id: screen_manager
-
     WelcomePage:
-        ##0
         id: WelcomePage
         name: "WelcomePage"
 
@@ -34,10 +33,10 @@ ScreenManager:
             if self.login_state == 'in': app.user_idToken_doctor = self.idToken
             if self.login_state == 'in': app.UserID_Doctor = self.UserID
     
-    NewDoctor_SignUp:
+    NewUser_Doctor:
         ##2
-        id: NewDoctor_SignUp
-        name: "NewDoctor_SignUp"
+        id: NewUser_Doctor
+        name: "NewUser_Doctor"
         debug: True
         remember_user: True
         require_email_verification: False
@@ -54,10 +53,10 @@ ScreenManager:
         id: DoctorHomePage
         name: "DoctorHomePage"
 
-    NewPatient_SignUp:
+    NewUser_Patient:
         ##4
-        id: NewPatient_SignUp
-        name: "NewPatient_SignUp"
+        id: NewUser_Patient
+        name: "NewUser_Patient"
         debug: True
         remember_user: False
         require_email_verification: False
@@ -109,4 +108,11 @@ ScreenManager:
         id: BladderDiary
         name: "BladderDiary"
         on_enter:
-            BladderDiary.BuildTimeline()
+            BladderDiary.ShowSummary()
+
+    BladderDiarySummary:
+        ##11
+        id: BladderDiarySummary
+        name: "BladderDiarySummary"
+        on_enter:
+            BladderDiarySummary.BuildTimeline()
