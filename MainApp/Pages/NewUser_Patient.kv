@@ -28,7 +28,7 @@
             size_hint: .7, .04
             pos_hint: {"top":0.6, "center_x": 0.5}
 
-        MDTextFieldRound: 
+        MDTextFieldRound:
             id: StartTreatment
             hint_text: "Treatment Start Date (dd/mm/yyyy)"
             font_size: 25
@@ -58,7 +58,7 @@
             halign: 'center'
             size_hint_y: None
             pos_hint: {"top": .4, "center_x": .5}
-            height: self.texture_size[1]  
+            height: self.texture_size[1]
 
         MDTextFieldRound:
             id: Email_Patient
@@ -80,22 +80,22 @@
             pos_hint: {"top": .15, "center_x": .5}
             on_release:
                 root.sign_up(Email_Patient.text, Password_Patient_SignUp.text,FirstName_Patient.text, LastName_Patient.text, DOB.text, Weight.text, Height.text, StartTreatment.text, EndTreatment.text  )
-        
+
         MDRaisedButton:
             text: "Back"
             size_hint: .3, .04
             pos_hint: {"top": .1, "center_x": .5}
             on_release:
                 root.parent.current = "DoctorHomePage"
-                root.manager.transition.direction = "right"  
-        
+                root.manager.transition.direction = "right"
+
         MDTextFieldRound:
             id: FirstName_Patient
             hint_text: "First Name"
             font_size: 25
             size_hint: .7, .04
             pos_hint: {"top":0.8, "center_x": 0.5}
-    
+
         MDTextFieldRound:
             id: RaspBerryPi_ID
             hint_text: "Set RaspberryPi ID"

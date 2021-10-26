@@ -14,13 +14,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-
-
-class DiaryEntry(MDList):
-    pass
-
 class BladderDiarySummary(Screen):
-    
     Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
