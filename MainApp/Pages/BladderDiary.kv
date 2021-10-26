@@ -12,9 +12,17 @@
                     text: "Show Detailed Timeline"
                     size_hint: 0.7, 0.05
                     spacing_x: 30
-                    pos_hint: {"top": .9, "center_x": .5}
+                    pos_hint: {"top": .2, "center_x": .5}
                     on_press:
                         root.parent.current = "BladderDiarySummary"
+
+                MDRoundFlatButton:
+                    text: "Press for Symptoms"
+                    size_hint: 0.7, 0.25
+                    spacing_x: 30
+                    pos_hint: {"top": .3, "center_x": .5}
+                    on_press:
+                        root.parent.current = "SymptomTracker"
 
                 GridLayout:
                     id: BladderSummary
@@ -23,8 +31,9 @@
                     padding : 5, 0
                     spacing: 10, 0
                     size_hint: 0.9, 0.3
-                    pos: self.pos
-                    size: self.size
+                    # pos: self.pos
+                    # size: self.size
+
 
                 MDRoundFlatButton:
                     text: "Back"
