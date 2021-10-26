@@ -1,12 +1,15 @@
 <BladderDiary>:
     ScrollView:
-        MDList:
-            GridLayout:
+        do_scroll_x: False
+        do_scroll_y: True
+        GridLayout:
+            rows: 3
+            size_hint_y: None ## Without size hint scroll doesnt work, but it keeps 'bouncing' probably a problem with the screen size
+            MDList:
+                id: BladderDiary
+            MDList:
                 id: BladderSummary
-                cols: 1
-                pos_hint: {"top": .8, "center_x": .5}
-                padding : 5, 0
-                spacing: 10, 0
-                size_hint: 0.9, 0.3
-                pos: self.pos
-                size: self.size
+            MDRoundFlatButton:
+                text: "Back"
+                on_press:
+                    root.parent.current = "PatientHomePage"

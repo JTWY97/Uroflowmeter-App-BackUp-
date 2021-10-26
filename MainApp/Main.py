@@ -30,10 +30,4 @@ class MainApp(MDApp):
         self.root.ids.Patient_LogIn.log_out()
         self.root.current = 'Patient_LogIn'
 
-    def BackToHomePage(self):
-        self.root.current = 'PatientHomepage'
-
-    def Summary(self):
-        self.root.current = 'BladderDiarySummary'
-
 MainApp().run()

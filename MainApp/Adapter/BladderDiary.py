@@ -1,9 +1,10 @@
 from kivymd.uix.list import OneLineAvatarListItem
-from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.screen import Screen
+from kivymd.uix.list import MDList, ThreeLineAvatarListItem
+from kivymd.uix.list import IconLeftWidget
 import pyrebase
 import numpy as np
-
+# from BladderDiarySummary import BladderDiarySummary
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -71,10 +72,28 @@ class BladderDiary(Screen):
 
         NumberOfVoids_Entry = OneLineAvatarListItem(text = "Total Number of Voids Logged Today: " + str(NumberofVoids))
         TotalVoidVolume_Entry = OneLineAvatarListItem(text = "Total Volume Voided Today: " + str(TotalVoid))
-        BackButton = MDRaisedButton(text="Back")
-        MoreButton = MDRaisedButton(text="Show Detailed Timeline")
 
-        ScreenLayout.add_widget(MoreButton)
         ScreenLayout.add_widget(NumberOfVoids_Entry)
         ScreenLayout.add_widget(TotalVoidVolume_Entry)
-        ScreenLayout.add_widget(BackButton)
+
+    def BuildTimeline(self):
+        ScreenLayout = self.ids['BladderDiary']
+        VoidType = self.GetData_VoidType()
+        VoidTime = self.GetData_Time()
+        VoidVolume = self.GetData_Volume()
+
+        for i in range(0,len(VoidType)):
+            if VoidType[-i] == "First Morning Episode":
+                Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Morning.png")
+            elif VoidType[-i] == "Normal Episode":
+                Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Normal.png")
+            elif VoidType[-i] == "Nocturia Episode":
+                Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Nocturia.png")
+            else:
+                Icon = IconLeftWidget(icon="human")
+
+            ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[-i]), secondary_text = "Void Type: " + VoidType[-i], tertiary_text = "Void Volume: " + VoidVolume[-i]+ "ml")
+
+            ListComponents.add_widget(Icon)
+            ScreenLayout.add_widget(ListComponents)
+            i+=1
