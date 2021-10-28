@@ -1,0 +1,28 @@
+<BladderDiaryDaySelection>:
+    FloatLayout:
+        MDRoundFlatButton:
+            id: DayOne
+            text: "Day 1"
+            font_size: 25
+            size_hint: .4, .06
+            pos_hint: {"top":0.6, "center_x": 0.5}
+            on_release:
+                root.parent.current = "BladderDiary"
+        
+        MDRoundFlatButton:
+            id: DayTwo
+            text: "Day 2"
+            font_size: 25
+            size_hint: .4, .06
+            pos_hint: {"top":0.5, "center_x": 0.5}
+            on_release:
+                root.parent.current = "BladderDiary"
+        
+        MDRoundFlatButton:
+            id: DayThree
+            text: "Day 3"
+            font_size: 25
+            size_hint: .4, .06
+            pos_hint: {"top":0.4, "center_x": 0.5}
+            on_release:
+                root.parent.current = "BladderDiary"

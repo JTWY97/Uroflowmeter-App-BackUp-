@@ -1,6 +1,6 @@
 from kivymd.uix.list import OneLineAvatarListItem
 from kivymd.uix.screen import Screen
-from kivymd.uix.list import MDList, ThreeLineAvatarListItem
+from kivymd.uix.list import ThreeLineAvatarListItem
 from kivymd.uix.list import IconLeftWidget
 import pyrebase
 import numpy as np
@@ -21,15 +21,16 @@ class BladderDiary(Screen):
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
 
-    def GetData_Volume(self):
-        Volume = db.child("patientData").child(self.PatientID).child("day 1").child("volume").get()
+    def GetData_Volume(self, dayID):
+        print(dayID)
+        Volume = db.child("patientData").child(self.PatientID).child(dayID).child("volume").get()
         PatientUroflowData_Volume = Volume.val()
         VoidVolume = PatientUroflowData_Volume.split(',')
         return VoidVolume
 
-    def GetData_Time(self):
+    def GetData_Time(self, dayID):
         VoidTimeList = []
-        PatientUroflowData_Time = db.child("patientData").child(self.PatientID).child("day 1").child("time").get()
+        PatientUroflowData_Time = db.child("patientData").child(self.PatientID).child(dayID).child("time").get()
         PatientUroflowData_Time = PatientUroflowData_Time.val()
         VoidTimeArray = PatientUroflowData_Time.split(',')
         VoidTimeArray = np.array(VoidTimeArray).astype(np.float)
@@ -49,9 +50,9 @@ class BladderDiary(Screen):
         VoidTime = str(int(out[3])) + str(int(out[2])) + ":" + str(int(out[1]))+ str(int(out[0]))
         return VoidTime
 
-    def GetData_VoidType(self):
+    def GetData_VoidType(self, dayID):
         print("PatientID:" + self.PatientID)
-        PatientUroflowData_VoidType = db.child("patientData").child(self.PatientID).child("day 1").child("episode").get()
+        PatientUroflowData_VoidType = db.child("patientData").child(self.PatientID).child(dayID).child("episode").get()
         PatientUroflowData_VoidType = PatientUroflowData_VoidType.val()
         print(PatientUroflowData_VoidType)
         if PatientUroflowData_VoidType != None:
@@ -65,10 +66,10 @@ class BladderDiary(Screen):
         PatientWakeTime = db.child("patientUsers").child(self.PatientID).child("wakeup").get().val()
         return PatientBedTime, PatientWakeTime
 
-    def ShowSummary(self):
+    def ShowSummary(self, dayID):
         ScreenLayout = self.ids['BladderSummary']
 
-        VoidVolume = self.GetData_Volume()
+        VoidVolume = self.GetData_Volume(dayID)
         TotalVoidVolume = []
         
         NumberofVoids = (len(VoidVolume))
@@ -82,11 +83,12 @@ class BladderDiary(Screen):
         ScreenLayout.add_widget(NumberOfVoids_Entry)
         ScreenLayout.add_widget(TotalVoidVolume_Entry)
 
-    def BuildTimeline(self):
+    def BuildTimeline(self, dayID):
+        print(dayID)
         ScreenLayout = self.ids['BladderDiary']
-        VoidType = self.GetData_VoidType()
-        VoidTime, VoidTimeRaw = self.GetData_Time()
-        VoidVolume = self.GetData_Volume()
+        VoidType = self.GetData_VoidType(dayID)
+        VoidTime, VoidTimeRaw = self.GetData_Time(dayID)
+        VoidVolume = self.GetData_Volume(dayID)
 
         SleepTime, WakeTime = self.GetSleepPattern()
         AutomatedVoidType = []
@@ -119,7 +121,7 @@ class BladderDiary(Screen):
                         else:
                             AutomatedVoidType.append("Normal Episode")
                             
-        SendVoidType(AutomatedVoidType, self.PatientID)
+        SendVoidType(str(AutomatedVoidType), self.PatientID)
 
         for i in range(0, len(VoidTime)):
             if AutomatedVoidType[i] == "First Morning Episode":

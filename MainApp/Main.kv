@@ -5,6 +5,7 @@
 #:import FluidIntake Adapter.FluidIntake.FluidIntake
 #:import PatientList Adapter.PatientList.PatientList
 #:import BladderDiary Adapter.BladderDiary.BladderDiary
+#:import BladderDiaryDaySelection Adapter.BladderDiaryDaySelection.BladderDiaryDaySelection
 #:import Doctor_LogIn Adapter.Doctor_LogIn.Doctor_LogIn
 #:import Patient_LogIn Adapter.Patient_LogIn.Patient_LogIn
 #:import NewUser_Doctor Adapter.NewUser_Doctor.NewUser_Doctor
@@ -92,6 +93,8 @@ ScreenManager:
         ##8
         id: FluidIntake
         name: "FluidIntake"
+        on_enter:
+            FluidIntake.FluidDrankLabel()
     
     PatientList:
         ##9
@@ -100,10 +103,16 @@ ScreenManager:
         on_enter:
             PatientList.BuildButton()
             
+
+    BladderDiaryDaySelection:
+        ##10
+        id: BladderDiaryDaySelection
+        name: "BladderDiaryDaySelection"
+
     BladderDiary:
         ##10
         id: BladderDiary
         name: "BladderDiary"
         on_enter:
-            BladderDiary.ShowSummary()
-            BladderDiary.BuildTimeline()
+            BladderDiary.ShowSummary("day 1")
+            BladderDiary.BuildTimeline("day 1")
