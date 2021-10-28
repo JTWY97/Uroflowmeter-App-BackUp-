@@ -3,12 +3,11 @@
         do_scroll_x: False
         do_scroll_y: True
         GridLayout:
-            rows: 4
+            rows: 6
             size:(root.width, root.height)
             size_hint_y: None
             height: self.minimum_height
             row_default_height: 180
-            #row_force_default: True 
             FloatLayout:
                 MDIconButton:
                     id: DayOne
@@ -31,16 +30,18 @@
                     on_press:
                         root.BuildTimeline("day 3")
                         root.ShowSummary("day 3")
+            FloatLayout:
+                id: ErrorMessage
+                Label:
+                    pos_hint: {"top":1, "center_x": 0.5}
             MDList:
                 id: BladderDiary
             MDList:
                 id: BladderSummary
-
             MDRoundFlatButton:
                 text: "Access Symptoms Here"
                 on_press:
                     root.parent.current = "SymptomTracker"
-
             MDRoundFlatButton:
                 text: "Back"
                 on_press:
