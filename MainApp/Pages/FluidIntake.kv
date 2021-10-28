@@ -6,21 +6,24 @@
             MDIconButton:
                 id: DayOne
                 pos_hint: {"top":0.6, "center_x": 0.2}
-                icon: "./Styles/BladderDiaryIcons/Morning.png"
+                icon: "./Styles/DayLogos/Day1.png"
+                user_font_size: dp(40)
                 on_press:
                     root.GetDay(button = "DayOne")
 
             MDIconButton:
                 id: DayTwo
                 pos_hint: {"top":0.6, "center_x": 0.5}
-                icon: "./Styles/BladderDiaryIcons/Normal.png"
+                icon: "./Styles/DayLogos/Day2.png"
+                user_font_size: dp(40)
                 on_press:
                     root.GetDay(button = "DayTwo")
 
             MDIconButton:
                 id: DayThree
                 pos_hint: {"top":0.6, "center_x": 0.8}
-                icon: "./Styles/BladderDiaryIcons/Nocturia.png"
+                icon: "./Styles/DayLogos/Day3.png"
+                user_font_size: dp(40)
                 on_press:
                     root.GetDay(button = "DayThree")
 
@@ -40,7 +43,7 @@
                 pos_hint: {"top":0.8, "center_x": 0.3}
                 theme_text_color: 'Custom'
                 text_color: app.theme_cls.primary_color
-                user_font_size: 150
+                user_font_size: dp(60)
                 on_release:
                     root.callback(button = 'button1')
 
@@ -50,7 +53,7 @@
                 pos_hint: {"top":0.8, "center_x": 0.5}
                 theme_text_color: 'Custom'                    
                 text_color: app.theme_cls.primary_color
-                user_font_size: 150
+                user_font_size: dp(60)
                 on_release:
                     root.callback(button = 'button2')
 
@@ -60,7 +63,7 @@
                 pos_hint: {"top":0.8, "center_x": 0.7}
                 theme_text_color: 'Custom'
                 text_color: app.theme_cls.primary_color
-                user_font_size: 150
+                user_font_size: dp(60)
                 on_release:
                     root.callback(button = 'button3')
 

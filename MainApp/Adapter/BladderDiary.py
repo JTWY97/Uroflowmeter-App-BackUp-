@@ -137,17 +137,18 @@ class BladderDiary(Screen, EventDispatcher):
 
             for i in range(0, len(VoidTime)):
                 if AutomatedVoidType[i] == "First Morning Episode":
-                    Icon = MDIconButton(icon="./Styles/BladderDiaryIcons/Morning.png")
+                    Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Morning.png")
                 elif AutomatedVoidType[i] == "Normal Episode":
-                    Icon = MDIconButton(icon="./Styles/BladderDiaryIcons/Normal.png")
+                    Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Normal.png")
                 elif AutomatedVoidType[i] == "Nocturia Episode":
-                    Icon = MDIconButton(icon="./Styles/BladderDiaryIcons/Nocturia.png")
+                    Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Nocturia.png")
                 else:
-                    Icon = MDIconButton(icon="human")
+                    Icon = IconLeftWidget(icon="human")
 
                 ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + AutomatedVoidType[i], tertiary_text = "Void Volume: " + VoidVolume[i]+ "ml")
                 ListComponents.add_widget(Icon)
                 ScreenLayout.add_widget(ListComponents)
+
                 i+=1
         else:
             ScreenLayout = self.ids['ErrorMessage']

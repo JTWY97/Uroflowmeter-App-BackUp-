@@ -12,21 +12,24 @@
                 MDIconButton:
                     id: DayOne
                     pos_hint: {"top":0.7, "center_x": 0.2}
-                    icon: "./Styles/BladderDiaryIcons/Morning.png"
+                    icon: "./Styles/DayLogos/Day1.png"
+                    user_font_size: dp(40)
                     on_press:
                         root.BuildTimeline("day 1")
                         root.ShowSummary("day 1")
                 MDIconButton:
                     id: DayTwo
                     pos_hint: {"top":0.7, "center_x": 0.5}
-                    icon: "./Styles/BladderDiaryIcons/Normal.png"
+                    icon: "./Styles/DayLogos/Day2.png"
+                    user_font_size: dp(40)
                     on_press:
                         root.BuildTimeline("day 2")
                         root.ShowSummary("day 2")
                 MDIconButton:
                     id: DayThree
                     pos_hint: {"top":0.7, "center_x": 0.8}
-                    icon: "./Styles/BladderDiaryIcons/Nocturia.png"
+                    icon: "./Styles/DayLogos/Day3.png"
+                    user_font_size: dp(40)
                     on_press:
                         root.BuildTimeline("day 3")
                         root.ShowSummary("day 3")
