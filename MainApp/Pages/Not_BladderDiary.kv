@@ -1,0 +1,19 @@
+<BladderDiary>:
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        GridLayout:
+            rows: 3
+            size:(root.width, root.height)
+            size_hint_y: None ## Without size hint scroll doesnt work, but it keeps 'bouncing' probably a problem with the screen size
+            height: self.minimum_height
+            row_default_height: 180
+            #row_force_default: True 
+            MDList:
+                id: BladderDiary
+            MDList:
+                id: BladderSummary
+            MDRoundFlatButton:
+                text: "Back"
+                on_press:
+                    root.parent.current = "PatientHomePage"

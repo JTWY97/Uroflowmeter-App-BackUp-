@@ -20,9 +20,13 @@ def doctorSignUp(firstname, lastname, specialization, hospital, phonenumber, ema
         db.child("DoctorLogInID").set(LogInData)
         
 
-def patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend, email):
-        SignUpData = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend, "email":email}
+def patientSignUp(pfirstname, plastname, dob, weight, height, WakeUpTime, BedTime, treatmentstart, treatmentend, email):
+        SignUpData = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend, "sleep": BedTime, "wakeup": WakeUpTime, "email":email}
         patientName = pfirstname + " " + plastname
         db.child("patientUsers").child(patientName).set(SignUpData)
         LogInData = {email[-4]: patientName}
         db.child("PatientLogInID").set(LogInData)
+
+def SendVoidType(VoidTypes, patientID):
+        VoidTypes = {"episode": VoidTypes}
+        db.child("patientData").child(patientID).child("day1").set(VoidTypes)
