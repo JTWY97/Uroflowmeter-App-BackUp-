@@ -150,6 +150,7 @@ class BladderDiary(Screen, EventDispatcher):
                 ScreenLayout.add_widget(ListComponents)
 
                 i+=1
+                
         else:
             ScreenLayout = self.ids['ErrorMessage']
             NoDataMessage = Label(text = "You have no recorded data for this day", color = "black")
