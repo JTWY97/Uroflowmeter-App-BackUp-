@@ -5,7 +5,6 @@
 #:import FluidIntake Adapter.FluidIntake.FluidIntake
 #:import PatientList Adapter.PatientList.PatientList
 #:import BladderDiary Adapter.BladderDiary.BladderDiary
-#:import BladderDiaryDaySelection Adapter.BladderDiaryDaySelection.BladderDiaryDaySelection
 #:import Doctor_LogIn Adapter.Doctor_LogIn.Doctor_LogIn
 #:import Patient_LogIn Adapter.Patient_LogIn.Patient_LogIn
 #:import NewUser_Doctor Adapter.NewUser_Doctor.NewUser_Doctor
@@ -102,12 +101,6 @@ ScreenManager:
         name: "PatientList"
         on_enter:
             PatientList.BuildButton()
-            
-
-    BladderDiaryDaySelection:
-        ##10
-        id: BladderDiaryDaySelection
-        name: "BladderDiaryDaySelection"
 
     BladderDiary:
         ##10
