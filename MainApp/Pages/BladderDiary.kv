@@ -35,9 +35,13 @@
                 id: BladderDiary
             MDList:
                 id: BladderSummary
-            FloatLayout:
-                MDRoundFlatButton:
-                    text: "Back"
-                    pos_hint: {"top":0.7, "center_x": 0.5}
-                    on_press:
-                        root.parent.current = "PatientHomePage"
+
+            MDRoundFlatButton:
+                text: "Access Symptoms Here"
+                on_press:
+                    root.parent.current = "SymptomTracker"
+
+            MDRoundFlatButton:
+                text: "Back"
+                on_press:
+                    root.parent.current = "PatientHomePage"
