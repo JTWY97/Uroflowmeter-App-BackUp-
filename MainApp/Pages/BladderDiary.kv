@@ -3,7 +3,7 @@
         do_scroll_x: False
         do_scroll_y: True
         GridLayout:
-            rows: 3
+            rows: 4
             size:(root.width, root.height)
             size_hint_y: None
             height: self.minimum_height
@@ -13,6 +13,12 @@
                 id: BladderDiary
             MDList:
                 id: BladderSummary
+
+            MDRoundFlatButton:
+                text: "Access Symptoms Here"
+                on_press:
+                    root.parent.current = "SymptomTracker"
+
             MDRoundFlatButton:
                 text: "Back"
                 on_press:
