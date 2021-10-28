@@ -9,7 +9,6 @@ class MainApp(MDApp):
     UserID_Patient = ""
     UserID_Doctor = ""
 
-
     Builder.load_file("./Pages/Patient_LogIn.kv")
     Builder.load_file("./Pages/Doctor_LogIn.kv")
     Builder.load_file("./Pages/WelcomePage.kv")
