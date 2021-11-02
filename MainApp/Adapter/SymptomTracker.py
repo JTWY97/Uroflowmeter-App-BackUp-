@@ -103,6 +103,6 @@ class SymptomTracker(Screen):
             return self.SymptomList
 
     def SendSymptomToFirebase(self):
-        Label = "Symptoms Experienced" + str(self.date)
+        Label = "Symptoms Experienced"
         data = {Label: self.SymptomList}
         db.child("patientData").child(self.PatientID).update(data)
