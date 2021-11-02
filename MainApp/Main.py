@@ -29,13 +29,4 @@ class MainApp(MDApp):
         self.root.ids.Patient_LogIn.log_out()
         self.root.current = 'Patient_LogIn'
 
-    def build(self): ##Meant to fix the duplicate problem on BladderDiary
-        from kivy.resources import resource_find
-
-        filename = './Pages/Not_BladderDiary.kv'
-        filename = resource_find(filename) or filename
-        if filename in Builder.files:
-            Builder.unload_file(filename)
-        return Builder.load_file(filename)
-
 MainApp().run()

@@ -19,12 +19,17 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
+import os
+
+
 class BladderDiary(Screen, EventDispatcher):
     Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
 
     def GetData_VoidType(self, dayID):
+        self.ids.BladderDiary.clear_widgets()
+        self.ids.BladderSummary.clear_widgets()
         print("PatientID:" + self.PatientID)
         PatientUroflowData_VoidType = db.child("patientData").child(self.PatientID).child(dayID).child("episode").get()
         PatientUroflowData_VoidType = PatientUroflowData_VoidType.val()
@@ -76,7 +81,6 @@ class BladderDiary(Screen, EventDispatcher):
         return PatientBedTime, PatientWakeTime
 
     def ShowSummary(self, dayID):
-        
         VoidVolume = self.GetData_Volume(dayID)
         TotalVoidVolume = []
         if len(VoidVolume) != 0:
