@@ -1,7 +1,7 @@
 #this code shld be in all the py files which will communicate with firebase
 import pyrebase
 import json
-  
+
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
   "authDomain": "bg4102app.firebaseapp.com",
@@ -30,3 +30,8 @@ def patientSignUp(pfirstname, plastname, dob, weight, height, WakeUpTime, BedTim
 def SendVoidType(VoidTypes, patientID):
         VoidTypes = {"episode": VoidTypes}
         db.child("patientData").child(patientID).child("day1").set(VoidTypes)
+
+VoidIndexFetched = []
+
+def GetVoidDetails(VoidIndex):
+    VoidIndexFetched.append(VoidIndex)

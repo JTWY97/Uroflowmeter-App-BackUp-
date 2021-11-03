@@ -1,13 +1,15 @@
 from kivy.event import EventDispatcher
+from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.list import OneLineAvatarListItem
 from kivymd.uix.screen import Screen
 from kivymd.uix.list import ThreeLineAvatarListItem
 from kivymd.uix.list import IconLeftWidget
-from kivymd.uix.button import MDIconButton
 from kivymd.uix.label import Label
+from  kivy.uix.popup import Popup
 import pyrebase
 import numpy as np
-from ExternalConnections.FirebaseTest import SendVoidType
+from ExternalConnections.FirebaseTest import SendVoidType, GetVoidDetails
+from kivy.uix.floatlayout import FloatLayout
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -21,8 +23,11 @@ db = firebase.database()
 
 import os
 
+class P(FloatLayout):
+    pass
 
 class BladderDiary(Screen, EventDispatcher):
+
     Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
@@ -80,6 +85,16 @@ class BladderDiary(Screen, EventDispatcher):
         PatientWakeTime = db.child("patientUsers").child(self.PatientID).child("wakeup").get().val()
         return PatientBedTime, PatientWakeTime
 
+    def WarningMessage(self):
+        popupWarning = Popup(title='Uh Oh!', content=Label(text='You have no recorded data for this day.'), size_hint=(None, None), size=(400, 400))
+        popupWarning.open()
+
+    def EditVoidData(self, VoidIndex):
+        show = P()
+        GetVoidDetails(VoidIndex)
+        popupVoid = Popup(title = 'Would you like to edit this void?', content=show, size_hint=(None, None), size=(1000, 1000))
+        popupVoid.open()
+
     def ShowSummary(self, dayID):
         VoidVolume = self.GetData_Volume(dayID)
         TotalVoidVolume = []
@@ -96,9 +111,7 @@ class BladderDiary(Screen, EventDispatcher):
             ScreenLayout.add_widget(NumberOfVoids_Entry)
             ScreenLayout.add_widget(TotalVoidVolume_Entry)
         else:
-            ScreenLayout = self.ids['ErrorMessage']
-            NoDataMessage = Label(text = "You have no recorded data for this day", color = "black")
-            ScreenLayout.add_widget(NoDataMessage)
+            pass
 
     def BuildTimeline(self, dayID):
         VoidType = self.GetData_VoidType(dayID)
@@ -106,10 +119,14 @@ class BladderDiary(Screen, EventDispatcher):
         VoidVolume = self.GetData_Volume(dayID)
 
         SleepTime, WakeTime = self.GetSleepPattern()
+
         AutomatedVoidType = []
         if len(VoidVolume) != 0:
+
             ScreenLayout = self.ids['BladderDiary']
+
             MorningEpisode = VoidType.count("First Morning Episode")
+            
             if len(VoidType) != len(VoidTime):
                 if len(VoidType) != 0:
                     Difference = len(VoidTime) - len(VoidType)
@@ -142,10 +159,13 @@ class BladderDiary(Screen, EventDispatcher):
             for i in range(0, len(VoidTime)):
                 if AutomatedVoidType[i] == "First Morning Episode":
                     Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Morning.png")
+                    Icon.bind(on_press = lambda x: self.EditVoidData(i))
                 elif AutomatedVoidType[i] == "Normal Episode":
                     Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Normal.png")
+                    Icon.bind(on_press = lambda x: self.EditVoidData(i))
                 elif AutomatedVoidType[i] == "Nocturia Episode":
                     Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Nocturia.png")
+                    Icon.bind(on_press = lambda x: self.EditVoidData(i))
                 else:
                     Icon = IconLeftWidget(icon="human")
 
@@ -156,6 +176,4 @@ class BladderDiary(Screen, EventDispatcher):
                 i+=1
                 
         else:
-            ScreenLayout = self.ids['ErrorMessage']
-            NoDataMessage = Label(text = "You have no recorded data for this day", color = "black")
-            ScreenLayout.add_widget(NoDataMessage)
+            self.WarningMessage()

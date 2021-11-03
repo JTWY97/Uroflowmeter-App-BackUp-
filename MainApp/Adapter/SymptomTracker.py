@@ -3,6 +3,7 @@ from kivy.uix.screenmanager import SlideTransition
 from kivymd.uix.picker import MDDatePicker
 import pyrebase
 import os
+from ExternalConnections.FirebaseTest import VoidIndexFetched
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -15,14 +16,13 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 class SymptomTracker(Screen):
-
     Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
-
-
+    
     date = []
     SymptomList = []
+    
     def on_save(self, instance, Symptom, date_range):
         self.date.append(str(Symptom))
         self.ids.date_label.text = str(self.date[-1])
@@ -40,7 +40,8 @@ class SymptomTracker(Screen):
             Symptom = "Fatigue"
             self.SymptomList.append(Symptom)
             self.SendSymptomToFirebase()
-            return self.SymptomList
+            print("The index fetched is:" + str(VoidIndexFetched))
+            # return self.SymptomList
             
         elif button == 'button2':
             Symptom = "Leg Swelling"
