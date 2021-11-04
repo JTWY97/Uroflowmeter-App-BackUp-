@@ -31,7 +31,7 @@ class BladderDiary(Screen, EventDispatcher):
     Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
-
+    IconList = []
     def GetData_VoidType(self, dayID):
         self.ids.BladderDiary.clear_widgets()
         self.ids.BladderSummary.clear_widgets()
@@ -45,7 +45,7 @@ class BladderDiary(Screen, EventDispatcher):
         return VoidType
 
     def GetData_Volume(self, dayID):
-        print(dayID)
+        # print(dayID)
         Volume = db.child("patientData").child(self.PatientID).child(dayID).child("volume").get()
         PatientUroflowData_Volume = Volume.val()
         if PatientUroflowData_Volume != None:
@@ -113,11 +113,19 @@ class BladderDiary(Screen, EventDispatcher):
         else:
             pass
 
+
+    def edit_void_callback(self, instance):
+        print(instance)
+        Index = self.IconList.index(instance)
+        self.EditVoidData(Index)
+
+
     def BuildTimeline(self, dayID):
+        print(dayID)
         VoidType = self.GetData_VoidType(dayID)
         VoidTime, VoidTimeRaw = self.GetData_Time(dayID)
         VoidVolume = self.GetData_Volume(dayID)
-
+        
         SleepTime, WakeTime = self.GetSleepPattern()
 
         AutomatedVoidType = []
@@ -153,27 +161,27 @@ class BladderDiary(Screen, EventDispatcher):
                                 MorningEpisode += 1
                             else:
                                 AutomatedVoidType.append("Normal Episode")
-                                
+
             SendVoidType(str(AutomatedVoidType), self.PatientID)
+
+            
 
             for i in range(0, len(VoidTime)):
                 if AutomatedVoidType[i] == "First Morning Episode":
-                    Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Morning.png")
-                    Icon.bind(on_press = lambda x: self.EditVoidData(i))
+                    Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Morning.png", on_press = self.edit_void_callback)
+                    self.IconList.append(Icon)
                 elif AutomatedVoidType[i] == "Normal Episode":
-                    Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Normal.png")
-                    Icon.bind(on_press = lambda x: self.EditVoidData(i))
+                    Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Normal.png", on_press = self.edit_void_callback)
+                    self.IconList.append(Icon)
                 elif AutomatedVoidType[i] == "Nocturia Episode":
-                    Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Nocturia.png")
-                    Icon.bind(on_press = lambda x: self.EditVoidData(i))
+                    Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Nocturia.png", on_press = self.edit_void_callback)
+                    self.IconList.append(Icon)
                 else:
                     Icon = IconLeftWidget(icon="human")
 
                 ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + AutomatedVoidType[i], tertiary_text = "Void Volume: " + VoidVolume[i]+ "ml")
                 ListComponents.add_widget(Icon)
-                ScreenLayout.add_widget(ListComponents)
-
-                i+=1
                 
+                ScreenLayout.add_widget(ListComponents)
         else:
             self.WarningMessage()

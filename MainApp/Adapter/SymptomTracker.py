@@ -54,7 +54,7 @@ class SymptomTracker(Screen):
             self.SymptomList.append(Symptom)
             self.SendSymptomToFirebase()
             return self.SymptomList
-            
+        
         elif button == 'button4':
             Symptom = "Nausea and/or vomiting"
             self.SymptomList.append(Symptom)
