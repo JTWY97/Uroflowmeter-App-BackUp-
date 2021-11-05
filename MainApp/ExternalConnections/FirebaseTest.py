@@ -2,6 +2,7 @@
 import pyrebase
 import json
 
+
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
   "authDomain": "bg4102app.firebaseapp.com",
@@ -11,6 +12,12 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 db = firebase.database() #connect to firebase
+
+def listToString(s): 
+    str1 = ""  
+    for ele in s: 
+        str1 += ele   
+    return str1 
 
 def doctorSignUp(firstname, lastname, specialization, hospital, phonenumber, email):
         SignUpData = {"firstname": firstname, "lastname": lastname, "specialization": specialization, "hospital": hospital, "phonenumber": phonenumber, "email": email}
@@ -27,11 +34,16 @@ def patientSignUp(pfirstname, plastname, dob, weight, height, WakeUpTime, BedTim
         LogInData = {email[-4]: patientName}
         db.child("PatientLogInID").set(LogInData)
 
-def SendVoidType(VoidTypes, patientID):
-        VoidTypes = {"episode": VoidTypes}
-        db.child("patientData").child(patientID).child("day1").set(VoidTypes)
+def SendVoidType(VoidTypes, patientID, dayID):
+        db.child("patientData").child(patientID).child(dayID).set(VoidTypes)
 
 VoidIndexFetched = []
+WhichDay = []
 
-def GetVoidDetails(VoidIndex):
+def GetVoidDetails(VoidIndex, dayID):
     VoidIndexFetched.append(VoidIndex)
+    WhichDay.append(dayID)
+    return VoidIndexFetched, WhichDay
+
+VoidTime = db.child("raspberrypi").child("raspberry1").child("button1").child("03-11-2021").child("time").get().val()
+print(VoidTime)

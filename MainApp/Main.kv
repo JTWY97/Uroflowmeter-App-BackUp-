@@ -87,6 +87,8 @@ ScreenManager:
         ##7
         id: SymptomTracker
         name: "SymptomTracker"
+        on_enter:
+            SymptomTracker.GetSetupData()
 
     FluidIntake:
         ##8
@@ -106,9 +108,10 @@ ScreenManager:
         ##10
         id: BladderDiary
         name: "BladderDiary"
-        # on_enter:
-        #     BladderDiary.ShowSummary("day 1")
-        #     BladderDiary.BuildTimeline("day 1")
+        on_enter:
+            BladderDiary.GetDaysAndRaspberryPiID()
+            # BladderDiary.ShowSummary("day 1")
+            # BladderDiary.BuildTimeline("day 1")
     # P:
     #     ##10
     #     id: P

@@ -1,196 +1,194 @@
 <SymptomTracker>:
     id:SymptomTracker
     name: 'SymptomTracker'
-    FloatLayout:
-        MDLabel:
-            id: Symptom_T
-            text: "How are your symptoms!"
-            font_size: 40
-            halign: 'center'
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+
+        GridLayout:
+            rows: 5
+            size:(root.width, root.height)
             size_hint_y: None
-            pos_hint: {"top": .9, "center_x": .5}
-            height: self.texture_size[1]  
+            height: self.minimum_height
+            row_default_height: 200
 
-        MDRoundFlatButton:
-            text: "Open Date Picker!"
-            font_size: 25
-            size_hint: .5, .06
-            pos_hint: {"top":0.7, "center_x": 0.5}
-            on_release: root.show_date_picker()
+            FloatLayout:
+                ThreeLineIconListItem:
+                    id: VoidInfo
+                    text: "Void Time:"
+                    secondary_text: "Void Type:"
+                    tertiary_text: "Void Volume:"
+                    font_size: 30
+                    halign: 'center'
+                    size_hint_y: None
+                    pos_hint: {"top": 1, "center_x": .5}
+                    IconLeftWidget:
+                        id: VoidInfoIcon
+                        icon:"./Styles/BladderDiaryIcons/Normal.png"
 
-        MDLabel:
-            id: date_label
-            text: "Some Stuff!"
-            pos_hint: {"top":0.6, "center_x": 0.95}
+                MDLabel:
+                    text: "Change void type:"
+                    font_size: 40
+                    halign: 'center'
+                    size_hint_y: None
+                    pos_hint: {"top": .2, "center_x": .5}
+                    height: self.texture_size[1]
 
-        MDRoundFlatButton:
-            text: "Back"
-            font_size: 25
-            size_hint: .5, .06
-            pos_hint: {"top":0.3, "center_x": 0.5}
-            on_release:
-                root.parent.current = "PatientHomePage"
-                # root.manager.transition.direction = "right"
+            FloatLayout:
+                MDLabel:
+                    text: "Morning Void"
+                    font_size: 30
+                    halign: 'center'
+                    size_hint_y: None
+                    pos_hint: {"top":0.1, "center_x": 0.2}
+                    height: self.texture_size[1]
+                MDIconButton:
+                    id: Morning
+                    pos_hint: {"top":1, "center_x": 0.2}
+                    icon: "./Styles/BladderDiaryIcons/Morning.png"
+                    user_font_size: dp(40)
+                    on_press:
+                        root.ChangeVoidType(button = 'Morning')
 
-    GridLayout:
-        rows: 3
-        cols: 5
-        pos_hint: {"center_y":0.2, "center_x": 0.65}
-        MDIconButton:
-            id: ButtonOne
-            icon: "./Styles/SymptomTrackerIcons/Fatigue.png"
-            # pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.SendSymptom(button = 'button1')
+                MDLabel:
+                    text: "Normal Void"
+                    font_size: 30
+                    halign: 'center'
+                    size_hint_y: None
+                    pos_hint: {"top":0.1, "center_x": 0.5}
+                    height: self.texture_size[1]
+                MDIconButton:
+                    id: Normal
+                    pos_hint: {"top":1, "center_x": 0.5}
+                    icon: "./Styles/BladderDiaryIcons/Normal.png"
+                    user_font_size: dp(40)
+                    on_press:
+                        root.ChangeVoidType(button = 'Normal')
 
-        MDIconButton:
-            id: ButtonTwo
-            icon: "./Styles/SymptomTrackerIcons/SwollenLeg.png"
-            # pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.SendSymptom(button = 'button2')
+                MDLabel:
+                    text: "Nocturia Void"
+                    font_size: 30
+                    halign: 'center'
+                    size_hint_y: None
+                    pos_hint: {"top":0.1, "center_x": 0.8}
+                    height: self.texture_size[1]
+                MDIconButton:
+                    id: Nocturia
+                    pos_hint: {"top":1, "center_x": 0.8}
+                    icon: "./Styles/BladderDiaryIcons/Nocturia.png"
+                    user_font_size: dp(40)
+                    on_press:
+                        root.ChangeVoidType(button = 'Nocturia')
 
-        MDIconButton:
-            id: ButtonThree
-            icon: "./Styles/SymptomTrackerIcons/Fever.png"
-            # pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.SendSymptom(button = 'button3')
-        MDIconButton:
-            id: ButtonFour
-            icon: "./Styles/SymptomTrackerIcons/Nausea.png"
-            # pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.SendSymptom(button = 'button4')
 
-        MDIconButton:
-            id: ButtonFive
-            icon: "./Styles/SymptomTrackerIcons/Headache.png"
-            # pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.SendSymptom(button = 'button5')
+            FloatLayout:
+                MDLabel:
+                    id: Symptom_T
+                    text: "What symptoms did you experience during this void?"
+                    font_size: 40
+                    halign: 'center'
+                    size_hint_y: None
+                    pos_hint: {"top": .9, "center_x": .5}
+                    height: self.texture_size[1]  
 
-        MDIconButton:
-            id: ButtonSix
-            icon: "./Styles/SymptomTrackerIcons/Leaks.png"
-            pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
+            GridLayout:
+                rows: 3
+                cols: 5
+                pos_hint: {"center_y":0, "center_x": 0.5}
+                MDIconButton:
+                    id: ButtonOne
+                    icon: "./Styles/SymptomTrackerIcons/Fatigue.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.SendSymptom(button = 'button1')
+                MDIconButton:
+                    id: ButtonTwo
+                    icon: "./Styles/SymptomTrackerIcons/SwollenLeg.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.SendSymptom(button = 'button2')
+                MDIconButton:
+                    id: ButtonThree
+                    icon: "./Styles/SymptomTrackerIcons/Fever.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.SendSymptom(button = 'button3')
+                MDIconButton:
+                    id: ButtonFour
+                    icon: "./Styles/SymptomTrackerIcons/Nausea.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.SendSymptom(button = 'button4')
+                MDIconButton:
+                    id: ButtonFive
+                    icon: "./Styles/SymptomTrackerIcons/Headache.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.SendSymptom(button = 'button5')
+                MDIconButton:
+                    id: ButtonSix
+                    icon: "./Styles/SymptomTrackerIcons/Leaks.png"
+                    pos_hint: {"top":1, "center_x": 0.3}
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                MDIconButton:
+                    id: ButtonSeven
+                    icon: "./Styles/SymptomTrackerIcons/Foulsmell.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.callback(button = 'button7')
+                MDIconButton:
+                    id: ButtonEight
+                    icon: "./Styles/SymptomTrackerIcons/pelvicpain.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.callback(button = 'button8')
+                MDIconButton:
+                    id: ButtonNine
+                    icon: "./Styles/SymptomTrackerIcons/cloudyurine.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.callback(button = 'button9')
+                MDIconButton:
+                    id: ButtonTen
+                    icon: "./Styles/SymptomTrackerIcons/crampsonside.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.callback(button = 'button10')
+                MDIconButton:
+                    id: ButtonEleven
+                    icon: "./Styles/SymptomTrackerIcons/hesitancytourinate.png"
+                    theme_text_color: 'Custom'
+                    text_color: app.theme_cls.primary_color
+                    user_font_size: 90
+                    on_release:
+                        root.callback(button = 'button11')
 
-        MDIconButton:
-            id: ButtonSeven
-            icon: "./Styles/SymptomTrackerIcons/Foulsmell.png"
-            # pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.callback(button = 'button7')
-
-        MDIconButton:
-            id: ButtonEight
-            icon: "./Styles/SymptomTrackerIcons/pelvicpain.png"
-            pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.callback(button = 'button8')
-
-        MDIconButton:
-            id: ButtonNine
-            icon: "./Styles/SymptomTrackerIcons/cloudyurine.png"
-            pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.callback(button = 'button9')
-
-        MDIconButton:
-            id: ButtonTen
-            icon: "./Styles/SymptomTrackerIcons/crampsonside.png"
-            pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.callback(button = 'button10')
-
-        MDIconButton:
-            id: ButtonEleven
-            icon: "./Styles/SymptomTrackerIcons/hesitancytourinate.png"
-            pos_hint: {"top":1, "center_x": 0.3}
-            theme_text_color: 'Custom'
-            text_color: app.theme_cls.primary_color
-            user_font_size: 90
-            on_release:
-                root.callback(button = 'button11')
-
-        #MDIconButton:
-        #     id: ButtonTwelve
-        #     icon: "human"
-        #     # pos_hint: {"top":1, "center_x": 0.3}
-        #     theme_text_color: 'Custom'
-        #     text_color: app.theme_cls.primary_color
-        #     user_font_size: 50
-        #     # on_release:
-        #     #     root.callback(button = 'button1')
-
-        # MDIconButton:
-        #     id: ButtonEleven
-        #     icon: "human"
-        #     # pos_hint: {"top":1, "center_x": 0.3}
-        #     theme_text_color: 'Custom'
-        #     text_color: app.theme_cls.primary_color
-        #     user_font_size: 50
-
-        # MDIconButton:
-        #     id: ButtonTwelve
-        #     icon: "human"
-        #     # pos_hint: {"top":1, "center_x": 0.3}
-        #     theme_text_color: 'Custom'
-        #     text_color: app.theme_cls.primary_color
-        #     user_font_size: 50
-
-        # MDIconButton:
-        #     id: ButtonThirteen
-        #     icon: "human"
-        #     # pos_hint: {"top":1, "center_x": 0.3}
-        #     theme_text_color: 'Custom'
-        #     text_color: app.theme_cls.primary_color
-        #     user_font_size: 50
-        #     # on_release:
-        #     #     root.callback(button = 'button1')
-
-        # MDIconButton:
-        #     id: ButtonFourteen
-        #     icon: "human"
-        #     # pos_hint: {"top":1, "center_x": 0.3}
-        #     theme_text_color: 'Custom'
-        #     text_color: app.theme_cls.primary_color
-        #     user_font_size: 50
-
-        # MDIconButton:
-        #     id: ButtonFifteen
-        #     icon: "human"
-        #     # pos_hint: {"top":1, "center_x": 0.3}
-        #     theme_text_color: 'Custom'
-        #     text_color: app.theme_cls.primary_color
-        #     user_font_size: 50   
+            FloatLayout:
+                MDRoundFlatButton:
+                    text: "Back"
+                    font_size: 25
+                    size_hint: .1, .2
+                    pos_hint: {"top":0.3, "center_x": 0.5}
+                    on_release:
+                        root.parent.current = "PatientHomePage"
+                        root.manager.transition.direction = "right"

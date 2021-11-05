@@ -44,6 +44,12 @@ class FluidIntake(Screen, EventDispatcher):
 		VolumeDrank = Volume.val()
 		if VolumeDrank != None:
 			self.ids.VolumeDrankOnThisDay.text = str(int(VolumeDrank)) + " ml"
+			if self.dayID == "day 1":
+				self.volume_day1.append(int(VolumeDrank))
+			elif self.dayID == "day 2":
+				self.volume_day2.append(int(VolumeDrank))
+			elif self.dayID == "day 3":
+				self.volume_day3.append(int(VolumeDrank))
 		else:
 			self.ids.VolumeDrankOnThisDay.text = "You have not logged any fluid intake"
 		

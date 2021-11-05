@@ -3,7 +3,8 @@ from kivy.uix.screenmanager import SlideTransition
 from kivymd.uix.picker import MDDatePicker
 import pyrebase
 import os
-from ExternalConnections.FirebaseTest import VoidIndexFetched
+import numpy as np
+from ExternalConnections.FirebaseTest import VoidIndexFetched, WhichDay
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -19,29 +20,99 @@ class SymptomTracker(Screen):
     Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
-    
-    date = []
+
     SymptomList = []
-    
-    def on_save(self, instance, Symptom, date_range):
-        self.date.append(str(Symptom))
-        self.ids.date_label.text = str(self.date[-1])
-        
-    def on_cancel(self, instance, Symptom):
-        self.ids.date_label.text = "You Clicked Cancel"
-    
-    def show_date_picker(self):
-        date_dialog = MDDatePicker()
-        date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
-        date_dialog.open()
+    EpiDay = ''
+    VoidNo = ''
+
+    def GetSetupData(self):
+        if len(VoidIndexFetched) != 0:
+            VoidNumber = VoidIndexFetched[-1]
+        else:
+            VoidNumber = 0
+        if len(WhichDay) != 0:
+            DayID = WhichDay
+        else:
+            DayID = "day 1"
+        self.ShowVoid(VoidNumber, DayID)
+
+    def GetData_VoidType(self, dayID, VoidNumber):
+        PatientUroflowData_VoidType = db.child("patientData").child(self.PatientID).child(dayID).child(VoidNumber).get()
+        VoidType = PatientUroflowData_VoidType.val()
+        return VoidType
+
+    def GetData_Volume(self, dayID):
+        Volume = db.child("patientData").child(self.PatientID).child(dayID).child("volume").get()
+        PatientUroflowData_Volume = Volume.val()
+        if PatientUroflowData_Volume != None:
+            VoidVolume = PatientUroflowData_Volume.split(',')
+        else:
+            VoidVolume = []
+        return VoidVolume
+
+    def GetData_Time(self, dayID):
+        VoidTimeList = []
+        PatientUroflowData_Time = db.child("patientData").child(self.PatientID).child(dayID).child("time").get()
+        PatientUroflowData_Time = PatientUroflowData_Time.val()
+        if PatientUroflowData_Time != None:
+            VoidTimeArray = PatientUroflowData_Time.split(',')
+            print(VoidTimeArray)
+            for i in range(0, len(VoidTimeArray)):
+                Time = VoidTimeArray[i]
+                VoidTime = Time[0] + Time[1] + ':' + Time[2] + Time[3]
+                VoidTimeList.append(VoidTime)
+        else:
+            VoidTimeList = []
+            VoidTimeArray = []
+        return VoidTimeList, VoidTimeArray
+
+    def ShowVoid(self, VoidNumber, dayID):
+        str1 = " "
+        stri = str1.join(dayID)
+        str2 = " "
+        VoidNumberStri = str2.join(VoidNumber)
+        EpisodeDayID = stri + 'episode'
+        self.EpiDay = EpisodeDayID
+        self.VoidNo = VoidNumberStri
+        VoidType = self.GetData_VoidType(EpisodeDayID, VoidNumberStri)
+        VoidTime, VoidTimeRaw = self.GetData_Time(stri)
+        VoidVolume = self.GetData_Volume(stri)
+        self.ids.VoidInfo.text = "VoidTime: " + VoidTime[int(VoidNumberStri)]
+        self.ids.VoidInfo.secondary_text = "Void Type: " + VoidType
+        self.ids.VoidInfo.tertiary_text = "Void Volume: " + VoidVolume[int(VoidNumberStri)]+ "ml"
+        if VoidType == "First Morning Episode":
+            self.ids.VoidInfoIcon.icon = "./Styles/BladderDiaryIcons/Morning.png"
+        elif VoidType == "Normal Episode":
+            self.ids.VoidInfoIcon.icon = "./Styles/BladderDiaryIcons/Normal.png"
+        elif VoidType == "Nocturia Episode":
+            self.ids.VoidInfoIcon.icon = "./Styles/BladderDiaryIcons/Nocturia.png"
+
+    def ChangeVoidType(self, button):
+        if button == 'Morning':
+            db.child("patientData").child(self.PatientID).child(str(self.EpiDay)).update({str(self.VoidNo):"First Morning Episode"})
+            self.UpdateVoidDisplayed("First Morning Episode")
+        elif button == 'Normal':
+            db.child("patientData").child(self.PatientID).child(str(self.EpiDay)).update({str(self.VoidNo):"Normal Episode"})
+            self.UpdateVoidDisplayed("Normal Episode")
+        elif button == 'Nocturia':
+            db.child("patientData").child(self.PatientID).child(str(self.EpiDay)).update({str(self.VoidNo):"Nocturia Episode"})
+            self.UpdateVoidDisplayed("Nocturia Episode")
+
+    def UpdateVoidDisplayed(self, VoidType):
+        self.ids.VoidInfo.secondary_text = "Void Type: " + VoidType
+        if VoidType == "First Morning Episode":
+            self.ids.VoidInfoIcon.icon = "./Styles/BladderDiaryIcons/Morning.png"
+        elif VoidType == "Normal Episode":
+            self.ids.VoidInfoIcon.icon = "./Styles/BladderDiaryIcons/Normal.png"
+        elif VoidType == "Nocturia Episode":
+            self.ids.VoidInfoIcon.icon = "./Styles/BladderDiaryIcons/Nocturia.png"
 
     def SendSymptom(self, button):
         if button == 'button1':
             Symptom = "Fatigue"
             self.SymptomList.append(Symptom)
             self.SendSymptomToFirebase()
-            print("The index fetched is:" + str(VoidIndexFetched))
-            # return self.SymptomList
+            return self.SymptomList
             
         elif button == 'button2':
             Symptom = "Leg Swelling"
