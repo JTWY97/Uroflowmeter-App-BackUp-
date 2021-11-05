@@ -44,6 +44,3 @@ def GetVoidDetails(VoidIndex, dayID):
     VoidIndexFetched.append(VoidIndex)
     WhichDay.append(dayID)
     return VoidIndexFetched, WhichDay
-
-VoidTime = db.child("raspberrypi").child("raspberry1").child("button1").child("03-11-2021").child("time").get().val()
-print(VoidTime)
