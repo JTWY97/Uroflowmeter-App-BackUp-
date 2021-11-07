@@ -43,6 +43,8 @@ class PatientList(MDApp):
             startdate.append(db.child("patientUsers").child(name).child("start").get().val())
             start = startdate[0]
 
+            print(startdate)
+
             enddate = []
             enddate.append(db.child("patientUsers").child(name).child("end").get().val())
             end = enddate[0]
