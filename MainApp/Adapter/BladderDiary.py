@@ -131,7 +131,7 @@ class BladderDiary(Screen, EventDispatcher):
         show = P()
         print("testets" + str(VoidIndex))
         GetVoidDetails(str(VoidIndex), str(self.DayID))
-        popupVoid = Popup(title = 'Would you like to edit this void?', content=show, size_hint=(None, None), size=(1000, 1000))
+        popupVoid = Popup(title = 'Would you like to edit this void?', content=show, size_hint=(None, None), size=(400, 400), pos_hint={'center_x' : 0.5})
         popupVoid.open()
 
     def ShowSummary(self, dayID):
