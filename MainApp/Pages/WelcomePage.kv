@@ -5,7 +5,6 @@
             icon: "./Styles/AppLogo/WaterDrop.png"
             pos_hint: {"top":1, "center_x": 0.5}
 
-
         MDLabel:
             text: "Welcome to Ap-pee!"
             font_size: 40
@@ -13,7 +12,6 @@
             size_hint_y: None
             pos_hint: {"top": .8, "center_x": .5}
             height: self.texture_size[1]
-
 
         MDLabel:
             text: "I am a..."
@@ -29,28 +27,22 @@
             icon: "./Styles/AppLogo/Patient.png"
             pos_hint: {"top":.6, "center_x": 0.5}
 
-
         MDRaisedButton:
             id: PatientLogIn
-            text: "PATIENT"
+            text: "CURRENT USER"
             font_size: 25
             size_hint: .7, .06
             pos_hint: {"top": .4, "center_x": .5}
             on_release:
                 root.parent.current = "Patient_LogIn"
                 root.manager.transition.direction = "left"
-
-        MDIconButton:
-            user_font_size: dp(40)
-            icon: "./Styles/AppLogo/Doctor.png"
-            pos_hint: {"top":.33, "center_x": 0.5}
         
         MDRaisedButton:
             id: DoctorLogIn
-            text: "DOCTOR"
+            text: "NEW USER"
             font_size: 25
             size_hint: .7, .06
-            pos_hint: {"top": .15, "center_x": .5}
+            pos_hint: {"top": .3, "center_x": .5}
             on_release:
-                root.parent.current = "Doctor_LogIn"
+                root.parent.current = "NewUser_Patient"
                 root.manager.transition.direction = "left"
