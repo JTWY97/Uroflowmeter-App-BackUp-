@@ -1,9 +1,5 @@
 from kivy.uix.screenmanager import Screen
-from kivy.uix.screenmanager import SlideTransition
-from kivymd.uix.picker import MDDatePicker
 import pyrebase
-import os
-import numpy as np
 from ExternalConnections.FirebaseTest import VoidIndexFetched, WhichDay
 
 config = {
@@ -77,9 +73,6 @@ class SymptomTracker(Screen):
 
     def ShowVoid(self, VoidNumber, dayID):
         
-        print("Symptom Tracker Day ID: " + dayID)
-        
-        # VoidNumberStri = int(VoidNumber)
         EpisodeDayID = dayID + 'episode'
         self.EpiDay = EpisodeDayID
         self.VoidNo = VoidNumber
@@ -186,6 +179,6 @@ class SymptomTracker(Screen):
             return self.SymptomList
 
     def SendSymptomToFirebase(self):
-        Label = "Symptoms Experienced"
+        Label = "Symptoms" + self.EpiDay
         data = {Label: str(self.SymptomList)}
         db.child("patientData").child(self.PatientID).update(data)
