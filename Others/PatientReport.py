@@ -26,7 +26,7 @@ class PatientReport():
       ## DAILY STATS ##
 
       #--> 1. Total Fluid Intake
-      TotalFluidIntake = db.child("patientData").child(PatientID).child(dayID).child("total fluid intake").get().val()
+      TotalFluidIntake = db.child("patientData").child(PatientID).child(dayID).child("day 1Fluidintake").get().val()
       if TotalFluidIntake == None:
         print("Fluid intake has not been logged.")
       
@@ -62,6 +62,8 @@ class PatientReport():
   
 
       #--> 3. No. of nocturia polyuria episode
+      TotalEpList = db.child("patientData").child(PatientID).child(dayID).child("day 1episode").get().val()
+      print(TotalEpList)
       NocturiaEpisode = db.child("patientData").child(PatientID).child(dayID).child("NoOfNocturiaEpisode").get().val()
       print("No. of nocturia episodes for day 1: " + str(NocturiaEpisode))
 
@@ -79,9 +81,10 @@ class PatientReport():
 
       #plot graph for daily stats
 
-      plt.plot([1, 2, 3, 4], [1, 4, 9, 16])
-      plt.ylabel('y values')
+      plt.plot([1, 2, 3], [1, 4, 9, 16])
       plt.xlabel('x values')
+      plt.ylabel('y values')
+
 
       plt.show()
 
