@@ -34,6 +34,7 @@ class BladderDiary(Screen, EventDispatcher):
         PatientID = f.read()
 
     IconList = []
+    
     def GetDaysAndRaspberryPiID(self):
         PatientStart = db.child("patientUsers").child(self.PatientID).child("start").get().val()
         PatientEnd = db.child("patientUsers").child(self.PatientID).child("end").get().val()
@@ -134,7 +135,7 @@ class BladderDiary(Screen, EventDispatcher):
         show = P()
         print("testets" + str(VoidIndex))
         GetVoidDetails(str(VoidIndex), str(self.DayID))
-        popupVoid = Popup(title = 'Would you like to edit this void?', content=show, size_hint=(None, None), size=(1000, 1000))
+        popupVoid = Popup(title = 'Would you like to edit this void?', content=show, size_hint=(None, None), size=(400, 400), pos_hint={'center_x' : 0.5})
         popupVoid.open()
 
     def ShowSummary(self, dayID):
@@ -155,17 +156,19 @@ class BladderDiary(Screen, EventDispatcher):
         else:
             pass
 
-
     def edit_void_callback(self, instance):
         print(instance)
+        print(len(self.IconList))
         Index = self.IconList.index(instance)
         self.EditVoidData(Index)
 
     def BuildTimeline(self, dayID):
-        self.DayID = self.DayID + dayID
+        self.DayID = dayID
+        print("BuildTimeLine:", self.DayID)
         VoidType = self.GetData_VoidType(dayID)
         VoidTime, VoidTimeRaw = self.GetData_Time(dayID)
         VoidVolume = self.GetData_Volume(dayID)
+        self.IconList.clear()
         
         SleepTime, WakeTime = self.GetSleepPattern()
 
