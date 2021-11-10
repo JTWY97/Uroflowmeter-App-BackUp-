@@ -34,6 +34,7 @@ class BladderDiary(Screen, EventDispatcher):
         PatientID = f.read()
 
     IconList = []
+    
     def GetDaysAndRaspberryPiID(self):
         PatientStart = db.child("patientUsers").child(self.PatientID).child("start").get().val()
         PatientEnd = db.child("patientUsers").child(self.PatientID).child("end").get().val()
@@ -152,17 +153,19 @@ class BladderDiary(Screen, EventDispatcher):
         else:
             pass
 
-
     def edit_void_callback(self, instance):
         print(instance)
+        print(len(self.IconList))
         Index = self.IconList.index(instance)
         self.EditVoidData(Index)
 
     def BuildTimeline(self, dayID):
-        self.DayID = self.DayID + dayID
+        self.DayID = dayID
+        print("BuildTimeLine:", self.DayID)
         VoidType = self.GetData_VoidType(dayID)
         VoidTime, VoidTimeRaw = self.GetData_Time(dayID)
         VoidVolume = self.GetData_Volume(dayID)
+        self.IconList.clear()
         
         SleepTime, WakeTime = self.GetSleepPattern()
 

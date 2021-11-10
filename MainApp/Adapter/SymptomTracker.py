@@ -31,9 +31,18 @@ class SymptomTracker(Screen):
         else:
             VoidNumber = 0
         if len(WhichDay) != 0:
-            DayID = WhichDay
+            if WhichDay[-1] == 1:
+                DayID = "day 1"
+            elif WhichDay[-1] == 2:
+                DayID = "day 2"
+            elif WhichDay[-1] == 3:
+                DayID = "day 3"
+            else:
+                DayID = "day 1"
+                print("ERROR IN FETCHING DAY ID")
         else:
             DayID = "day 1"
+
         self.ShowVoid(VoidNumber, DayID)
 
     def GetData_VoidType(self, dayID, VoidNumber):
@@ -67,19 +76,21 @@ class SymptomTracker(Screen):
         return VoidTimeList, VoidTimeArray
 
     def ShowVoid(self, VoidNumber, dayID):
-        str1 = " "
-        stri = str1.join(dayID)
-        str2 = " "
-        VoidNumberStri = str2.join(VoidNumber)
-        EpisodeDayID = stri + 'episode'
+        
+        print("Symptom Tracker Day ID: " + dayID)
+        
+        # VoidNumberStri = int(VoidNumber)
+        EpisodeDayID = dayID + 'episode'
         self.EpiDay = EpisodeDayID
-        self.VoidNo = VoidNumberStri
-        VoidType = self.GetData_VoidType(EpisodeDayID, VoidNumberStri)
-        VoidTime, VoidTimeRaw = self.GetData_Time(stri)
-        VoidVolume = self.GetData_Volume(stri)
-        self.ids.VoidInfo.text = "VoidTime: " + VoidTime[int(VoidNumberStri)]
+        self.VoidNo = VoidNumber
+        
+        VoidType = self.GetData_VoidType(EpisodeDayID, VoidNumber)
+        VoidTime, VoidTimeRaw = self.GetData_Time(dayID)
+        VoidVolume = self.GetData_Volume(dayID)
+
+        self.ids.VoidInfo.text = "VoidTime: " + VoidTime[int(VoidNumber)]
         self.ids.VoidInfo.secondary_text = "Void Type: " + VoidType
-        self.ids.VoidInfo.tertiary_text = "Void Volume: " + VoidVolume[int(VoidNumberStri)]+ "ml"
+        self.ids.VoidInfo.tertiary_text = "Void Volume: " + VoidVolume[int(VoidNumber)]+ "ml"
         if VoidType == "First Morning Episode":
             self.ids.VoidInfoIcon.icon = "./Styles/BladderDiaryIcons/Morning.png"
         elif VoidType == "Normal Episode":

@@ -42,5 +42,10 @@ WhichDay = []
 
 def GetVoidDetails(VoidIndex, dayID):
     VoidIndexFetched.append(VoidIndex)
-    WhichDay.append(dayID)
+    if dayID == "day 1":
+        WhichDay.append(1)
+    elif dayID == "day 2":
+        WhichDay.append(2)
+    elif dayID == "day 3":
+        WhichDay.append(3)
     return VoidIndexFetched, WhichDay
