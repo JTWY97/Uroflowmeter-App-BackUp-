@@ -38,10 +38,14 @@ class BladderDiary(Screen, EventDispatcher):
     def GetDaysAndRaspberryPiID(self):
         PatientStart = db.child("patientUsers").child(self.PatientID).child("start").get().val()
         PatientEnd = db.child("patientUsers").child(self.PatientID).child("end").get().val()
-
+        print(PatientStart)
         date_1 = datetime.datetime.strptime(PatientStart, "%d-%m-%Y")
         next_day = date_1 + datetime.timedelta(days=1)
-        PatientDay2 = str(next_day.day) + '-' + str(next_day.month) + '-' + str(next_day.year)
+        if len(str(next_day.day)) !=2:
+            PatientDay2 = str(0) + str(next_day.day) + '-' + str(next_day.month) + '-' + str(next_day.year)
+        else:
+            PatientDay2 = str(next_day.day) + '-' + str(next_day.month) + '-' + str(next_day.year)
+        print(PatientDay2)
 
         RasberryPiID = db.child("patientUsers").child(self.PatientID).child("raspberrypi").get().val()
         ButtonID = db.child("patientUsers").child(self.PatientID).child("button").get().val()

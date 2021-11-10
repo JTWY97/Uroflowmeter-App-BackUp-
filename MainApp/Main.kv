@@ -5,6 +5,7 @@
 #:import BladderDiary Adapter.BladderDiary.BladderDiary
 #:import Patient_LogIn Adapter.Patient_LogIn.Patient_LogIn
 #:import NewUser_Patient Adapter.NewUser_Patient.NewUser_Patient
+#:import PatientReport Adapter.PatientReport.PatientReport
 
 ScreenManager:
     id: screen_manager
@@ -66,5 +67,8 @@ ScreenManager:
         name: "BladderDiary"
         on_enter:
             BladderDiary.GetDaysAndRaspberryPiID()
-            # BladderDiary.ShowSummary("day 1")
-            # BladderDiary.BuildTimeline("day 1")
+
+    PatientReport:
+        ##10
+        id: PatientReport
+        name: "PatientReport"
