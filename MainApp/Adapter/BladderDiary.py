@@ -53,8 +53,9 @@ class BladderDiary(Screen, EventDispatcher):
         VoidVolumes = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("volume").get().val()
         VoidColors = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("color").get().val()
         VoidQMax = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("qmax").get().val()
+        VoidOsmolaity = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("osmolality").get().val()
 
-        VoidData = {"time":VoidTime, "volume":VoidVolumes, "color":VoidColors, "qmax":VoidQMax}
+        VoidData = {"time":VoidTime, "volume":VoidVolumes, "color":VoidColors, "qmax":VoidQMax, "osmolality":VoidOsmolaity}
 
         db.child("patientData").child(self.PatientID).child("day 1").set(VoidData)
         
@@ -63,8 +64,9 @@ class BladderDiary(Screen, EventDispatcher):
         VoidVolumes = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("volume").get().val()
         VoidColors = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("color").get().val()
         VoidQMax = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("qmax").get().val()
-        
-        VoidData2 = {"time":VoidTime, "volume":VoidVolumes, "color":VoidColors, "qmax":VoidQMax}
+        VoidOsmolaity = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("osmolality").get().val()
+
+        VoidData2 = {"time":VoidTime, "volume":VoidVolumes, "color":VoidColors, "qmax":VoidQMax, "osmolality":VoidOsmolaity}
 
         db.child("patientData").child(self.PatientID).child("day 2").set(VoidData2)
         
@@ -73,8 +75,9 @@ class BladderDiary(Screen, EventDispatcher):
         VoidVolumes = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("volume").get().val()
         VoidColors = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("color").get().val()
         VoidQMax = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("qmax").get().val()
-        
-        VoidData3 = {"time":VoidTime, "volume":VoidVolumes, "color":VoidColors, "qmax":VoidQMax}
+        VoidOsmolaity = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("osmolality").get().val()
+
+        VoidData3 = {"time":VoidTime, "volume":VoidVolumes, "color":VoidColors, "qmax":VoidQMax, "osmolality":VoidOsmolaity}
         db.child("patientData").child(self.PatientID).child("day 3").set(VoidData3)
 
         self.ShowSummary("day 1")
@@ -204,30 +207,13 @@ class BladderDiary(Screen, EventDispatcher):
                 EpisodeDayID = dayID + 'episode'
 
                 SendVoidType(VoidType, self.PatientID, EpisodeDayID)
-                for i in range(0, len(VoidTime)):
-                    if VoidType[i] == "First Morning Episode":
-                        Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Morning.png", on_press = self.edit_void_callback)
-                        self.IconList.append(Icon)
-                    elif VoidType[i] == "Normal Episode":
-                        Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Normal.png", on_press = self.edit_void_callback)
-                        self.IconList.append(Icon)
-                    elif VoidType[i] == "Nocturia Episode":
-                        Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Nocturia.png", on_press = self.edit_void_callback)
-                        self.IconList.append(Icon)
-                    else:
-                        Icon = IconLeftWidget(icon="human")
-
-                    ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + VoidType[i], tertiary_text = "Voud Volume: " + VoidVolume[i] + "ml")
-                    ListComponents.add_widget(Icon)
-                    
-                    ScreenLayout.add_widget(ListComponents)
-            else:
-                print("IMPORTANT" , VoidType)
                 NoOfNocturiaEp = 0
                 NoOfNormalEp = 0
+                NoOfMorningEp = 0
 
                 for i in range(0, len(VoidTime)):
                     if VoidType[i] == "First Morning Episode":
+                        NoOfMorningEp += 1
                         Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Morning.png", on_press = self.edit_void_callback)
                         self.IconList.append(Icon)
                     elif VoidType[i] == "Normal Episode":
@@ -241,15 +227,34 @@ class BladderDiary(Screen, EventDispatcher):
                     else:
                         Icon = IconLeftWidget(icon="human")
 
+                    ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + VoidType[i], tertiary_text = "Void Volume: " + VoidVolume[i] + "ml")
+                    ListComponents.add_widget(Icon)
+                    
+                    ScreenLayout.add_widget(ListComponents)
+
+                #Add Total Ep count & Nocturia Ep count on to google firebase
+                EpisodeCount = {"TotalEpisode": len(VoidVolume), "NoOfMorningEp": NoOfMorningEp,"NoOfNormalEp": NoOfNormalEp,"NoOfNocturiaEpisode": NoOfNocturiaEp}
+                db.child("patientData").child(self.PatientID).child(dayID).update(EpisodeCount) 
+
+            else:
+                print("IMPORTANT" , VoidType)
+                for i in range(0, len(VoidTime)):
+                    if VoidType[i] == "First Morning Episode":
+                        Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Morning.png", on_press = self.edit_void_callback)
+                        self.IconList.append(Icon)
+                    elif VoidType[i] == "Normal Episode":
+                        Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Normal.png", on_press = self.edit_void_callback)
+                        self.IconList.append(Icon)
+                    elif VoidType[i] == "Nocturia Episode":
+                        Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Nocturia.png", on_press = self.edit_void_callback)
+                        self.IconList.append(Icon)
+                    else:
+                        Icon = IconLeftWidget(icon="human")
+
                     ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + VoidType[i], tertiary_text = "Voud Volume: " + VoidVolume[i] + "ml")
                     ListComponents.add_widget(Icon)
                     
                     ScreenLayout.add_widget(ListComponents)
-            
-                #Add Total Ep count & Nocturia Ep count on to google firebase
-                EpisodeCount = {"NoOfNocturiaEpisode": NoOfNocturiaEp, "NoOfNormalEp": NoOfNormalEp, "TotalEpisode": len(VoidType)}
-                db.child("raspberrypi").child("raspberry1").child("button1").child("03-11-2021").update(EpisodeCount) #how dayID is being defined, instead of hardcoding what should be the variable? 
-            
         else:
             self.WarningMessage()
     
