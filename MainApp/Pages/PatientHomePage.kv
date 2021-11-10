@@ -20,20 +20,11 @@
             height: self.texture_size[1]
 
         MDRoundFlatButton:
-            id: SymptomTracker
-            text: "Symptom Tracker"
-            font_size: 25
-            size_hint: .4, .06
-            pos_hint: {"top":0.7, "center_x": 0.5}
-            on_release:
-                root.parent.current = "SymptomTracker"
-
-        MDRoundFlatButton:
             id: BladderDiary
             text: "Bladder Diary"
             font_size: 25
             size_hint: .4, .06
-            pos_hint: {"top":0.6, "center_x": 0.5}    
+            pos_hint: {"top":0.7, "center_x": 0.5}    
             on_release:
                 root.parent.current = "BladderDiary"
                         
@@ -42,9 +33,18 @@
             text: "Fluid Intake"
             font_size: 25
             size_hint: .4, .06
-            pos_hint: {"top":0.5, "center_x": 0.5}
+            pos_hint: {"top":0.6, "center_x": 0.5}
             on_release:
                 root.parent.current = "FluidIntake"
+
+        MDRoundFlatButton:
+            id: SymptomTracker
+            text: "Generate Report"
+            font_size: 25
+            size_hint: .4, .06
+            pos_hint: {"top":0.7, "center_x": 0.5}
+            # on_release:
+            #     root.parent.current = "SymptomTracker"
             
         MDFloatingActionButton:
             id: QuickPee

@@ -21,38 +21,45 @@ class FluidIntake(Screen, EventDispatcher):
 
 	dayID = "day 1"
 
+	volume_day1_original = []
+	volume_day2_original = []
+	volume_day3_original = []
+ 
 	volume_day1 = []
 	volume_day2 = []
 	volume_day3 = []
 
-	def GetDay(self, button):
-		if button == 'DayOne':
+	def GetDay(self, DayButton):
+		if DayButton == 'DayOne':
 			self.dayID = "day 1"
-			self.FluidDrankLabel()
+			self.Original_FluidDrankLabel()
 			self.ids.volumeop.text = "Volume here!"
-		elif button == 'DayTwo':
+		elif DayButton == 'DayTwo':
 			self.dayID = "day 2"
-			self.FluidDrankLabel()
+			self.Original_FluidDrankLabel()
 			self.ids.volumeop.text = "Volume here!"
-		elif button == 'DayThree':
+		elif DayButton == 'DayThree':
 			self.dayID = "day 3"
-			self.FluidDrankLabel()
+			self.Original_FluidDrankLabel()
 			self.ids.volumeop.text = "Volume here!"
 
-	def FluidDrankLabel(self):
-		Volume = db.child("patientData").child(self.PatientID).child(self.dayID).child("total fluid intake").get()
+	def Original_FluidDrankLabel(self):
+		FluidIntakeDayID = self.dayID + "FluidIntake"
+		Volume = db.child("patientData").child(self.PatientID).child(FluidIntakeDayID).child("total fluid intake").get()
 		VolumeDrank = Volume.val()
 		if VolumeDrank != None:
 			self.ids.VolumeDrankOnThisDay.text = str(int(VolumeDrank)) + " ml"
 			if self.dayID == "day 1":
-				self.volume_day1.append(int(VolumeDrank))
+				self.volume_day1_original.append(int(VolumeDrank))
 			elif self.dayID == "day 2":
-				self.volume_day2.append(int(VolumeDrank))
+				self.volume_day2_original.append(int(VolumeDrank))
 			elif self.dayID == "day 3":
-				self.volume_day3.append(int(VolumeDrank))
+				self.volume_day3_original.append(int(VolumeDrank))
 		else:
 			self.ids.VolumeDrankOnThisDay.text = "You have not logged any fluid intake"
 		
+	def FluidDrankLabel(self, VolumeInFireBase):
+		self.ids.VolumeDrankOnThisDay.text = str(int(VolumeInFireBase)) + " ml"
 	
 	def callback(self, button):
 		if button == 'button1':
@@ -132,20 +139,22 @@ class FluidIntake(Screen, EventDispatcher):
 			return self.volume_day3
 
 	def showvol(self, day):
+		print(self.volume_day1)
 		if day == "day 1":
-			meanvol = np.sum(self.volume_day1)
-			self.ids.volumeop.text = str(int(meanvol))
+			meanvol = np.sum(self.volume_day1) + self.volume_day1_original[-1]
+			today_vol = np.sum(self.volume_day1)
+			self.ids.volumeop.text = str(int(today_vol))
 			data = {"total fluid intake": str(int(meanvol))}
 		elif day == "day 2":
-			meanvol = np.sum(self.volume_day2)
-			self.ids.volumeop.text = str(int(meanvol))
+			meanvol = np.sum(self.volume_day2) + self.volume_day2_original[-1]
+			today_vol = np.sum(self.volume_day2)
+			self.ids.volumeop.text = str(int(today_vol))
 			data = {"total fluid intake": str(int(meanvol))}
 		elif day == "day 3":
-			meanvol = np.sum(self.volume_day3)
-			self.ids.volumeop.text = str(int(meanvol))
+			meanvol = np.sum(self.volume_day3) + self.volume_day2_original[-1]
+			today_vol = np.sum(self.volume_day3)
+			self.ids.volumeop.text = str(int(today_vol))
 			data = {"total fluid intake": str(int(meanvol))}
-
-		db.child("patientData").child(self.PatientID).child(self.dayID).update(data)
-		self.FluidDrankLabel()
-
-        
+		FluidIntakeDayID = self.dayID + "FluidIntake"
+		db.child("patientData").child(self.PatientID).child(FluidIntakeDayID).set(data)
+		self.FluidDrankLabel(str(int(meanvol)))

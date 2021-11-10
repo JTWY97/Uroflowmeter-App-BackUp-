@@ -52,33 +52,30 @@ class BladderDiary(Screen, EventDispatcher):
         #day1
         VoidTime = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("time").get().val()
         VoidVolumes = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("volume").get().val()
-        VoidColors = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("color").get().val()
+        VoidOsmolality = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("osmolality").get().val()
         VoidQMax = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("qmax").get().val()
-        VoidOsmolaity = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientStart).child("osmolality").get().val()
 
-        VoidData = {"time":VoidTime, "volume":VoidVolumes, "color":VoidColors, "qmax":VoidQMax, "osmolality":VoidOsmolaity}
+        VoidData = {"time":VoidTime, "volume":VoidVolumes, "qmax":VoidQMax, "osmolality":VoidOsmolality}
 
         db.child("patientData").child(self.PatientID).child("day 1").set(VoidData)
         
         # day2
         VoidTime = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("time").get().val()
         VoidVolumes = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("volume").get().val()
-        VoidColors = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("color").get().val()
+        VoidOsmolality = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("osmolality").get().val()
         VoidQMax = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("qmax").get().val()
-        VoidOsmolaity = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientDay2).child("osmolality").get().val()
 
-        VoidData2 = {"time":VoidTime, "volume":VoidVolumes, "color":VoidColors, "qmax":VoidQMax, "osmolality":VoidOsmolaity}
+        VoidData2 = {"time":VoidTime, "volume":VoidVolumes, "qmax":VoidQMax, "osmolality":VoidOsmolality}
 
         db.child("patientData").child(self.PatientID).child("day 2").set(VoidData2)
         
         #day3
         VoidTime = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("time").get().val()
         VoidVolumes = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("volume").get().val()
-        VoidColors = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("color").get().val()
+        VoidOsmolality = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("osmolality").get().val()
         VoidQMax = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("qmax").get().val()
-        VoidOsmolaity = db.child("raspberrypi").child(RasberryPiID).child(ButtonID).child(PatientEnd).child("osmolality").get().val()
 
-        VoidData3 = {"time":VoidTime, "volume":VoidVolumes, "color":VoidColors, "qmax":VoidQMax, "osmolality":VoidOsmolaity}
+        VoidData3 = {"time":VoidTime, "volume":VoidVolumes, "qmax":VoidQMax, "osmolality":VoidOsmolality}
         db.child("patientData").child(self.PatientID).child("day 3").set(VoidData3)
 
         self.ShowSummary("day 1")
