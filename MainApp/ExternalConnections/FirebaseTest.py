@@ -11,21 +11,10 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
-db = firebase.database() #connect to firebase
+db = firebase.database()
 
-def listToString(s): 
-    str1 = ""  
-    for ele in s: 
-        str1 += ele   
-    return str1 
-
-def doctorSignUp(firstname, lastname, specialization, hospital, phonenumber, email):
-        SignUpData = {"firstname": firstname, "lastname": lastname, "specialization": specialization, "hospital": hospital, "phonenumber": phonenumber, "email": email}
-        doctorName = "Dr " + lastname
-        db.child("doctorUsers").child(doctorName).set(SignUpData)
-        LogInData = {email[-4]: doctorName}
-        db.child("DoctorLogInID").set(LogInData)
-        
+VoidIndexFetched = []
+WhichDay = []
 
 def patientSignUp(pfirstname, plastname, dob, weight, height, WakeUpTime, BedTime, treatmentstart, treatmentend, email):
         SignUpData = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend, "sleep": BedTime, "wakeup": WakeUpTime, "email":email}
@@ -36,9 +25,6 @@ def patientSignUp(pfirstname, plastname, dob, weight, height, WakeUpTime, BedTim
 
 def SendVoidType(VoidTypes, patientID, dayID):
         db.child("patientData").child(patientID).child(dayID).set(VoidTypes)
-
-VoidIndexFetched = []
-WhichDay = []
 
 def GetVoidDetails(VoidIndex, dayID):
     VoidIndexFetched.append(VoidIndex)
