@@ -38,13 +38,13 @@
                 root.parent.current = "FluidIntake"
 
         MDRoundFlatButton:
-            id: SymptomTracker
+            id: ReportGenerator
             text: "Generate Report"
             font_size: 25
             size_hint: .4, .06
-            pos_hint: {"top":0.7, "center_x": 0.5}
-            # on_release:
-            #     root.parent.current = "SymptomTracker"
+            pos_hint: {"top":0.5, "center_x": 0.5}
+            on_release:
+                root.parent.current = "PatientReport"
             
         MDFloatingActionButton:
             id: QuickPee

@@ -140,18 +140,28 @@ class FluidIntake(Screen, EventDispatcher):
 
 	def showvol(self, day):
 		print(self.volume_day1)
+		
 		if day == "day 1":
-			meanvol = np.sum(self.volume_day1) + self.volume_day1_original[-1]
+			if len(self.volume_day1_original) != 0:
+				meanvol = np.sum(self.volume_day1) + self.volume_day1_original[-1]
+			else:
+				meanvol = np.sum(self.volume_day1)
 			today_vol = np.sum(self.volume_day1)
 			self.ids.volumeop.text = str(int(today_vol))
 			data = {"total fluid intake": str(int(meanvol))}
 		elif day == "day 2":
-			meanvol = np.sum(self.volume_day2) + self.volume_day2_original[-1]
+			if len(self.volume_day2_original) != 0:
+				meanvol = np.sum(self.volume_day2) + self.volume_day2_original[-1]
+			else:
+				meanvol = np.sum(self.volume_day2)
 			today_vol = np.sum(self.volume_day2)
 			self.ids.volumeop.text = str(int(today_vol))
 			data = {"total fluid intake": str(int(meanvol))}
 		elif day == "day 3":
-			meanvol = np.sum(self.volume_day3) + self.volume_day2_original[-1]
+			if len(self.volume_day3_original) != 0:
+				meanvol = np.sum(self.volume_day3) + self.volume_day3_original[-1]
+			else:
+				meanvol = np.sum(self.volume_day3)
 			today_vol = np.sum(self.volume_day3)
 			self.ids.volumeop.text = str(int(today_vol))
 			data = {"total fluid intake": str(int(meanvol))}

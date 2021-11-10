@@ -15,6 +15,7 @@ class MainApp(MDApp):
     Builder.load_file("./Pages/SymptomTracker.kv")
     Builder.load_file("./Pages/FluidIntake.kv")
     Builder.load_file("./Pages/BladderDiary.kv")
+    Builder.load_file("./Pages/PatientReport.kv")
 
     def sign_out_patient(self):
         self.root.ids.Patient_LogIn.log_out()
