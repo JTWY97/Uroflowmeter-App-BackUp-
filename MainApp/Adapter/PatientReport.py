@@ -105,6 +105,7 @@ class PatientReportGenerator():
         NoOfNocturiaEp = 0
         NoOfNormalEp = 0
         NoOfMorningEp = 0
+        TotalVoidEp = 0
 
         NocturiaVoidVol = []
         MorningVoidVol = []
@@ -115,26 +116,30 @@ class PatientReportGenerator():
             if VoidType[i] == "First Morning Episode":
                 MorningVoidVol.append(VoidVolume[i])
                 NoOfMorningEp += 1
+                TotalVoidEp += 1
             elif VoidType[i] == "Normal Episode":
                 NormalVoidVol.append(VoidVolume[i])
                 NoOfNormalEp += 1
+                TotalVoidEp += 1
             elif VoidType[i] == "Nocturia Episode":
                 NocturiaVoidVol.append(VoidVolume[i])
                 NoOfNocturiaEp += 1
+                TotalVoidEp += 1
         
-        TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent= self.DailyReportData(FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol)
+        TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent= self.DailyReportData(FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol, TotalVoidEp)
         return TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent
     
-    def DailyReportData(self, FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol):
+    def DailyReportData(self, FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol, TotalVoidEp):
         
         TotalInput = FluidIntake
         VoidVolume = np.array(VoidVolume).astype(float)
         TotalOutput = np.sum(VoidVolume)
         NocturiaNumber = NoOfNocturiaEp
+        TotalVoidNumber = TotalVoidEp
         NocturiaVoidVol = np.array(NocturiaVoidVol).astype(float)
         MorningVoidVol = np.array(MorningVoidVol).astype(float)
         NocturiaVoidVol = np.sum(NocturiaVoidVol) + np.sum(MorningVoidVol)
-        NPI = (NocturiaVoidVol/TotalOutput)*100
+        NPI = (NocturiaNumber/TotalVoidNumber)*100
         if NocturiaNumber != 0:
             NcoturiaPresent = "Yes"
         else:
@@ -144,77 +149,109 @@ class PatientReportGenerator():
 
     def CollectingData(self):
         
-        #Data for Day Report
         TotalInput_Day1, TotalOutput_Day1, NocturiaNumber_Day1, NPI_Day1, NocturiaPresent_Day1 = self.GetVoidData("day 1", "DailyTable")
         TotalInput_Day2, TotalOutput_Day2, NocturiaNumber_Day2, NPI_Day2, NocturiaPresent_Day2 = self.GetVoidData("day 2", "DailyTable")
         TotalInput_Day3, TotalOutput_Day3, NocturiaNumber_Day3, NPI_Day3, NocturiaPresent_Day3 = self.GetVoidData("day 3", "DailyTable")
         
-        Day1 = {'Total Input (ml)': TotalInput_Day1, 'Total Output (ml)': TotalOutput_Day1, 'Nocturia Episodes':  NocturiaNumber_Day1, 'NPI (%)': NPI_Day1, 'Nocturnal Polyuria': NocturiaPresent_Day1}
-        print(Day1)
-        Day1DF = pd.DataFrame(data=Day1,index=[0])
-        print(Day1DF)
-        Day2 = {'Total Input (ml)': TotalInput_Day2, 'Total Output (ml)': TotalOutput_Day2, 'Nocturia Episodes':  NocturiaNumber_Day2, 'NPI (%)': NPI_Day2, 'Nocturnal Polyuria': NocturiaPresent_Day2}
-        Day2DF = pd.DataFrame(data=Day2,index=[0])
-        Day3 = {'Total Input (ml)': TotalInput_Day3, 'Total Output (ml)': TotalOutput_Day3, 'Nocturia Episodes':  NocturiaNumber_Day3, 'NPI (%)': NPI_Day3, 'Nocturnal Polyuria': NocturiaPresent_Day3}
-        Day3DF = pd.DataFrame(data=Day3,index=[0])
+        TotalInput = []
+        TotalInput.append(TotalInput_Day1)
+        if TotalInput_Day2 != None:
+            TotalInput.append(TotalInput_Day2)
+        else:
+            TotalInput.append(0)
+        if TotalInput_Day3 != None:
+            TotalInput.append(TotalInput_Day3)
+        else:
+            TotalInput.append(0)
+
+        TotalOutput = []
+        TotalOutput.append(TotalOutput_Day1)
+        TotalOutput.append(TotalOutput_Day2)
+        TotalOutput.append(TotalOutput_Day3)
         
+        NocNum = []
+        NocNum.append(NocturiaNumber_Day1)
+        NocNum.append(NocturiaNumber_Day2)
+        NocNum.append(NocturiaNumber_Day3)
         
+        NPI = []
+        NPI.append(str(NPI_Day1)[:4])
+        NPI.append(str(NPI_Day2)[:4])
+        NPI.append(str(NPI_Day3)[:4])
+        
+        Noc = []
+        Noc.append(NocturiaPresent_Day1)
+        Noc.append(NocturiaPresent_Day2)
+        Noc.append(NocturiaPresent_Day3)
+
+        AllDays = []
+        AllDays.append(TotalInput)
+        AllDays.append(TotalOutput)
+        AllDays.append(NocNum)
+        AllDays.append(NPI)
+        AllDays.append(Noc)
+        
+
         #Daily Graph Data
         
         VoidVolume_Day1, VoidTimeList_Day1 = self.GetVoidData("day 1", "DailyGraph")
+        VoidVolume_Day1 = np.array(VoidVolume_Day1).astype(float)
         VoidVolume_Day2, VoidTimeList_Day2 = self.GetVoidData("day 2", "DailyGraph")
+        VoidVolume_Day2 = np.array(VoidVolume_Day2).astype(float)
         VoidVolume_Day3, VoidTimeList_Day3 = self.GetVoidData("day 3", "DailyGraph")
+        VoidVolume_Day3 = np.array(VoidVolume_Day3).astype(float)
         
-        return Day1DF, VoidVolume_Day1, VoidTimeList_Day1, Day2DF, VoidVolume_Day2, VoidTimeList_Day2, Day3DF, VoidVolume_Day3, VoidTimeList_Day3
+        return AllDays, VoidVolume_Day1, VoidTimeList_Day1, VoidVolume_Day2, VoidTimeList_Day2, VoidVolume_Day3, VoidTimeList_Day3
         
     def GenerateFigure(self):
-        Day1DF, VoidVolume_Day1, VoidTimeList_Day1, Day2DF, VoidVolume_Day2, VoidTimeList_Day2, Day3DF, VoidVolume_Day3, VoidTimeList_Day3 = self.CollectingData()
+        AllDays, VoidVolume_Day1, VoidTimeList_Day1, VoidVolume_Day2, VoidTimeList_Day2, VoidVolume_Day3, VoidTimeList_Day3 = self.CollectingData()
         
         fig3 = plt.figure(constrained_layout=True, figsize= [10,8])
         gs = fig3.add_gridspec(4, 4)
         
-        f3_ax1 = fig3.add_subplot(gs[0, -1])
-        f3_ax2 = fig3.add_subplot(gs[0, -2])
-        f3_ax3 = fig3.add_subplot(gs[0, :-2])
-        f3_ax3.set_axis_off()
 
-        f3_ax4 = fig3.add_subplot(gs[1, -1])
-        f3_ax5 = fig3.add_subplot(gs[1, -2])
-        f3_ax6 = fig3.add_subplot(gs[1, :-2])
-        f3_ax6.set_axis_off()
+        ax1 = fig3.add_subplot(gs[0, :])
+        ax1.set_axis_off()
 
-        f3_ax7 = fig3.add_subplot(gs[2, -1])
-        f3_ax8 = fig3.add_subplot(gs[2, -2])
-        f3_ax9 = fig3.add_subplot(gs[2, :-2])
-        f3_ax9.set_axis_off()
+        ax2 = fig3.add_subplot(gs[1, :])
+        ax2.set_axis_off()
 
-        f3_ax10 = fig3.add_subplot(gs[3, :])
+        #Usual Daytime Frequency plot
+        # Day = [1, 2, 3]
+        # DaytimeFreq = [0.83, 0.34, 0.23]
 
+        ax3 = fig3.add_subplot(gs[2, :])
+        # ax3.plot(Day, DaytimeFreq)
+        # ax3.xlabel('Day')
+        # ax3.ylabel('Frequency')
+        ax3.set_title('Usual Daytime Freq', fontweight= "bold")
+
+        ax4 = fig3.add_subplot(gs[3, :])
+        ax4.set_title('Voided Volume/Day', fontweight= "bold")
         
-        
-        f3_ax1.scatter(VoidTimeList_Day1, VoidVolume_Day1)
-        Day1Table = f3_ax3.table(cellText=Day1DF.values, colLabels=Day1DF.columns, loc='center')
-        Day1Table.scale(1, 4)
-        Day1Table.auto_set_font_size(False)
-        Day1Table.set_fontsize(5)
-        
-        f3_ax4.scatter(VoidTimeList_Day2, VoidVolume_Day2)
-        Day2Table = f3_ax6.table(cellText=Day2DF.values, colLabels=Day2DF.columns, loc='center')
-        Day2Table.scale(1, 4)
-        Day2Table.auto_set_font_size(False)
-        Day2Table.set_fontsize(5)
-        
-        f3_ax7.scatter(VoidTimeList_Day3, VoidVolume_Day3)
-        Day3Table = f3_ax9.table(cellText=Day3DF.values, colLabels=Day3DF.columns, loc='center')
-        Day3Table.scale(1, 4)
-        Day3Table.auto_set_font_size(False)
-        Day3Table.set_fontsize(5)
-        
+        #Daily FVC Table
+        Columns1 = ('Day 1', 'Day 2', 'Day 3')
+        Rows1 = ('Total Input (ml)', 'Total Output (ml)', 'Nocturia Episode Count', 'NPI (%)', 'Nocturnal Polyuria')
+        ccolors = plt.cm.BuPu(np.full(len(Columns1), 0.1))
+        rcolors = plt.cm.BuPu(np.full(len(Rows1), 0.1))
+        DailySummaryTable = ax1.table(cellText=AllDays, colLabels=Columns1, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
+        ax1.set_title('Daily FVC Data', fontweight = "bold")
+
+        #Overall Stats Table 
+        Columns1 = ('Day 1', 'Day 2', 'Day 3')
+        Rows1 = ('Total Input (ml)', 'Total Output (ml)', 'Nocturia Episode Count', 'NPI (%)', 'Nocturnal Polyuria')
+        ccolors = plt.cm.BuPu(np.full(len(Columns1), 0.1))
+        rcolors = plt.cm.BuPu(np.full(len(Rows1), 0.1))
+        OverallStatsTable = ax2.table(cellText=AllDays, colLabels=Columns1, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
+        ax2.set_title('Overall FVC Data', fontweight = "bold")
+
+        #Usual Daytime Freq scatterplot
+
+
         fig3.tight_layout()
 
         plt.savefig('./Styles/Patient.png')
 
 class PatientReport(Screen):
     PatientReportGenerator().GenerateFigure()
-    pass
-        
+    # pass
