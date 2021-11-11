@@ -209,22 +209,44 @@ class PatientReportGenerator():
         fig3 = plt.figure(constrained_layout=True, figsize= [10,8])
         gs = fig3.add_gridspec(4, 4)
         
+
         ax1 = fig3.add_subplot(gs[0, :])
         ax1.set_axis_off()
 
-        ax3 = fig3.add_subplot(gs[1, -2:])
-        ax4 = fig3.add_subplot(gs[1, :-2])
+        ax2 = fig3.add_subplot(gs[1, :])
+        ax2.set_axis_off()
 
-        ax5 = fig3.add_subplot(gs[2, -2:])
-        ax6 = fig3.add_subplot(gs[2, :-2])
+        #Usual Daytime Frequency plot
+        # Day = [1, 2, 3]
+        # DaytimeFreq = [0.83, 0.34, 0.23]
 
-        ax7 = fig3.add_subplot(gs[3, :])
+        ax3 = fig3.add_subplot(gs[2, :])
+        # ax3.plot(Day, DaytimeFreq)
+        # ax3.xlabel('Day')
+        # ax3.ylabel('Frequency')
+        ax3.set_title('Usual Daytime Freq', fontweight= "bold")
+
+        ax4 = fig3.add_subplot(gs[3, :])
+        ax4.set_title('Voided Volume/Day', fontweight= "bold")
         
-        Columns = ('Day 1', 'Day 2', 'Day 3')
-        Rows = ('Total Input (ml)', 'Total Output (ml)', 'Nocturia Episode Count', 'NPI (%)', 'Nocturnal Polyuria')
-        ccolors = plt.cm.BuPu(np.full(len(Columns), 0.1))
-        rcolors = plt.cm.BuPu(np.full(len(Rows), 0.1))
-        DailySummaryTable = ax1.table(cellText=AllDays, colLabels=Columns, rowLabels = Rows, loc='center', colColours = ccolors, rowColours = rcolors)
+        #Daily FVC Table
+        Columns1 = ('Day 1', 'Day 2', 'Day 3')
+        Rows1 = ('Total Input (ml)', 'Total Output (ml)', 'Nocturia Episode Count', 'NPI (%)', 'Nocturnal Polyuria')
+        ccolors = plt.cm.BuPu(np.full(len(Columns1), 0.1))
+        rcolors = plt.cm.BuPu(np.full(len(Rows1), 0.1))
+        DailySummaryTable = ax1.table(cellText=AllDays, colLabels=Columns1, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
+        ax1.set_title('Daily FVC Data', fontweight = "bold")
+
+        #Overall Stats Table 
+        Columns1 = ('Day 1', 'Day 2', 'Day 3')
+        Rows1 = ('Total Input (ml)', 'Total Output (ml)', 'Nocturia Episode Count', 'NPI (%)', 'Nocturnal Polyuria')
+        ccolors = plt.cm.BuPu(np.full(len(Columns1), 0.1))
+        rcolors = plt.cm.BuPu(np.full(len(Rows1), 0.1))
+        OverallStatsTable = ax2.table(cellText=AllDays, colLabels=Columns1, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
+        ax2.set_title('Overall FVC Data', fontweight = "bold")
+
+        #Usual Daytime Freq scatterplot
+
 
         fig3.tight_layout()
 
