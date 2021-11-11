@@ -27,7 +27,7 @@ class NewUser_Patient(Screen, EventDispatcher):
 
     debug = False
 
-    def sign_up(self, email, password, pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend):
+    def sign_up(self, email, password, pfirstname, plastname, dob, weight, height, WakeUpTime, BedTime, treatmentstart, treatmentend, RaspberryID, ButtonID):
 
         if self.debug:
             print("Attempting to create a new account: ", email, password)
@@ -40,7 +40,7 @@ class NewUser_Patient(Screen, EventDispatcher):
                    on_failure=self.sign_up_failure,
                    on_error=self.sign_up_error, ca_file=certifi.where())
 
-        patientSignUp(pfirstname, plastname, dob, weight, height, treatmentstart, treatmentend, email)
+        patientSignUp(email, pfirstname, plastname, dob, weight, height, WakeUpTime, BedTime, treatmentstart, treatmentend, RaspberryID, ButtonID)
 
     def successful_sign_up(self, request, result):
         if self.debug:
