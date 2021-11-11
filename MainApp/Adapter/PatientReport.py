@@ -139,7 +139,12 @@ class PatientReportGenerator():
         NocturiaVoidVol = np.array(NocturiaVoidVol).astype(float)
         MorningVoidVol = np.array(MorningVoidVol).astype(float)
         NocturiaVoidVol = np.sum(NocturiaVoidVol) + np.sum(MorningVoidVol)
-        NPI = (NocturiaNumber/TotalVoidNumber)*100
+
+        if TotalVoidNumber != 0:
+            NPI = (NocturiaNumber/TotalVoidNumber)*100
+        else:
+            NPI = "Not logged yet."
+
         if NocturiaNumber != 0:
             NcoturiaPresent = "Yes"
         else:

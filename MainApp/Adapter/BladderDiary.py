@@ -205,9 +205,7 @@ class BladderDiary(Screen, EventDispatcher):
                                 MorningEpisode += 1
                             else:
                                 VoidType.append("Normal Episode")
-                    
-                    
-
+                                
                 EpisodeDayID = dayID + 'episode'
 
                 SendVoidType(VoidType, self.PatientID, EpisodeDayID)
@@ -236,12 +234,7 @@ class BladderDiary(Screen, EventDispatcher):
                     
                     ScreenLayout.add_widget(ListComponents)
 
-                #Add Total Ep count & Nocturia Ep count on to google firebase
-                EpisodeCount = {"TotalEpisode": len(VoidVolume), "NoOfMorningEp": NoOfMorningEp,"NoOfNormalEp": NoOfNormalEp,"NoOfNocturiaEpisode": NoOfNocturiaEp}
-                db.child("patientData").child(self.PatientID).child(dayID).update(EpisodeCount) 
-
             else:
-                print("IMPORTANT" , VoidType)
                 for i in range(0, len(VoidTime)):
                     if VoidType[i] == "First Morning Episode":
                         Icon = IconLeftWidget(icon="./Styles/BladderDiaryIcons/Morning.png", on_press = self.edit_void_callback)
@@ -255,10 +248,9 @@ class BladderDiary(Screen, EventDispatcher):
                     else:
                         Icon = IconLeftWidget(icon="human")
 
-                    ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + VoidType[i], tertiary_text = "Voud Volume: " + VoidVolume[i] + "ml")
+                    ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + VoidType[i], tertiary_text = "Void Volume: " + VoidVolume[i] + "ml")
                     ListComponents.add_widget(Icon)
                     
                     ScreenLayout.add_widget(ListComponents)
         else:
             self.WarningMessage()
-    

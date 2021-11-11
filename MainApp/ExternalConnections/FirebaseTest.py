@@ -16,11 +16,12 @@ db = firebase.database()
 VoidIndexFetched = []
 WhichDay = []
 
-def patientSignUp(pfirstname, plastname, dob, weight, height, WakeUpTime, BedTime, treatmentstart, treatmentend, email):
-        SignUpData = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend, "sleep": BedTime, "wakeup": WakeUpTime, "email":email}
+def patientSignUp(email, pfirstname, plastname, dob, weight, height, WakeUpTime, BedTime, treatmentstart, treatmentend, RaspberryID, ButtonID):
+        SignUpData = {"firstname": pfirstname, "lastname": plastname, "dob": dob, "weight": weight, "height": height, "start": treatmentstart, "end": treatmentend, "sleep": BedTime, "wakeup": WakeUpTime, "raspberrypi":RaspberryID, "button":ButtonID}
         patientName = pfirstname + " " + plastname
+        print(SignUpData)
         db.child("patientUsers").child(patientName).set(SignUpData)
-        LogInData = {email[-4]: patientName}
+        LogInData = {email[:-4]: patientName}
         db.child("PatientLogInID").set(LogInData)
 
 def SendVoidType(VoidTypes, patientID, dayID):
