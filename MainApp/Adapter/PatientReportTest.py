@@ -336,6 +336,8 @@ class PatientReportGenerator():
         #VoidOsmolality2, VoidTimeList2
         #VoidOsmolality3, VoidTimeList3
         
+    def BuildReport(self):...
+        
         
         
 
