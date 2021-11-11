@@ -79,7 +79,7 @@ class Patient_LogIn(Screen, EventDispatcher):
         PatientID = FirebaseConnection.val()
         self.UserID = FirebaseConnection.val()
         with open(Variables_Patient, "w") as f:
-            f.write(PatientID)
+            f.write(str(PatientID))
 
     def sign_in(self, email, password):
         if self.debug:
