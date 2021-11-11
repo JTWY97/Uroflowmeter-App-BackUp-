@@ -144,7 +144,7 @@ class PatientReportGenerator():
             NPI = (NocturiaNumber/TotalVoidNumber)*100
         else:
             NPI = "Not logged yet."
-            
+
         if NocturiaNumber != 0:
             NcoturiaPresent = "Yes"
         else:
