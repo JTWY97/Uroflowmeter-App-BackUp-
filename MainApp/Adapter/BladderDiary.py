@@ -22,8 +22,6 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-import os
-
 class P(FloatLayout):
     pass
 
@@ -38,7 +36,7 @@ class BladderDiary(Screen, EventDispatcher):
     def GetDaysAndRaspberryPiID(self):
         PatientStart = db.child("patientUsers").child(self.PatientID).child("start").get().val()
         PatientEnd = db.child("patientUsers").child(self.PatientID).child("end").get().val()
-        print(PatientStart)
+
         date_1 = datetime.datetime.strptime(PatientStart, "%d-%m-%Y")
         next_day = date_1 + datetime.timedelta(days=1)
         if len(str(next_day.day)) !=2:
@@ -134,7 +132,6 @@ class BladderDiary(Screen, EventDispatcher):
 
     def EditVoidData(self, VoidIndex):
         show = P()
-        print("testets" + str(VoidIndex))
         GetVoidDetails(str(VoidIndex), str(self.DayID))
         popupVoid = Popup(title = 'Would you like to edit this void?', content=show, size_hint=(None, None), size=(400, 400), pos_hint={'center_x' : 0.5})
         popupVoid.open()
@@ -158,14 +155,11 @@ class BladderDiary(Screen, EventDispatcher):
             pass
 
     def edit_void_callback(self, instance):
-        print(instance)
-        print(len(self.IconList))
         Index = self.IconList.index(instance)
         self.EditVoidData(Index)
 
     def BuildTimeline(self, dayID):
         self.DayID = dayID
-        print("BuildTimeLine:", self.DayID)
         VoidType = self.GetData_VoidType(dayID)
         VoidTime, VoidTimeRaw = self.GetData_Time(dayID)
         VoidVolume = self.GetData_Volume(dayID)

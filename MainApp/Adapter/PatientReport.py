@@ -269,8 +269,6 @@ class PatientReportGenerator():
         
         return Summarydata
         
-        
-    
     def CollectingData(self):
         
         TotalInput_Day1, TotalOutput_Day1, NocturiaNumber_Day1, NPI_Day1, NocturiaPresent_Day1 = self.GetVoidData("day 1", "DailyTable")
@@ -315,7 +313,6 @@ class PatientReportGenerator():
         AllDays.append(NPI)
         AllDays.append(Noc)
         
-
         #Daily Graph Data
         
         VoidVolume_Day1, VoidTimeList_Day1 = self.GetVoidData("day 1", "DailyGraph")
@@ -324,9 +321,7 @@ class PatientReportGenerator():
         VoidVolume_Day2 = np.array(VoidVolume_Day2).astype(float)
         VoidVolume_Day3, VoidTimeList_Day3 = self.GetVoidData("day 3", "DailyGraph")
         VoidVolume_Day3 = np.array(VoidVolume_Day3).astype(float)
-        
-        
-        
+
         return AllDays, VoidVolume_Day1, VoidTimeList_Day1, VoidVolume_Day2, VoidTimeList_Day2, VoidVolume_Day3, VoidTimeList_Day3
         
     def GenerateFigure(self):
@@ -335,7 +330,7 @@ class PatientReportGenerator():
 
         fig3 = plt.figure(constrained_layout=True, figsize= [10,8])
         gs = fig3.add_gridspec(4, 4)
-        
+    
         ax1 = fig3.add_subplot(gs[0, :])
         ax1.set_axis_off()
 
@@ -347,7 +342,7 @@ class PatientReportGenerator():
 
         ax4 = fig3.add_subplot(gs[3, :])
         ax4.set_title('Voided Volume/Day', fontweight= "bold")
-        
+
         #Daily FVC Table
         Columns1 = ('Day 1', 'Day 2', 'Day 3')
         Rows1 = ('Total Input (ml)', 'Total Output (ml)', 'Nocturia Episode Count', 'NPI (%)', 'Nocturnal Polyuria')
@@ -356,19 +351,23 @@ class PatientReportGenerator():
         DailySummaryTable = ax1.table(cellText=AllDays, colLabels=Columns1, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
         ax1.set_title('Daily FVC Data', fontweight = "bold")
 
-        #Overall Stats Table 
-        Rows1 = ('Day Time Frequency Range', 'Usual Daytime Frequency', 'Maximal Voided Volume (MVV) (ml)', 'Usual Daytime Voided Volume (ml)', 'Q Max Range')
+        #Overall Stats Table
+        Rows1 = ()
         rcolors = plt.cm.BuPu(np.full(len(Rows1), 0.1))
         OverallFVCTable = ax2.table(cellText=FVCSummaryData, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
         ax2.set_title('Summary FVC Data', fontweight = "bold")
 
         #Usual Daytime Freq scatterplot
+        
+
+###################### Usual Daytime Frequency, Maximal Voided Volume (MVV) (ml), Usual Daytime Voided Volume (ml) --> Plot
+###################### Q Max Range (above 150ml), Daytime Frequency Range, Daytime Voided Volume Range --> Table
 
 
         fig3.tight_layout()
-        plt.show()
-        # plt.savefig('./Styles/Patient.png')
 
-# class PatientReport(Screen):
-PatientReportGenerator().GenerateFigure()
-# pass
+        plt.savefig('./Styles/Patient.png')
+
+class PatientReport(Screen):
+    # PatientReportGenerator().GenerateFigure()
+    pass
