@@ -248,7 +248,7 @@ class BladderDiary(Screen, EventDispatcher):
                     else:
                         Icon = IconLeftWidget(icon="human")
 
-                    ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + VoidType[i], tertiary_text = "Voud Volume: " + VoidVolume[i] + "ml")
+                    ListComponents = ThreeLineAvatarListItem(text = str(VoidTime[i]), secondary_text = "Void Type: " + VoidType[i], tertiary_text = "Void Volume: " + VoidVolume[i] + "ml")
                     ListComponents.add_widget(Icon)
                     
                     ScreenLayout.add_widget(ListComponents)
