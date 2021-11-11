@@ -105,6 +105,7 @@ class PatientReportGenerator():
         NoOfNocturiaEp = 0
         NoOfNormalEp = 0
         NoOfMorningEp = 0
+        TotalVoidEp = 0
 
         NocturiaVoidVol = []
         MorningVoidVol = []
@@ -115,26 +116,30 @@ class PatientReportGenerator():
             if VoidType[i] == "First Morning Episode":
                 MorningVoidVol.append(VoidVolume[i])
                 NoOfMorningEp += 1
+                TotalVoidEp += 1
             elif VoidType[i] == "Normal Episode":
                 NormalVoidVol.append(VoidVolume[i])
                 NoOfNormalEp += 1
+                TotalVoidEp += 1
             elif VoidType[i] == "Nocturia Episode":
                 NocturiaVoidVol.append(VoidVolume[i])
                 NoOfNocturiaEp += 1
+                TotalVoidEp += 1
         
-        TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent= self.DailyReportData(FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol)
+        TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent= self.DailyReportData(FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol, TotalVoidEp)
         return TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent
     
-    def DailyReportData(self, FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol):
+    def DailyReportData(self, FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol, TotalVoidEp):
         
         TotalInput = FluidIntake
         VoidVolume = np.array(VoidVolume).astype(float)
         TotalOutput = np.sum(VoidVolume)
         NocturiaNumber = NoOfNocturiaEp
+        TotalVoidNumber = TotalVoidEp
         NocturiaVoidVol = np.array(NocturiaVoidVol).astype(float)
         MorningVoidVol = np.array(MorningVoidVol).astype(float)
         NocturiaVoidVol = np.sum(NocturiaVoidVol) + np.sum(MorningVoidVol)
-        NPI = (NocturiaVoidVol/TotalOutput)*100
+        NPI = (NocturiaNumber/TotalVoidNumber)*100
         if NocturiaNumber != 0:
             NcoturiaPresent = "Yes"
         else:
