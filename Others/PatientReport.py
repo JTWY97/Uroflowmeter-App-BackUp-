@@ -64,6 +64,7 @@ class PatientReport():
       #--> 3. No. of nocturia polyuria episode
       TotalEpList = db.child("patientData").child(PatientID).child(dayID).child("day 1episode").get().val()
       print(TotalEpList)
+      
       NocturiaEpisode = db.child("patientData").child(PatientID).child(dayID).child("NoOfNocturiaEpisode").get().val()
       print("No. of nocturia episodes for day 1: " + str(NocturiaEpisode))
 
