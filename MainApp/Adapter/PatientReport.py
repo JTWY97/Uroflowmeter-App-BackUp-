@@ -372,8 +372,8 @@ class PatientReportGenerator():
             #y-axis: Usual daytime freq for each day 
         
         #Max voided volume + Usual Daytime volume (for each day)
-            #x-axis: Day 1, Day 2, Day 3
-            #y-axis: Usual daytime freq for each day 
+            #x-axis 1: Day 1, Day 2, Day 3
+            #y-axis 1: Usual daytime freq for each day 
 
         fig3.tight_layout()
         plt.show()

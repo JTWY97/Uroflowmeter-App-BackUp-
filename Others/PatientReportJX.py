@@ -23,6 +23,7 @@ class PatientReportGenerator():
     Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
+    
 
     def GetDay2Date(self, PatientStart):
         date_1 = datetime.datetime.strptime(PatientStart, "%d-%m-%Y")
@@ -335,7 +336,7 @@ class PatientReportGenerator():
         AllDays, VoidVolume_Day1, VoidTimeList_Day1, VoidVolume_Day2, VoidTimeList_Day2, VoidVolume_Day3, VoidTimeList_Day3 = self.CollectingData()
         FVCSummaryData= self.CollData()
 
-        fig3 = plt.figure(constrained_layout=True, figsize= [10,8])
+        fig3 = plt.figure(tight_layout=True, figsize= [10,9])
         gs = fig3.add_gridspec(4, 4)
         
         #table 1
@@ -373,13 +374,13 @@ class PatientReportGenerator():
         Rows1 = ('Total Input (ml)', 'Total Output (ml)', 'Nocturia Episode Count', 'NPI (%)', 'Nocturnal Polyuria')
         ccolors = plt.cm.BuPu(np.full(len(Columns1), 0.1))
         rcolors = plt.cm.BuPu(np.full(len(Rows1), 0.1))
-        DailySummaryTable = ax1.table(cellText=AllDays, colLabels=Columns1, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
+        DailySummaryTable = ax1.table(cellText=AllDays, colLabels=Columns1, rowLabels = Rows1, cellLoc= 'center', loc='center', colColours = ccolors, rowColours = rcolors, colWidths = [0.25, 0.25, 0.25])
         ax1.set_title('Daily FVC Data', fontweight = "bold")
 
         #Overall Stats Table (to remove "Usual Daytime freq" -> transfer to a scatterplot)
         Rows1 = ('Day Time Frequency Range', 'Usual Daytime Frequency', 'Maximal Voided Volume (MVV) (ml)', 'Usual Daytime Voided Volume (ml)', 'Q Max Range')
         rcolors = plt.cm.BuPu(np.full(len(Rows1), 0.1))
-        OverallFVCTable = ax2.table(cellText=FVCSummaryData, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
+        OverallFVCTable = ax2.table(cellText=FVCSummaryData, rowLabels = Rows1, cellLoc= 'center', loc='center', colColours = ccolors, rowColours = rcolors, colWidths = [0.5] )
         ax2.set_title('Summary FVC Data', fontweight = "bold")
 
         #Usual Daytime Freq scatterplot
