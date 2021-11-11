@@ -5,6 +5,8 @@ import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 import matplotlib.gridspec as gridspec
+import seaborn as sns
+import datetime
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -21,22 +23,10 @@ class PatientReportGenerator():
     Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
-
-    def GetDay2Date(self, PatientStart):
-        date_1 = datetime.datetime.strptime(PatientStart, "%d-%m-%Y")
-        next_day = date_1 + datetime.timedelta(days=1)
-        PatientDay2 = str(next_day.day) + '-' + str(next_day.month) + '-' + str(next_day.year)
-        return PatientDay2
-    
-    def GetFullName(self):
-        PatientName = ""
-        FirstName = db.child("patientUsers").child(self.PatientID).child("firstname").get().val()
-        LastName = db.child("patientUsers").child(self.PatientID).child("lastname").get().val()
-        PatientName = PatientName + FirstName + LastName
-        return PatientName
-
-    def GetPatientInfo(self):
         
+    ## REPORT HEADER
+    
+    def GetPatientInfo(self):
         PatientName = self.GetFullName()
         
         PatientDay1 = db.child("patientUsers").child(self.PatientID).child("start").get().val()
@@ -48,7 +38,24 @@ class PatientReportGenerator():
         
         return PatientName, PatientDay1, PatientDay2, PatientDay3, WakeUpTime, BedTime
     
-    def GetAllDayData(self, dayID):
+    def GetFullName(self):
+        PatientName = ""
+        FirstName = db.child("patientUsers").child(self.PatientID).child("firstname").get().val()
+        LastName = db.child("patientUsers").child(self.PatientID).child("lastname").get().val()
+        PatientName = PatientName + FirstName + LastName
+        return PatientName
+    
+    def GetDay2Date(self, PatientStart):
+        date_1 = datetime.datetime.strptime(PatientStart, "%d-%m-%Y")
+        next_day = date_1 + datetime.timedelta(days=1)
+        PatientDay2 = str(next_day.day) + '-' + str(next_day.month) + '-' + str(next_day.year)
+        return PatientDay2
+    
+    ##FETCH ALL VOID DATA
+    
+    def GetVoidData(self, dayID):
+        
+        # Void Type
         EpisodeDayID = dayID + "episode"
         PatientUroflowData_VoidType = db.child("patientData").child(self.PatientID).child(EpisodeDayID).get()
         PatientUroflowData_VoidType = PatientUroflowData_VoidType.val()
@@ -57,328 +64,374 @@ class PatientReportGenerator():
             print(VoidType)
         else:
             VoidType = []
-
+        
+        VoidVolume = []
+        #Void Volumes
         Volume = db.child("patientData").child(self.PatientID).child(dayID).child("volume").get()
         PatientUroflowData_Volume = Volume.val()
         if PatientUroflowData_Volume != None:
-            VoidVolume = PatientUroflowData_Volume.split(',')
-        else:
-            VoidVolume = []
-            
-        NoOfNocturiaEp = 0
-        NoOfNormalEp = 0
-        NoOfMorningEp = 0
-        TotalVoidEp = 0
-
-        NocturiaVoidVol = []
-        MorningVoidVol = []
-        NormalVoidVol = []
-        print(len(VoidVolume))
-        print(len(VoidType))
-        for i in range(0, len(VoidType)):
-            if VoidType[i] == "First Morning Episode":
-                MorningVoidVol.append(VoidVolume[i])
-                NoOfMorningEp += 1
-                TotalVoidEp += 1
-            elif VoidType[i] == "Normal Episode":
-                NormalVoidVol.append(VoidVolume[i])
-                NoOfNormalEp += 1
-                TotalVoidEp += 1
-            elif VoidType[i] == "Nocturia Episode":
-                NocturiaVoidVol.append(VoidVolume[i])
-                NoOfNocturiaEp += 1
-                TotalVoidEp += 1
-        DayTimeFrequencyRange = len(NormalVoidVol) #both uses the count of normal voids?
-        UsualDayTimeFrequency = len(NormalVoidVol) #average no. of normal voids
-        MaximalVoidedVolume = max(VoidVolume) 
-        NormalVoidVol = np.array(NormalVoidVol).astype(float)
-        DayTimeVoidedVolumerange = max(NormalVoidVol) - min(NormalVoidVol) 
-
-        VoidTimeList = []
-        PatientUroflowData_Time = db.child("patientData").child(self.PatientID).child(dayID).child("time").get()
-        PatientUroflowData_Time = PatientUroflowData_Time.val()
-        if PatientUroflowData_Time != None:
-            VoidTimeArray = PatientUroflowData_Time.split(',')
-            for i in range(0, len(VoidTimeArray)):
-                Time = VoidTimeArray[i]
-                VoidTime = Time[0] + Time[1] + ':' + Time[2] + Time[3]
-                VoidTimeList.append(VoidTime)
+            VoidVolumeRaw = PatientUroflowData_Volume.split(',')
+            for i in range(0, len(VoidVolumeRaw)):
+                NearestTen = round(float(VoidVolumeRaw[i])/10)*10
+                VoidVolume.append(NearestTen)
         else:
             pass
-        
-        Osmolality = db.child("patientData").child(self.PatientID).child(dayID).child("osmolality").get()
-        PatientUroflowData_Osmolality = Osmolality.val()
-        if PatientUroflowData_Osmolality != None:
-            VoidOsmolality = PatientUroflowData_Osmolality.split(',')
-        else:
-            VoidOsmolality = []
-            
-        QMax = db.child("patientData").child(self.PatientID).child(dayID).child("qmax").get()
-        PatientUroflowData_QMax = QMax.val()
-        if PatientUroflowData_QMax != None:
-            VoidQMax = PatientUroflowData_QMax.split(',')
-        else:
-            VoidQMax = []
-        
-        FluidIntakeDayID = dayID + "FluidIntake"
-        FluidIntake = db.child("patientData").child(self.PatientID).child(FluidIntakeDayID).child("total fluid intake").get().val()
-        
-        VoidQMax = np.array(VoidQMax).astype(float)
-        if len(VoidQMax) != 0:
-            QmaxRange = max(VoidQMax) - min(VoidQMax)
-        else:
-            QmaxRange = 0
-        
-        return DayTimeFrequencyRange, UsualDayTimeFrequency, MaximalVoidedVolume, DayTimeVoidedVolumerange, DayTimeVoidedVolumerange, QmaxRange
-        
-    
-    def GetVoidData(self, dayID, WhichCollection):
-
-        EpisodeDayID = dayID + "episode"
-        PatientUroflowData_VoidType = db.child("patientData").child(self.PatientID).child(EpisodeDayID).get()
-        PatientUroflowData_VoidType = PatientUroflowData_VoidType.val()
-        if PatientUroflowData_VoidType != None:
-            VoidType = PatientUroflowData_VoidType
-            print(VoidType)
-        else:
-            VoidType = []
-
-        Volume = db.child("patientData").child(self.PatientID).child(dayID).child("volume").get()
-        PatientUroflowData_Volume = Volume.val()
-        if PatientUroflowData_Volume != None:
-            VoidVolume = PatientUroflowData_Volume.split(',')
-        else:
-            VoidVolume = []
-
-        VoidTimeList = []
-        PatientUroflowData_Time = db.child("patientData").child(self.PatientID).child(dayID).child("time").get()
-        PatientUroflowData_Time = PatientUroflowData_Time.val()
-        if PatientUroflowData_Time != None:
-            VoidTimeArray = PatientUroflowData_Time.split(',')
-            for i in range(0, len(VoidTimeArray)):
-                Time = VoidTimeArray[i]
-                VoidTime = Time[0] + Time[1] + ':' + Time[2] + Time[3]
-                VoidTimeList.append(VoidTime)
-        else:
-            pass
-        
-        Osmolality = db.child("patientData").child(self.PatientID).child(dayID).child("osmolality").get()
-        PatientUroflowData_Osmolality = Osmolality.val()
-        if PatientUroflowData_Osmolality != None:
-            VoidOsmolality = PatientUroflowData_Osmolality.split(',')
-        else:
-            VoidOsmolality = []
-            
-        QMax = db.child("patientData").child(self.PatientID).child(dayID).child("qmax").get()
-        PatientUroflowData_QMax = QMax.val()
-        if PatientUroflowData_QMax != None:
-            VoidQMax = PatientUroflowData_QMax.split(',')
-        else:
-            VoidQMax = []
-        
-        FluidIntakeDayID = dayID + "FluidIntake"
-        FluidIntake = db.child("patientData").child(self.PatientID).child(FluidIntakeDayID).child("total fluid intake").get().val()
-        
-        TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent = self.VoidTypeInfo(VoidType, VoidVolume, FluidIntake)
-        if WhichCollection == "DailyTable":
-            return TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent
-        elif WhichCollection == "DailyGraph":
-            return VoidVolume, VoidTimeList
-    
-    def VoidTypeInfo(self, VoidType, VoidVolume, FluidIntake):
-        NoOfNocturiaEp = 0
-        NoOfNormalEp = 0
-        NoOfMorningEp = 0
-        TotalVoidEp = 0
-
-        NocturiaVoidVol = []
-        MorningVoidVol = []
-        NormalVoidVol = []
-        print(len(VoidVolume))
-        print(len(VoidType))
-        for i in range(0, len(VoidType)):
-            if VoidType[i] == "First Morning Episode":
-                MorningVoidVol.append(VoidVolume[i])
-                NoOfMorningEp += 1
-                TotalVoidEp += 1
-            elif VoidType[i] == "Normal Episode":
-                NormalVoidVol.append(VoidVolume[i])
-                NoOfNormalEp += 1
-                TotalVoidEp += 1
-            elif VoidType[i] == "Nocturia Episode":
-                NocturiaVoidVol.append(VoidVolume[i])
-                NoOfNocturiaEp += 1
-                TotalVoidEp += 1
-        
-        TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent= self.DailyReportData(FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol, TotalVoidEp)
-        return TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent
-    
-    def DailyReportData(self, FluidIntake, VoidVolume, NoOfNocturiaEp, NocturiaVoidVol, MorningVoidVol, TotalVoidEp):
-        
-        TotalInput = FluidIntake
         VoidVolume = np.array(VoidVolume).astype(float)
-        TotalOutput = np.sum(VoidVolume)
-        NocturiaNumber = NoOfNocturiaEp
-        TotalVoidNumber = TotalVoidEp
-        NocturiaVoidVol = np.array(NocturiaVoidVol).astype(float)
-        MorningVoidVol = np.array(MorningVoidVol).astype(float)
-        NocturiaVoidVol = np.sum(NocturiaVoidVol) + np.sum(MorningVoidVol)
 
-        if TotalVoidNumber != 0:
-            NPI = (NocturiaNumber/TotalVoidNumber)*100
+        #Void Times
+        VoidTimeList = []
+        PatientUroflowData_Time = db.child("patientData").child(self.PatientID).child(dayID).child("time").get()
+        PatientUroflowData_Time = PatientUroflowData_Time.val()
+        if PatientUroflowData_Time != None:
+            VoidTimeArray = PatientUroflowData_Time.split(',')
+            for i in range(0, len(VoidTimeArray)):
+                Time = VoidTimeArray[i]
+                VoidTime = Time[0] + Time[1] + ':' + Time[2] + Time[3]
+                VoidTimeList.append(VoidTime)
         else:
-            NPI = "Not logged yet."
+            VoidTimeList = []
+        
+        #Osmolality
+        Osmolality = db.child("patientData").child(self.PatientID).child(dayID).child("osmolality").get()
+        PatientUroflowData_Osmolality = Osmolality.val()
+        if PatientUroflowData_Osmolality != None:
+            VoidOsmolality = PatientUroflowData_Osmolality.split(',')
+        else:
+            VoidOsmolality = []
+        VoidOsmolality = np.array(VoidOsmolality).astype(float)
+        
+        #OMax
+        QMax = db.child("patientData").child(self.PatientID).child(dayID).child("qmax").get()
+        PatientUroflowData_QMax = QMax.val()
+        if PatientUroflowData_QMax != None:
+            VoidQMax = PatientUroflowData_QMax.split(',')
+        else:
+            VoidQMax = []
+        
+        #FluidIntake
+        FluidIntakeDayID = dayID + "FluidIntake"
+        FluidIntake = db.child("patientData").child(self.PatientID).child(FluidIntakeDayID).child("total fluid intake").get().val()
+        
+        #Void Symptoms
+        SymptomsExperienced = []
+        
+        SymptomsID = "Symptoms" + dayID
+        for i in range(0, len(VoidType)):
+            VoidSymptoms = dayID + "episode"+ str(i)
+            FluidIntake = db.child("patientData").child(self.PatientID).child(SymptomsID).child(VoidSymptoms).get().val()
+            SymptomsExperienced.append(FluidIntake)
+            
+        return VoidType, VoidVolume, VoidTimeList, VoidOsmolality, VoidQMax, FluidIntake, SymptomsExperienced
+    
+    def VoidTypeInfo(self, VoidType, VoidVolume):
+        
+        #Count
+        NocturiaCount = 0
+        NormalCount = 0
+        MorningCount = 0
+        
+        #Volumes
+        NocturiaVoidVol = []
+        NormalVoidVol = []
+        MorningVoidVol = []
+        
+        for i in range(0, len(VoidType)):
+            if VoidType[i] == "First Morning Episode":
+                MorningVoidVol.append(VoidVolume[i])
+                MorningCount += 1
+            elif VoidType[i] == "Normal Episode":
+                NormalVoidVol.append(VoidVolume[i])
+                NormalCount += 1
+            elif VoidType[i] == "Nocturia Episode":
+                NocturiaVoidVol.append(VoidVolume[i])
+                NocturiaCount += 1
+        
+        return NocturiaCount, NormalCount, MorningCount, NocturiaVoidVol, NormalVoidVol, MorningVoidVol
+    
+    def DaySummaryData(self, VoidType1, VoidVolume1, FluidIntake1, NocturiaCount1, NocturiaVoidVol1, MorningVoidVol1, VoidType2, VoidVolume2, FluidIntake2, NocturiaCount2, NocturiaVoidVol2, MorningVoidVol2, VoidType3, VoidVolume3, FluidIntake3, NocturiaCount3, NocturiaVoidVol3, MorningVoidVol3):
+        TotalInput1 = FluidIntake1
+        TotalVoidNumber1 = len(VoidVolume1)
+        VoidVolume1 = np.array(VoidVolume1).astype(float)
+        TotalOutput1 = np.sum(VoidVolume1)
+        NocturiaVoidVol1 = np.array(NocturiaVoidVol1).astype(float)
+        MorningVoidVol1 = np.array(MorningVoidVol1).astype(float)
+        NocturiaVoidVol1 = np.sum(NocturiaVoidVol1) + np.sum(MorningVoidVol1)
 
-        if NPI >= 30:
-            NcoturiaPresent = "Yes"
+        if TotalVoidNumber1 != 0:
+            NPI1 = (NocturiaCount1/TotalVoidNumber1)*100
         else:
-            NcoturiaPresent = "No"
-        
-        return TotalInput, TotalOutput, NocturiaNumber, NPI, NcoturiaPresent
-    
-        
-    def CollData(self):
-        DayTimeFrequencyRange1, UsualDayTimeFrequency1, MaximalVoidedVolume1, DayTimeVoidedVolumerange1, DayTimeVoidedVolumerange1, QmaxRange1 = self.GetAllDayData("day 1")
-        DayTimeFrequencyRange2, UsualDayTimeFrequency2, MaximalVoidedVolume2, DayTimeVoidedVolumerange2, DayTimeVoidedVolumerange2, QmaxRange2 = self.GetAllDayData("day 2")
-        DayTimeFrequencyRange3, UsualDayTimeFrequency3, MaximalVoidedVolume3, DayTimeVoidedVolumerange3, DayTimeVoidedVolumerange3, QmaxRange3 = self.GetAllDayData("day 3")
-        x = []
-        x.append(UsualDayTimeFrequency1)
-        x.append(UsualDayTimeFrequency2)
-        x.append(UsualDayTimeFrequency3)
-        DayTimeFrequencyRange = (int(DayTimeFrequencyRange1) + int(DayTimeFrequencyRange2)+ int(DayTimeFrequencyRange3))/3 #should not be average, but Max(len(NormalVoid)) - Min(len(NormalVoid))?
-        UsualDayTimeFrequency = np.std(x)
-        MaximalVoidedVolume = (float(MaximalVoidedVolume1) + float(MaximalVoidedVolume2) + float(MaximalVoidedVolume3))/3
-        DayTimeVoidedVolumerange = (DayTimeVoidedVolumerange1 + DayTimeVoidedVolumerange2 + DayTimeVoidedVolumerange3)/3
-        QmaxRange = (QmaxRange1+ QmaxRange2+QmaxRange3)
-        Summarydata = []
-        a1 = []
-        a2 = []
-        a3 = []
-        a4 = []
-        a5 = []
-        a1.append(str(DayTimeFrequencyRange)[:5])
-        a2.append(str(UsualDayTimeFrequency)[:5])
-        a3.append(str(MaximalVoidedVolume)[:5])
-        a4.append(str(DayTimeVoidedVolumerange)[:5])
-        a5.append(str(QmaxRange)[:5])
-        Summarydata.append(a1)
-        Summarydata.append(a2)
-        Summarydata.append(a3)
-        Summarydata.append(a4)
-        Summarydata.append(a5)
-        
-        return Summarydata
-        
-        
-    
-    def CollectingData(self):
-        
-        TotalInput_Day1, TotalOutput_Day1, NocturiaNumber_Day1, NPI_Day1, NocturiaPresent_Day1 = self.GetVoidData("day 1", "DailyTable")
-        TotalInput_Day2, TotalOutput_Day2, NocturiaNumber_Day2, NPI_Day2, NocturiaPresent_Day2 = self.GetVoidData("day 2", "DailyTable")
-        TotalInput_Day3, TotalOutput_Day3, NocturiaNumber_Day3, NPI_Day3, NocturiaPresent_Day3 = self.GetVoidData("day 3", "DailyTable")
-        
+            NPI1 = "Not logged yet."
+
+        if int(NPI1) >= 30:
+            NocturiaPresent1 = "Yes"
+        else:
+            NocturiaPresent1 = "No"
+            
+        TotalInput2 = FluidIntake2
+        TotalVoidNumber2 = len(VoidVolume2)
+        VoidVolume2 = np.array(VoidVolume2).astype(float)
+        TotalOutput2 = np.sum(VoidVolume2)
+        NocturiaVoidVol2 = np.array(NocturiaVoidVol2).astype(float)
+        MorningVoidVol2 = np.array(MorningVoidVol2).astype(float)
+        NocturiaVoidVol2 = np.sum(NocturiaVoidVol2) + np.sum(MorningVoidVol2)
+
+        if TotalVoidNumber2 != 0:
+            NPI2 = (NocturiaCount2/TotalVoidNumber2)*100
+        else:
+            NPI2 = "Not logged yet."
+
+        if int(NPI2) >= 30:
+            NocturiaPresent2 = "Yes"
+        else:
+            NocturiaPresent2 = "No"
+            
+        TotalInput3 = FluidIntake3
+        TotalVoidNumber3 = len(VoidVolume3)
+        VoidVolume3 = np.array(VoidVolume3).astype(float)
+        TotalOutput3 = np.sum(VoidVolume1)
+        NocturiaVoidVol3 = np.array(NocturiaVoidVol3).astype(float)
+        MorningVoidVol3 = np.array(MorningVoidVol3).astype(float)
+        NocturiaVoidVol3 = np.sum(NocturiaVoidVol3) + np.sum(MorningVoidVol3)
+
+        if TotalVoidNumber3 != 0:
+            NPI3 = (NocturiaCount3/TotalVoidNumber3)*100
+        else:
+            NPI3 = "Not logged yet."
+
+        if int(NPI3) >= 30:
+            NocturiaPresent3 = "Yes"
+        else:
+            NocturiaPresent3 = "No"
+
         TotalInput = []
-        TotalInput.append(TotalInput_Day1)
-        if TotalInput_Day2 != None:
-            TotalInput.append(TotalInput_Day2)
-        else:
-            TotalInput.append(0)
-        if TotalInput_Day3 != None:
-            TotalInput.append(TotalInput_Day3)
-        else:
-            TotalInput.append(0)
-
+        TotalInput.append(TotalInput1)
+        TotalInput.append(TotalInput2)
+        TotalInput.append(TotalInput3)
+        
         TotalOutput = []
-        TotalOutput.append(TotalOutput_Day1)
-        TotalOutput.append(TotalOutput_Day2)
-        TotalOutput.append(TotalOutput_Day3)
+        TotalOutput.append(TotalOutput1)
+        TotalOutput.append(TotalOutput2)
+        TotalOutput.append(TotalOutput3)
         
         NocNum = []
-        NocNum.append(NocturiaNumber_Day1)
-        NocNum.append(NocturiaNumber_Day2)
-        NocNum.append(NocturiaNumber_Day3)
+        NocNum.append(NocturiaCount1)
+        NocNum.append(NocturiaCount2)
+        NocNum.append(NocturiaCount3)
         
         NPI = []
-        NPI.append(str(NPI_Day1)[:4])
-        NPI.append(str(NPI_Day2)[:4])
-        NPI.append(str(NPI_Day3)[:4])
+        NPI.append(str(NPI1)[:4])
+        NPI.append(str(NPI2)[:4])
+        NPI.append(str(NPI3)[:4])
         
         Noc = []
-        Noc.append(NocturiaPresent_Day1)
-        Noc.append(NocturiaPresent_Day2)
-        Noc.append(NocturiaPresent_Day3)
+        Noc.append(NocturiaPresent1)
+        Noc.append(NocturiaPresent2)
+        Noc.append(NocturiaPresent3)
 
-        AllDays = []
-        AllDays.append(TotalInput)
-        AllDays.append(TotalOutput)
-        AllDays.append(NocNum)
-        AllDays.append(NPI)
-        AllDays.append(Noc)
+        DayData = []
+        DayData.append(TotalInput)
+        DayData.append(TotalOutput)
+        DayData.append(NocNum)
+        DayData.append(NPI)
+        DayData.append(Noc)
         
+        return DayData
+    
+    def SummaryData(self, VoidVolume1, VoidQMax1, VoidVolume2, VoidQMax2, VoidVolume3, VoidQMax3, NormalCount1, NormalCount2, NormalCount3, NormalVoidVol1, NormalVoidVol2, NormalVoidVol3):
+        #Q Max Range (above 150ml)
+        ConsiderVolume1 = []
+        QMaxConsidered1 = []
+        print(VoidQMax1)
+        print(VoidQMax2)
+        if len(VoidQMax1) != 0:
+            for i in range(0, len(VoidVolume1)):
+                if float(VoidVolume1[i]) >= 150:
+                    ConsiderVolume1.append(i)
+                else:
+                    pass
+            for k in ConsiderVolume1:
+                QMaxConsidered1.append(VoidQMax1[k])
+            
+            QMaxConsidered1 = np.array(QMaxConsidered1).astype(float)
+            QMaxRange1 = max(QMaxConsidered1) - min(QMaxConsidered1)
+        else:
+            QMaxRange1 = 0
+        
+        ConsiderVolume2 = []
+        QMaxConsidered2 = []
+        if len(VoidQMax2) != 0:
+            for ii in range(0, len(VoidVolume2)):
+                if float(VoidVolume2[ii]) >= 150:
+                    ConsiderVolume2.append(ii)
+                else:
+                    pass
+            for kk in ConsiderVolume2:
+                QMaxConsidered2.append(VoidQMax2[kk])
+            
+            QMaxConsidered2 = np.array(QMaxConsidered2).astype(float)
+            QMaxRange2 = max(QMaxConsidered2) - min(QMaxConsidered2)
+            
+        else:
+            QMaxRange2 = 0
+        
+        ConsiderVolume3 = []
+        QMaxConsidered3 = []
+        if len(VoidQMax3) != 0:
+            for iii in range(0, len(VoidVolume3)):
+                if float(VoidVolume3[iii]) >= 150:
+                    ConsiderVolume3.append(iii)
+                else:
+                    pass
+            for kkk in ConsiderVolume3:
+                QMaxConsidered3.append(VoidQMax3[kkk])
+            
+            QMaxConsidered3 = np.array(QMaxConsidered3).astype(float)
+            QMaxRange3 = max(QMaxConsidered3) - min(QMaxConsidered3)
+        else:
+            QMaxRange3 = 0
+        
+        QMaxRange = (QMaxRange1 + QMaxRange2 + QMaxRange3)/3
+        QMaxRange = QMaxRange.round()
+        
+        #Daytime Frequency Range
+        DaytimeVoids = [NormalCount1, NormalCount2, NormalCount3]
+        DaytimeFrequency = max(DaytimeVoids) - min(DaytimeVoids)
 
-        #Daily Graph Data
+        # Daytime Voided Volume Range
+        DaytimeVoidVolume = []
+        NormalVoidVol1 = np.array(NormalVoidVol1).astype(float)
+        NormalVoidVol1 = sum(NormalVoidVol1)
+        DaytimeVoidVolume.append(NormalVoidVol1)
+        NormalVoidVol2 = np.array(NormalVoidVol2).astype(float)
+        NormalVoidVol2 = sum(NormalVoidVol2)
+        DaytimeVoidVolume.append(NormalVoidVol2)
+        NormalVoidVol3 = np.array(NormalVoidVol3).astype(float)
+        NormalVoidVol3 = sum(NormalVoidVol3)
+        DaytimeVoidVolume.append(NormalVoidVol3)
+        DaytimeVoided = max(DaytimeVoidVolume) - min(DaytimeVoidVolume)
+        DaytimeVoided = DaytimeVoided.round()
         
-        VoidVolume_Day1, VoidTimeList_Day1 = self.GetVoidData("day 1", "DailyGraph")
-        VoidVolume_Day1 = np.array(VoidVolume_Day1).astype(float)
-        VoidVolume_Day2, VoidTimeList_Day2 = self.GetVoidData("day 2", "DailyGraph")
-        VoidVolume_Day2 = np.array(VoidVolume_Day2).astype(float)
-        VoidVolume_Day3, VoidTimeList_Day3 = self.GetVoidData("day 3", "DailyGraph")
-        VoidVolume_Day3 = np.array(VoidVolume_Day3).astype(float)
+        QMaxRangeData = []
+        QMaxRangeData.append(QMaxRange)
+        DaytimeFrequencyRange = []
+        DaytimeFrequencyRange.append(DaytimeFrequency)
+        DaytimeVoidVolumeRange = []
+        DaytimeVoidVolumeRange.append(DaytimeVoided)
         
+        SummaryStructured = []
+        SummaryStructured.append(QMaxRangeData)
+        SummaryStructured.append(DaytimeFrequencyRange)
+        SummaryStructured.append(DaytimeVoidVolumeRange)
         
+        return SummaryStructured
         
-        return AllDays, VoidVolume_Day1, VoidTimeList_Day1, VoidVolume_Day2, VoidTimeList_Day2, VoidVolume_Day3, VoidTimeList_Day3
+    #Usual Daytime Frequency, Maximal Voided Volume (MVV) (ml), Usual Daytime Voided Volume (ml)
+    def UsualDaytimeFrequency(self):...
+    def MaximaVoidedVolume(self):...
+    def DaytimeVoidedVolume(self):...
+    
+    def ControlStation(self):
+    
+        #Report Header
+        # PatientName, PatientDay1, PatientDay2, PatientDay3, WakeUpTime, BedTime = self.GetPatientInfo()
         
-    def GenerateFigure(self):
-        AllDays, VoidVolume_Day1, VoidTimeList_Day1, VoidVolume_Day2, VoidTimeList_Day2, VoidVolume_Day3, VoidTimeList_Day3 = self.CollectingData()
-        FVCSummaryData= self.CollData()
-
-        fig3 = plt.figure(constrained_layout=True, figsize= [10,8])
+        #All Void Data by Day
+        VoidType1, VoidVolume1, VoidTimeList1, VoidOsmolality1, VoidQMax1, FluidIntake1, SymptomsExperienced1 = self.GetVoidData("day 1")
+        VoidType2, VoidVolume2, VoidTimeList2, VoidOsmolality2, VoidQMax2, FluidIntake2, SymptomsExperienced2 = self.GetVoidData("day 2")
+        VoidType3, VoidVolume3, VoidTimeList3, VoidOsmolality3, VoidQMax3, FluidIntake3, SymptomsExperienced3 = self.GetVoidData("day 3")
+        
+        #Void Type Specific Information
+        NocturiaCount1, NormalCount1, MorningCount1, NocturiaVoidVol1, NormalVoidVol1, MorningVoidVol1 = self.VoidTypeInfo(VoidType1, VoidVolume1)
+        NocturiaCount2, NormalCount2, MorningCount2, NocturiaVoidVol2, NormalVoidVol2, MorningVoidVol2 = self.VoidTypeInfo(VoidType2, VoidVolume2)
+        NocturiaCount3, NormalCount3, MorningCount3, NocturiaVoidVol3, NormalVoidVol3, MorningVoidVol3 =  self.VoidTypeInfo(VoidType3, VoidVolume3)
+        
+        #FVC Day Data (Structured)
+        DayDataStructured = self.DaySummaryData(VoidType1, VoidVolume1, FluidIntake1, NocturiaCount1, NocturiaVoidVol1, MorningVoidVol1, VoidType2, VoidVolume2, FluidIntake2, NocturiaCount2, NocturiaVoidVol2, MorningVoidVol2, VoidType3, VoidVolume3, FluidIntake3, NocturiaCount3, NocturiaVoidVol3, MorningVoidVol3)
+        
+        #FVC Summary (Structured)
+        SummaryStructured = self.SummaryData(VoidVolume1, VoidQMax1, VoidVolume2, VoidQMax2, VoidVolume3, VoidQMax3, NormalCount1, NormalCount2, NormalCount3, NormalVoidVol1, NormalVoidVol2, NormalVoidVol3)
+        
+        #Data for Graphs (Structured)
+        
+        #Data for Osmolality Graph (Structured)
+        #VoidOsmolality1, VoidTimeList1
+        #VoidOsmolality2, VoidTimeList2
+        #VoidOsmolality3, VoidTimeList3
+        return DayDataStructured, SummaryStructured, VoidVolume1, VoidOsmolality1, VoidTimeList1, VoidVolume2, VoidOsmolality2, VoidTimeList2, VoidVolume3, VoidOsmolality3, VoidTimeList3
+        
+    def BuildReport(self):
+        
+        DayDataStructured, SummaryStructured, VoidVolume1, VoidOsmolality1, VoidTimeList1, VoidVolume2, VoidOsmolality2, VoidTimeList2, VoidVolume3, VoidOsmolality3, VoidTimeList3 = self.ControlStation()
+        
+        fig3 = plt.figure(tight_layout=True, figsize= [10,8])
         gs = fig3.add_gridspec(4, 4)
         
+        #Daily FVC Table
         ax1 = fig3.add_subplot(gs[0, :])
         ax1.set_axis_off()
-
-        ax2 = fig3.add_subplot(gs[1, :])
-        ax2.set_axis_off()
-
-        ax3 = fig3.add_subplot(gs[2, :])
-        ax3.set_title('Usual Daytime Freq', fontweight= "bold")
-        ax3.set_ylabel('Frequency')
-
-        X = np.linspace(1, 3, num = 3, endpoint= True)
-        Y = [0.8, 0.55, 0.73]
-        ax4 = fig3.add_subplot(gs[3, :])
-        ax4.set_title('Voided Volume/Day', fontweight= "bold")
-        ax4.set_ylabel('Volume (ml)')
-        ax4.plot(X,Y, marker ='o')
         
-        #Daily FVC Table
         Columns1 = ('Day 1', 'Day 2', 'Day 3')
         Rows1 = ('Total Input (ml)', 'Total Output (ml)', 'Nocturia Episode Count', 'NPI (%)', 'Nocturnal Polyuria')
         ccolors = plt.cm.BuPu(np.full(len(Columns1), 0.1))
         rcolors = plt.cm.BuPu(np.full(len(Rows1), 0.1))
-        DailySummaryTable = ax1.table(cellText=AllDays, colLabels=Columns1, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
+        DailySummaryTable = ax1.table(cellText=DayDataStructured, colLabels=Columns1, rowLabels = Rows1, cellLoc= 'center', loc='center', colColours = ccolors, rowColours = rcolors, colWidths = [0.5, 0.5, 0.5], bbox=[0.2, 0, 0.8, 0.9])
         ax1.set_title('Daily FVC Data', fontweight = "bold")
 
-        #Overall Stats Table (to remove "Usual Daytime freq" -> transfer to a scatterplot)
-        Rows1 = ('Day Time Frequency Range', 'Usual Daytime Frequency', 'Maximal Voided Volume (MVV) (ml)', 'Usual Daytime Voided Volume (ml)', 'Q Max Range')
+        #table 2 
+        ax2 = fig3.add_subplot(gs[1, :])
+        ax2.set_axis_off()
+        Rows1 = ('Q Max Range (ml/s)', 'Day Time Frequency Range', 'Daytime Void Volume Range (ml)')
         rcolors = plt.cm.BuPu(np.full(len(Rows1), 0.1))
-        OverallFVCTable = ax2.table(cellText=FVCSummaryData, rowLabels = Rows1, loc='center', colColours = ccolors, rowColours = rcolors)
+        OverallFVCTable = ax2.table(cellText=SummaryStructured, rowLabels = Rows1, cellLoc= 'center', loc='center', colColours = ccolors, rowColours = rcolors, colWidths = [0.25], bbox=[0.5, 0, 0.3, 0.9])
         ax2.set_title('Summary FVC Data', fontweight = "bold")
 
-        #Usual Daytime Freq scatterplot
-            #x-axis: Day 1, Day 2, Day 3
-            #y-axis: Usual daytime freq for each day 
-        
-        #Max voided volume + Usual Daytime volume (for each day)
-            #x-axis 1: Day 1, Day 2, Day 3
-            #y-axis 1: Usual daytime freq for each day 
+        #osmolality graph
+        with sns.axes_style("whitegrid"):
+            ax3 = fig3.add_subplot(gs[2, :2])
+            if len(VoidOsmolality1) == len(VoidTimeList1):
+                ax3.scatter(y = VoidOsmolality1, x = VoidTimeList1, label = "Day 1", marker ='x', color = 'c')
+            else:
+                pass
+            if len(VoidOsmolality2) == len(VoidTimeList2):
+                ax3.scatter(y = VoidOsmolality2, x = VoidTimeList2, label = "Day 2", marker ='x', color = 'r')
+            else:
+                pass
+            if len(VoidOsmolality3) == len(VoidTimeList3):
+                ax3.scatter(y = VoidOsmolality3, x = VoidTimeList3, label = "Day 3", marker ='x', color = 'b')
+            else:
+                pass
+            ax3.set_title('Urine Osmolality', fontweight= "bold")
+            ax3.legend()
+            ax3.set_ylabel('Osmolality')
+            ax3.set_xlabel('Time')
+
+        #daytime freq graph
+        TotalVoids1 = len(VoidTimeList1)
+        TotalVoids2 = len(VoidTimeList2)
+        TotalVoids3 = len(VoidTimeList3)
+        VoidData = [TotalVoids1, TotalVoids2, TotalVoids3]
+        DaysData = ['Day 1', 'Day 2', 'Day 3']
+        x = [1,2,3]
+        with sns.axes_style("whitegrid"):
+            ax4 = fig3.add_subplot(gs[2, 2:])
+            ax4.scatter(x, y = VoidData, marker ='x', color = 'c')
+            plt.xticks(x,DaysData)
+            ax4.set_title('Usual Daytime Freq', fontweight= "bold")
+            ax4.set_ylabel('Frequency')
+            
+        #max voided vol & daytime vol
+        with sns.axes_style("whitegrid"):
+            ax5 = fig3.add_subplot(gs[3, :])
+            ax5.set_title('Voided Volume/Day', fontweight= "bold")
+            ax5.plot(VoidTimeList1,VoidVolume1, label = "Day 1", marker ='o')
+            ax5.plot(VoidTimeList2,VoidVolume2, label = "Day 2", marker ='o')
+            ax5.plot(VoidTimeList3,VoidVolume3, label = "Day 3", marker ='o')
+            ax5.legend()
+            plt.gcf().autofmt_xdate()
+            ax5.set_ylabel('Volume (ml)')
 
         fig3.tight_layout()
-        plt.show()
-        # plt.savefig('./Styles/Patient.png')
+        plt.savefig('./Styles/Patient.png')
 
 class PatientReport(Screen):
-    PatientReportGenerator().GenerateFigure()
-pass
+    PatientReportGenerator().BuildReport()
