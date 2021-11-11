@@ -145,13 +145,12 @@ class PatientReportGenerator():
         TotalVoidNumber1 = len(VoidVolume1)
         VoidVolume1 = np.array(VoidVolume1).astype(float)
         TotalOutput1 = np.sum(VoidVolume1)
-        NocturiaNumber1 = NocturiaCount1
         NocturiaVoidVol1 = np.array(NocturiaVoidVol1).astype(float)
         MorningVoidVol1 = np.array(MorningVoidVol1).astype(float)
         NocturiaVoidVol1 = np.sum(NocturiaVoidVol1) + np.sum(MorningVoidVol1)
 
         if TotalVoidNumber1 != 0:
-            NPI1 = (NocturiaNumber1/TotalVoidNumber1)*100
+            NPI1 = (NocturiaCount1/TotalVoidNumber1)*100
         else:
             NPI1 = "Not logged yet."
 
@@ -164,13 +163,12 @@ class PatientReportGenerator():
         TotalVoidNumber2 = len(VoidVolume2)
         VoidVolume2 = np.array(VoidVolume2).astype(float)
         TotalOutput2 = np.sum(VoidVolume2)
-        NocturiaNumber2 = NocturiaCount2
         NocturiaVoidVol2 = np.array(NocturiaVoidVol2).astype(float)
         MorningVoidVol2 = np.array(MorningVoidVol2).astype(float)
         NocturiaVoidVol2 = np.sum(NocturiaVoidVol2) + np.sum(MorningVoidVol2)
 
         if TotalVoidNumber2 != 0:
-            NPI2 = (NocturiaNumber2/TotalVoidNumber2)*100
+            NPI2 = (NocturiaCount2/TotalVoidNumber2)*100
         else:
             NPI2 = "Not logged yet."
 
@@ -183,13 +181,12 @@ class PatientReportGenerator():
         TotalVoidNumber3 = len(VoidVolume3)
         VoidVolume3 = np.array(VoidVolume3).astype(float)
         TotalOutput3 = np.sum(VoidVolume1)
-        NocturiaNumber3 = NocturiaCount3
         NocturiaVoidVol3 = np.array(NocturiaVoidVol3).astype(float)
         MorningVoidVol3 = np.array(MorningVoidVol3).astype(float)
         NocturiaVoidVol3 = np.sum(NocturiaVoidVol3) + np.sum(MorningVoidVol3)
 
         if TotalVoidNumber3 != 0:
-            NPI3 = (NocturiaNumber3/TotalVoidNumber3)*100
+            NPI3 = (NocturiaCount3/TotalVoidNumber3)*100
         else:
             NPI3 = "Not logged yet."
 
@@ -198,8 +195,119 @@ class PatientReportGenerator():
         else:
             NocturiaPresent3 = "No"
 
+        TotalInput = []
+        TotalInput.append(TotalInput1)
+        TotalInput.append(TotalInput2)
+        TotalInput.append(TotalInput3)
         
-            
+        TotalOutput = []
+        TotalOutput.append(TotalOutput1)
+        TotalOutput.append(TotalOutput2)
+        TotalOutput.append(TotalOutput3)
+        
+        NocNum = []
+        NocNum.append(NocturiaCount1)
+        NocNum.append(NocturiaCount2)
+        NocNum.append(NocturiaCount3)
+        
+        NPI = []
+        NPI.append(str(NPI1)[:4])
+        NPI.append(str(NPI2)[:4])
+        NPI.append(str(NPI3)[:4])
+        
+        Noc = []
+        Noc.append(NocturiaPresent1)
+        Noc.append(NocturiaPresent2)
+        Noc.append(NocturiaPresent3)
+
+        DayData = []
+        DayData.append(TotalInput)
+        DayData.append(TotalOutput)
+        DayData.append(NocNum)
+        DayData.append(NPI)
+        DayData.append(Noc)
+        
+        return DayData
+    
+    def SummaryData(self, VoidVolume1, VoidQMax1, VoidVolume2, VoidQMax2, VoidVolume3, VoidQMax3, NormalCount1, NormalCount2, NormalCount3, NormalVoidVol1, NormalVoidVol2, NormalVoidVol3):
+        #Q Max Range (above 150ml)
+        ConsiderVolume1 = []
+        QMaxConsidered1 = []
+        for i in range(0, len(VoidVolume1)):
+            if int(VoidVolume1[i]) >= 150:
+                ConsiderVolume1.append(i)
+            else:
+                pass
+        for k in ConsiderVolume1:
+            QMaxConsidered1.append(VoidQMax1[k])
+        
+        QMaxConsidered1 = np.array(QMaxConsidered1).astype(float)
+        QMaxRange1 = max(QMaxConsidered1) - min(QMaxConsidered1)
+        
+        ConsiderVolume2 = []
+        QMaxConsidered2 = []
+        for ii in range(0, len(VoidVolume2)):
+            if int(VoidVolume2[ii]) >= 150:
+                ConsiderVolume2.append(ii)
+            else:
+                pass
+        for kk in ConsiderVolume2:
+            QMaxConsidered2.append(VoidQMax2[kk])
+        
+        QMaxConsidered2 = np.array(QMaxConsidered2).astype(float)
+        QMaxRange2 = max(QMaxConsidered2) - min(QMaxConsidered2)
+        
+        ConsiderVolume3 = []
+        QMaxConsidered3 = []
+        for iii in range(0, len(VoidVolume3)):
+            if int(VoidVolume3[iii]) >= 150:
+                ConsiderVolume3.append(iii)
+            else:
+                pass
+        for kkk in ConsiderVolume3:
+            QMaxConsidered3.append(VoidQMax3[kkk])
+        
+        QMaxConsidered3 = np.array(QMaxConsidered3).astype(float)
+        QMaxRange3 = max(QMaxConsidered3) - min(QMaxConsidered3)
+        
+        QMaxRange = (QMaxRange1 + QMaxRange2 + QMaxRange3)/3
+        
+        #Daytime Frequency Range
+        DaytimeVoids = [NormalCount1, NormalCount2, NormalCount3]
+        DaytimeFrequency = max(DaytimeVoids) - min(DaytimeVoids)
+
+        # Daytime Voided Volume Range
+        DaytimeVoidVolume = []
+        NormalVoidVol1 = np.array(NormalVoidVol1).astype(float)
+        NormalVoidVol1 = sum(NormalVoidVol1)
+        DaytimeVoidVolume.append(NormalVoidVol1)
+        NormalVoidVol2 = np.array(NormalVoidVol2).astype(float)
+        NormalVoidVol2 = sum(NormalVoidVol2)
+        DaytimeVoidVolume.append(NormalVoidVol2)
+        NormalVoidVol3 = np.array(NormalVoidVol3).astype(float)
+        NormalVoidVol3 = sum(NormalVoidVol3)
+        DaytimeVoidVolume.append(NormalVoidVol3)
+        DaytimeVoided = max(DaytimeVoidVolume) - min(DaytimeVoidVolume)
+        
+        QMaxRangeData = []
+        QMaxRangeData.append(QMaxRange)
+        DaytimeFrequencyRange = []
+        DaytimeFrequencyRange.append(DaytimeFrequency)
+        DaytimeVoidVolumeRange = []
+        DaytimeVoidVolumeRange.append(DaytimeVoided)
+        
+        SummaryStructured = []
+        SummaryStructured.append(QMaxRangeData)
+        SummaryStructured.append(DaytimeFrequencyRange)
+        SummaryStructured.append(DaytimeVoidVolumeRange)
+        
+        return SummaryStructured
+        
+    #Usual Daytime Frequency, Maximal Voided Volume (MVV) (ml), Usual Daytime Voided Volume (ml)
+    def UsualDaytimeFrequency(self):...
+    def MaximaVoidedVolume(self):...
+    def DaytimeVoidedVolume(self):...
+    
     def ControlStation(self):
     
         #Report Header
@@ -216,7 +324,20 @@ class PatientReportGenerator():
         NocturiaCount3, NormalCount3, MorningCount3, NocturiaVoidVol3, NormalVoidVol3, MorningVoidVol3 =  self.VoidTypeInfo(VoidType3, VoidVolume3)
         
         #FVC Day Data (Structured)
-        DaySummaryStructured = self.DaySummaryData(VoidType1, VoidVolume1, FluidIntake1, NocturiaCount1, NocturiaVoidVol1, MorningVoidVol1, VoidType2, VoidVolume2, FluidIntake2, NocturiaCount2, NocturiaVoidVol2, MorningVoidVol2, VoidType3, VoidVolume3, FluidIntake3, NocturiaCount3, NocturiaVoidVol3, MorningVoidVol3)
+        DayDataStructured = self.DaySummaryData(VoidType1, VoidVolume1, FluidIntake1, NocturiaCount1, NocturiaVoidVol1, MorningVoidVol1, VoidType2, VoidVolume2, FluidIntake2, NocturiaCount2, NocturiaVoidVol2, MorningVoidVol2, VoidType3, VoidVolume3, FluidIntake3, NocturiaCount3, NocturiaVoidVol3, MorningVoidVol3)
+        
+        #FVC Summary (Structured)
+        SummaryStructured = self.SummaryData(VoidVolume1, VoidQMax1, VoidVolume2, VoidQMax2, VoidVolume3, VoidQMax3, NormalCount1, NormalCount2, NormalCount3, NormalVoidVol1, NormalVoidVol2, NormalVoidVol3)
+        
+        #Data for Graphs (Structured)
+        
+        #Data for Osmolality Graph (Structured)
+        #VoidOsmolality1, VoidTimeList1
+        #VoidOsmolality2, VoidTimeList2
+        #VoidOsmolality3, VoidTimeList3
+        
+        
+        
 
         
             
