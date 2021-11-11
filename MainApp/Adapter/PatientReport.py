@@ -229,7 +229,7 @@ class PatientReportGenerator():
         else:
             NPI = "Not logged yet."
 
-        if NocturiaNumber != 0:
+        if NPI >= 30:
             NcoturiaPresent = "Yes"
         else:
             NcoturiaPresent = "No"
@@ -371,4 +371,4 @@ class PatientReportGenerator():
 
 # class PatientReport(Screen):
 PatientReportGenerator().GenerateFigure()
-    # pass
+# pass
