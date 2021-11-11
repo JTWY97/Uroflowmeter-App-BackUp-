@@ -5,6 +5,8 @@ import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 import matplotlib.gridspec as gridspec
+import seaborn as sns
+
 
 config = {
   "apiKey": "AIzaSyBE439nHksT0x_MZ7gaD7rx3GwJh8VIBTM",
@@ -336,22 +338,35 @@ class PatientReportGenerator():
         fig3 = plt.figure(constrained_layout=True, figsize= [10,8])
         gs = fig3.add_gridspec(4, 4)
         
+        #table 1
         ax1 = fig3.add_subplot(gs[0, :])
         ax1.set_axis_off()
 
+        #table 2 
         ax2 = fig3.add_subplot(gs[1, :])
         ax2.set_axis_off()
 
-        ax3 = fig3.add_subplot(gs[2, :])
-        ax3.set_title('Usual Daytime Freq', fontweight= "bold")
-        ax3.set_ylabel('Frequency')
+        #osmolality graph
+        with sns.axes_style("whitegrid"):
+            ax3 = fig3.add_subplot(gs[2, :2])
+            ax3.set_title('Urine Osmolality', fontweight= "bold")
+            ax3.set_ylabel('Osmolality')
+            ax3.set_xlabel('Time')
 
-        X = np.linspace(1, 3, num = 3, endpoint= True)
-        Y = [0.8, 0.55, 0.73]
-        ax4 = fig3.add_subplot(gs[3, :])
-        ax4.set_title('Voided Volume/Day', fontweight= "bold")
-        ax4.set_ylabel('Volume (ml)')
-        ax4.plot(X,Y, marker ='o')
+        #daytime freq graph
+        with sns.axes_style("whitegrid"):
+            ax4 = fig3.add_subplot(gs[2, 2:])
+            ax4.set_title('Usual Daytime Freq', fontweight= "bold")
+            ax4.set_ylabel('Frequency')
+
+        #max voided vol & daytime vol
+        with sns.axes_style("whitegrid"):
+            X = np.linspace(1, 3, num = 3, endpoint= True)
+            Y = [0.8, 0.55, 0.73]
+            ax5 = fig3.add_subplot(gs[3, :])
+            ax5.set_title('Voided Volume/Day', fontweight= "bold")
+            ax5.set_ylabel('Volume (ml)')
+            ax5.plot(X,Y, marker ='o')
         
         #Daily FVC Table
         Columns1 = ('Day 1', 'Day 2', 'Day 3')
@@ -372,13 +387,12 @@ class PatientReportGenerator():
             #y-axis: Usual daytime freq for each day 
         
         #Max voided volume + Usual Daytime volume (for each day)
-            #x-axis: Day 1, Day 2, Day 3
-            #y-axis: Usual daytime freq for each day 
+            #x-axis 1: Day 1, Day 2, Day 3
+            #y-axis 1: Usual daytime freq for each day 
 
         fig3.tight_layout()
         plt.show()
         # plt.savefig('./Styles/Patient.png')
 
-class PatientReport(Screen):
-    PatientReportGenerator().GenerateFigure()
-pass
+
+PatientReportGenerator().GenerateFigure()
