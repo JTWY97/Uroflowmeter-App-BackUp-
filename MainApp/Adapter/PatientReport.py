@@ -118,8 +118,8 @@ class PatientReportGenerator():
         SymptomsID = "Symptoms" + dayID
         for i in range(0, len(VoidType)):
             VoidSymptoms = dayID + "episode"+ str(i)
-            FluidIntake = db.child("patientData").child(self.PatientID).child(SymptomsID).child(VoidSymptoms).get().val()
-            SymptomsExperienced.append(FluidIntake)
+            symp = db.child("patientData").child(self.PatientID).child(SymptomsID).child(VoidSymptoms).get().val()
+            SymptomsExperienced.append(symp)
             
         return VoidType, VoidVolume, VoidTimeList, VoidOsmolality, VoidQMax, FluidIntake, SymptomsExperienced
     
