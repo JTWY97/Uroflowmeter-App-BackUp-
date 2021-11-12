@@ -27,6 +27,7 @@ class P(FloatLayout):
 
 class BladderDiary(Screen, EventDispatcher):
     DayID = ''
+    
     Patient_Variables = "./Context/Variables_Patient.txt"
     with open(Patient_Variables, "r") as f:
         PatientID = f.read()
@@ -34,6 +35,7 @@ class BladderDiary(Screen, EventDispatcher):
     IconList = []
     
     def GetDaysAndRaspberryPiID(self):
+            
         PatientStart = db.child("patientUsers").child(self.PatientID).child("start").get().val()
         PatientEnd = db.child("patientUsers").child(self.PatientID).child("end").get().val()
 
