@@ -61,7 +61,6 @@ class PatientReportGenerator():
         PatientUroflowData_VoidType = PatientUroflowData_VoidType.val()
         if PatientUroflowData_VoidType != None:
             VoidType = PatientUroflowData_VoidType
-            print(VoidType)
         else:
             VoidType = []
         
@@ -195,13 +194,15 @@ class PatientReportGenerator():
 
         if TotalVoidNumber3 != 0:
             NPI3 = (NocturiaCount3/TotalVoidNumber3)*100
+            if int(NPI3) >= 30:
+                NocturiaPresent3 = "Yes"
+            else:
+                NocturiaPresent3 = "No"
         else:
             NPI3 = "Not logged yet."
+            NocturiaPresent3 = "Not logged yet."
 
-        if int(NPI3) >= 30:
-            NocturiaPresent3 = "Yes"
-        else:
-            NocturiaPresent3 = "No"
+
 
         TotalInput = []
         TotalInput.append(TotalInput1)
