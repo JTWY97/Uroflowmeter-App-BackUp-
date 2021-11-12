@@ -22,7 +22,7 @@ def patientSignUp(email, pfirstname, plastname, dob, weight, height, WakeUpTime,
         print(SignUpData)
         db.child("patientUsers").child(patientName).set(SignUpData)
         LogInData = {email[:-4]: patientName}
-        db.child("PatientLogInID").set(LogInData)
+        db.child("PatientLogInID").update(LogInData)
 
 def SendVoidType(VoidTypes, patientID, dayID):
         db.child("patientData").child(patientID).child(dayID).set(VoidTypes)

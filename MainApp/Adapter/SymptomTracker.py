@@ -38,7 +38,7 @@ class SymptomTracker(Screen):
                 print("ERROR IN FETCHING DAY ID")
         else:
             DayID = "day 1"
-
+        self.SymptomList.append(VoidNumber)
         self.ShowVoid(VoidNumber, DayID)
 
     def GetData_VoidType(self, dayID, VoidNumber):
@@ -179,6 +179,7 @@ class SymptomTracker(Screen):
             return self.SymptomList
 
     def SendSymptomToFirebase(self):
-        Label = "Symptoms" + self.EpiDay
+        SymptomTrackerChild = "Symptoms" + self.EpiDay
+        Label = self.EpiDay + self.VoidNo
         data = {Label: str(self.SymptomList)}
-        db.child("patientData").child(self.PatientID).update(data)
+        db.child("patientData").child(self.PatientID).child(SymptomTrackerChild).update(data)
