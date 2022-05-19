@@ -61,7 +61,6 @@ class PatientReportGenerator():
         PatientUroflowData_VoidType = PatientUroflowData_VoidType.val()
         if PatientUroflowData_VoidType != None:
             VoidType = PatientUroflowData_VoidType
-            print(VoidType)
         else:
             VoidType = []
         
@@ -159,13 +158,14 @@ class PatientReportGenerator():
 
         if TotalVoidNumber1 != 0:
             NPI1 = (NocturiaCount1/TotalVoidNumber1)*100
+            if int(NPI1) >= 30:
+                NocturiaPresent1 = "Yes"
+            else:
+                NocturiaPresent1 = "No"
         else:
             NPI1 = "Not logged yet."
+            NocturiaPresent1 = "Not logged yet."
 
-        if int(NPI1) >= 30:
-            NocturiaPresent1 = "Yes"
-        else:
-            NocturiaPresent1 = "No"
             
         TotalInput2 = FluidIntake2
         TotalVoidNumber2 = len(VoidVolume2)
@@ -177,13 +177,13 @@ class PatientReportGenerator():
 
         if TotalVoidNumber2 != 0:
             NPI2 = (NocturiaCount2/TotalVoidNumber2)*100
+            if int(NPI2) >= 30:
+                NocturiaPresent2 = "Yes"
+            else:
+                NocturiaPresent2 = "No"
         else:
             NPI2 = "Not logged yet."
-
-        if int(NPI2) >= 30:
-            NocturiaPresent2 = "Yes"
-        else:
-            NocturiaPresent2 = "No"
+            NocturiaPresent2 = "Not logged yet."
             
         TotalInput3 = FluidIntake3
         TotalVoidNumber3 = len(VoidVolume3)
@@ -195,13 +195,15 @@ class PatientReportGenerator():
 
         if TotalVoidNumber3 != 0:
             NPI3 = (NocturiaCount3/TotalVoidNumber3)*100
+            if int(NPI3) >= 30:
+                NocturiaPresent3 = "Yes"
+            else:
+                NocturiaPresent3 = "No"
         else:
             NPI3 = "Not logged yet."
+            NocturiaPresent3 = "Not logged yet."
 
-        if int(NPI3) >= 30:
-            NocturiaPresent3 = "Yes"
-        else:
-            NocturiaPresent3 = "No"
+
 
         TotalInput = []
         TotalInput.append(TotalInput1)
@@ -291,7 +293,7 @@ class PatientReportGenerator():
             QMaxRange3 = 0
         
         QMaxRange = (QMaxRange1 + QMaxRange2 + QMaxRange3)/3
-        QMaxRange = QMaxRange.round()
+        # QMaxRange = QMaxRange.round()
         
         #Daytime Frequency Range
         DaytimeVoids = [NormalCount1, NormalCount2, NormalCount3]
@@ -309,7 +311,7 @@ class PatientReportGenerator():
         NormalVoidVol3 = sum(NormalVoidVol3)
         DaytimeVoidVolume.append(NormalVoidVol3)
         DaytimeVoided = max(DaytimeVoidVolume) - min(DaytimeVoidVolume)
-        DaytimeVoided = DaytimeVoided.round()
+        # DaytimeVoided = DaytimeVoided.round()
         
         QMaxRangeData = []
         QMaxRangeData.append(QMaxRange)
